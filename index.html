@@ -51,7 +51,8 @@
                     <div class="ml-10 flex items-baseline space-x-8">
                         <a href="#inicio" class="hover:text-brand-500 transition-colors px-3 py-2 rounded-md text-sm font-medium">Inicio</a>
                         <a href="#servicios" class="hover:text-brand-500 transition-colors px-3 py-2 rounded-md text-sm font-medium">Servicios</a>
-                        <a href="#portfolio" class="hover:text-brand-500 transition-colors px-3 py-2 rounded-md text-sm font-medium">Proyectos</a>
+                        <a href="#portfolio" class="hover:text-brand-500 transition-colors px-3 py-2 rounded-md text-sm font-medium">Portafolio</a>
+                        <a href="#precios" class="hover:text-brand-500 transition-colors px-3 py-2 rounded-md text-sm font-medium">Precios</a>
                         <a href="#contacto" class="bg-brand-600 hover:bg-brand-500 text-white px-4 py-2 rounded-full text-sm font-medium transition-all">Contrátame</a>
                     </div>
                 </div>
@@ -67,6 +68,7 @@
                 <a href="#inicio" onclick="toggleMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Inicio</a>
                 <a href="#servicios" onclick="toggleMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Servicios</a>
                 <a href="#portfolio" onclick="toggleMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Portafolio</a>
+                <a href="#precios" onclick="toggleMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Precios</a>
                 <a href="#contacto" onclick="toggleMenu()" class="text-brand-500 font-bold block px-3 py-2 rounded-md text-base">Contrátame</a>
             </div>
         </div>
@@ -121,7 +123,6 @@
                 <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Mis Servicios</h2>
                 <p class="text-slate-400 max-w-2xl mx-auto">Soluciones a medida para cada etapa de tu negocio digital.</p>
             </div>
-            <!-- Cambiado a grid de 2 columnas para acomodar 4 servicios -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <!-- Servicio 1: Páginas Web -->
                 <div class="bg-dark-card p-8 rounded-2xl border border-slate-700/50 card-hover transition-all duration-300 reveal delay-100">
@@ -212,6 +213,100 @@
                     </div>
                 </div>
 
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="precios" class="py-20 bg-dark-bg border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Planes y Precios</h2>
+                <p class="text-slate-400 max-w-2xl mx-auto">Inversión transparente para impulsar tu proyecto al siguiente nivel.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Plan Básico -->
+                <div class="bg-dark-card p-8 rounded-2xl border border-slate-700/50 hover:border-slate-500 transition-all flex flex-col reveal delay-100">
+                    <div class="mb-6">
+                        <h3 class="text-xl font-semibold text-white mb-2">Básico</h3>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-4xl font-bold text-white">350€</span>
+                            <span class="text-slate-500 text-sm">/ proyecto</span>
+                        </div>
+                        <p class="text-slate-400 text-sm mt-4">Ideal para landing pages personales o pequeños negocios que necesitan presencia online.</p>
+                    </div>
+                    <ul class="space-y-4 mb-8 flex-1">
+                        <li class="flex items-start gap-3 text-slate-300 text-sm">
+                            <i class="fas fa-check text-brand-500 mt-1"></i> Diseño One-Page Responsive
+                        </li>
+                        <li class="flex items-start gap-3 text-slate-300 text-sm">
+                            <i class="fas fa-check text-brand-500 mt-1"></i> Formulario de Contacto
+                        </li>
+                        <li class="flex items-start gap-3 text-slate-300 text-sm">
+                            <i class="fas fa-check text-brand-500 mt-1"></i> Optimización Básica SEO
+                        </li>
+                        <li class="flex items-start gap-3 text-slate-300 text-sm">
+                            <i class="fas fa-check text-brand-500 mt-1"></i> Entrega en 1 semana
+                        </li>
+                    </ul>
+                    <a href="#contacto" class="w-full block text-center py-3 border border-slate-600 text-white rounded-lg hover:bg-slate-800 transition-all font-semibold">Seleccionar</a>
+                </div>
+
+                <!-- Plan Estándar -->
+                <div class="bg-dark-card p-8 rounded-2xl border-2 border-brand-500 shadow-lg shadow-brand-500/10 relative flex flex-col reveal delay-200 transform md:-translate-y-4">
+                    <div class="absolute top-0 right-0 bg-brand-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">POPULAR</div>
+                    <div class="mb-6">
+                        <h3 class="text-xl font-semibold text-white mb-2">Estándar</h3>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-4xl font-bold text-white">950€</span>
+                            <span class="text-slate-500 text-sm">/ proyecto</span>
+                        </div>
+                        <p class="text-slate-400 text-sm mt-4">Perfecto para webs corporativas completas o MVPs con funcionalidad dinámica.</p>
+                    </div>
+                    <ul class="space-y-4 mb-8 flex-1">
+                        <li class="flex items-start gap-3 text-slate-300 text-sm">
+                            <i class="fas fa-check text-brand-500 mt-1"></i> Hasta 5 Páginas
+                        </li>
+                        <li class="flex items-start gap-3 text-slate-300 text-sm">
+                            <i class="fas fa-check text-brand-500 mt-1"></i> CMS Autogestionable
+                        </li>
+                        <li class="flex items-start gap-3 text-slate-300 text-sm">
+                            <i class="fas fa-check text-brand-500 mt-1"></i> Integración con API/Base de Datos
+                        </li>
+                        <li class="flex items-start gap-3 text-slate-300 text-sm">
+                            <i class="fas fa-check text-brand-500 mt-1"></i> Soporte 1 mes incluido
+                        </li>
+                    </ul>
+                    <a href="#contacto" class="w-full block text-center py-3 bg-brand-600 text-white rounded-lg hover:bg-brand-500 transition-all font-bold">Seleccionar</a>
+                </div>
+
+                <!-- Plan Premium -->
+                <div class="bg-dark-card p-8 rounded-2xl border border-slate-700/50 hover:border-slate-500 transition-all flex flex-col reveal delay-300">
+                    <div class="mb-6">
+                        <h3 class="text-xl font-semibold text-white mb-2">Premium</h3>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-4xl font-bold text-white">2500€</span>
+                            <span class="text-slate-500 text-sm">/ desde</span>
+                        </div>
+                        <p class="text-slate-400 text-sm mt-4">Soluciones avanzadas para negocios digitales, E-commerce y aplicaciones SaaS.</p>
+                    </div>
+                    <ul class="space-y-4 mb-8 flex-1">
+                        <li class="flex items-start gap-3 text-slate-300 text-sm">
+                            <i class="fas fa-check text-brand-500 mt-1"></i> E-commerce Completo
+                        </li>
+                        <li class="flex items-start gap-3 text-slate-300 text-sm">
+                            <i class="fas fa-check text-brand-500 mt-1"></i> Panel de Administración Custom
+                        </li>
+                        <li class="flex items-start gap-3 text-slate-300 text-sm">
+                            <i class="fas fa-check text-brand-500 mt-1"></i> Pasarelas de Pago
+                        </li>
+                        <li class="flex items-start gap-3 text-slate-300 text-sm">
+                            <i class="fas fa-check text-brand-500 mt-1"></i> Escalabilidad y Alto Rendimiento
+                        </li>
+                    </ul>
+                    <a href="#contacto" class="w-full block text-center py-3 border border-slate-600 text-white rounded-lg hover:bg-slate-800 transition-all font-semibold">Consultar</a>
+                </div>
             </div>
         </div>
     </section>
