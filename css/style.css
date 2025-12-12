@@ -1,0 +1,42 @@
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Efecto de texto con gradiente */
+.gradient-text {
+    background: linear-gradient(to right, #38bdf8, #818cf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Efecto de levitación al pasar el mouse por las tarjetas */
+.card-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px -10px rgba(14, 165, 233, 0.3);
+}
+
+/* Estilo para la barra de desplazamiento suave */
+html {
+    scroll-behavior: smooth;
+}
+
+/* --- NUEVO: Animaciones de Scroll (Scroll Reveal) --- */
+/* Estado inicial: invisible y desplazado hacia abajo */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px); 
+    transition: all 0.8s ease-out; /* Animación suave de 0.8 segundos */
+}
+
+/* Estado final: visible y en su posición original */
+/* Esta clase se añade con JavaScript cuando el elemento entra en pantalla */
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Retrasos para efecto cascada (que las tarjetas salgan una por una) */
+.delay-100 { transition-delay: 0.1s; }
+.delay-200 { transition-delay: 0.2s; }
+.delay-300 { transition-delay: 0.3s; }
