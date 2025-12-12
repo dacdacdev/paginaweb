@@ -166,8 +166,7 @@
                     <div class="h-48 overflow-hidden relative">
                         <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="SoloCorte" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2">
-                            <a href="https://solocorte.vercel.app" target="_blank" class="px-4 py-2 bg-white text-black rounded-full text-sm font-bold hover:bg-gray-200 transition-colors">Visitar Sitio</a>
-                            <button onclick="openPreview('https://solocorte.vercel.app')" class="px-4 py-2 border border-white text-white rounded-full text-sm font-bold hover:bg-white/20 transition-colors">Vista Previa</button>
+                            <a href="https://solocorte.vercel.app" target="_blank" class="px-6 py-3 bg-white text-black rounded-full font-bold hover:bg-gray-200 transition-colors shadow-lg transform hover:scale-105">Visitar Sitio</a>
                         </div>
                     </div>
                     <div class="p-6">
@@ -185,8 +184,7 @@
                     <div class="h-48 overflow-hidden relative">
                         <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Proyecto Juego" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2">
-                            <a href="https://proyecto00juego.vercel.app" target="_blank" class="px-4 py-2 bg-white text-black rounded-full text-sm font-bold hover:bg-gray-200 transition-colors">Jugar Ahora</a>
-                            <button onclick="openPreview('https://proyecto00juego.vercel.app')" class="px-4 py-2 border border-white text-white rounded-full text-sm font-bold hover:bg-white/20 transition-colors">Vista Previa</button>
+                            <a href="https://proyecto00juego.vercel.app" target="_blank" class="px-6 py-3 bg-white text-black rounded-full font-bold hover:bg-gray-200 transition-colors shadow-lg transform hover:scale-105">Jugar Ahora</a>
                         </div>
                     </div>
                     <div class="p-6">
@@ -230,35 +228,6 @@
             </div>
         </div>
     </section>
-
-    <!-- Modal de Vista Previa -->
-    <div id="previewModal" class="fixed inset-0 z-[100] hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-dark-card w-full max-w-6xl h-[80vh] rounded-2xl border border-slate-700 relative flex flex-col shadow-2xl">
-            <!-- Header del Modal -->
-            <div class="flex justify-between items-center p-4 border-b border-slate-700 bg-slate-900/50 rounded-t-2xl">
-                <h3 class="text-white font-bold">Vista Previa</h3>
-                <div class="flex items-center gap-4">
-                    <!-- Botón de respaldo por si el iframe falla -->
-                    <a id="externalLink" href="#" target="_blank" class="text-brand-500 hover:text-white text-sm font-semibold flex items-center gap-2 transition-colors">
-                        Abrir en pestaña nueva <i class="fas fa-external-link-alt"></i>
-                    </a>
-                    <button onclick="closePreview()" class="text-slate-400 hover:text-red-400 transition-colors">
-                        <i class="fas fa-times text-2xl"></i>
-                    </button>
-                </div>
-            </div>
-            <!-- Contenido Iframe -->
-            <div class="flex-1 relative bg-white/5 overflow-hidden rounded-b-2xl">
-                <div id="loadingIndicator" class="absolute inset-0 flex items-center justify-center">
-                    <div class="text-center">
-                        <i class="fas fa-spinner fa-spin text-4xl text-brand-500 mb-4"></i>
-                        <p class="text-slate-400 text-sm">Cargando proyecto...</p>
-                    </div>
-                </div>
-                <iframe id="previewFrame" src="" class="w-full h-full border-0" onload="document.getElementById('loadingIndicator').classList.add('hidden')"></iframe>
-            </div>
-        </div>
-    </div>
 
     <footer class="bg-dark-bg border-t border-slate-800 py-8">
         <div class="max-w-7xl mx-auto px-4 text-center">
