@@ -165,8 +165,9 @@
                 <div class="group bg-dark-card rounded-xl overflow-hidden border border-slate-700/50 hover:border-brand-500/50 transition-all reveal delay-100">
                     <div class="h-48 overflow-hidden relative">
                         <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="SoloCorte" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                            <a href="https://solocorte.vercel.app" target="_blank" class="px-4 py-2 bg-white text-black rounded-full text-sm font-bold">Ver Demo</a>
+                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2">
+                            <a href="https://solocorte.vercel.app" target="_blank" class="px-4 py-2 bg-white text-black rounded-full text-sm font-bold hover:bg-gray-200 transition-colors">Visitar Sitio</a>
+                            <button onclick="openPreview('https://solocorte.vercel.app')" class="px-4 py-2 border border-white text-white rounded-full text-sm font-bold hover:bg-white/20 transition-colors">Vista Previa</button>
                         </div>
                     </div>
                     <div class="p-6">
@@ -176,7 +177,6 @@
                         </div>
                         <h3 class="text-xl font-bold text-white mb-2">SoloCorte</h3>
                         <p class="text-slate-400 text-sm mb-4">Aplicación web moderna y profesional. Haz clic para visitar.</p>
-                        <a href="https://solocorte.vercel.app" target="_blank" class="text-brand-500 text-sm font-semibold hover:underline">Visitar sitio &rarr;</a>
                     </div>
                 </div>
                 
@@ -184,8 +184,9 @@
                 <div class="group bg-dark-card rounded-xl overflow-hidden border border-slate-700/50 hover:border-brand-500/50 transition-all reveal delay-200">
                     <div class="h-48 overflow-hidden relative">
                         <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Proyecto Juego" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                            <a href="https://proyecto00juego.vercel.app" target="_blank" class="px-4 py-2 bg-white text-black rounded-full text-sm font-bold">Jugar Ahora</a>
+                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2">
+                            <a href="https://proyecto00juego.vercel.app" target="_blank" class="px-4 py-2 bg-white text-black rounded-full text-sm font-bold hover:bg-gray-200 transition-colors">Jugar Ahora</a>
+                            <button onclick="openPreview('https://proyecto00juego.vercel.app')" class="px-4 py-2 border border-white text-white rounded-full text-sm font-bold hover:bg-white/20 transition-colors">Vista Previa</button>
                         </div>
                     </div>
                     <div class="p-6">
@@ -195,7 +196,6 @@
                         </div>
                         <h3 class="text-xl font-bold text-white mb-2">Proyecto 00 Juego</h3>
                         <p class="text-slate-400 text-sm mb-4">Experiencia interactiva y divertida disponible online.</p>
-                        <a href="https://proyecto00juego.vercel.app" target="_blank" class="text-brand-500 text-sm font-semibold hover:underline">Jugar &rarr;</a>
                     </div>
                 </div>
 
@@ -230,6 +230,26 @@
             </div>
         </div>
     </section>
+
+    <!-- Modal de Vista Previa -->
+    <div id="previewModal" class="fixed inset-0 z-[100] hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-dark-card w-full max-w-6xl h-[80vh] rounded-2xl border border-slate-700 relative flex flex-col shadow-2xl">
+            <!-- Header del Modal -->
+            <div class="flex justify-between items-center p-4 border-b border-slate-700 bg-slate-900/50 rounded-t-2xl">
+                <h3 class="text-white font-bold">Vista Previa</h3>
+                <button onclick="closePreview()" class="text-slate-400 hover:text-white transition-colors">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <!-- Contenido Iframe -->
+            <div class="flex-1 relative bg-white/5 overflow-hidden rounded-b-2xl">
+                <div id="loadingIndicator" class="absolute inset-0 flex items-center justify-center">
+                    <i class="fas fa-spinner fa-spin text-4xl text-brand-500"></i>
+                </div>
+                <iframe id="previewFrame" src="" class="w-full h-full border-0" onload="document.getElementById('loadingIndicator').classList.add('hidden')"></iframe>
+            </div>
+        </div>
+    </div>
 
     <footer class="bg-dark-bg border-t border-slate-800 py-8">
         <div class="max-w-7xl mx-auto px-4 text-center">
