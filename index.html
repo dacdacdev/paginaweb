@@ -37,6 +37,15 @@
             }
         }
     </script>
+    <!-- Estilo adicional para ocultar el marcador por defecto en algunos navegadores -->
+    <style>
+        details > summary {
+            list-style: none;
+        }
+        details > summary::-webkit-details-marker {
+            display: none;
+        }
+    </style>
 </head>
 <body class="bg-dark-bg text-slate-200 antialiased selection:bg-brand-500 selection:text-white">
 
@@ -50,6 +59,7 @@
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-8">
                         <a href="#inicio" class="hover:text-brand-500 transition-colors px-3 py-2 rounded-md text-sm font-medium">Inicio</a>
+                        <a href="#sobre-mi" class="hover:text-brand-500 transition-colors px-3 py-2 rounded-md text-sm font-medium">Sobre Mí</a>
                         <a href="#servicios" class="hover:text-brand-500 transition-colors px-3 py-2 rounded-md text-sm font-medium">Servicios</a>
                         <a href="#portfolio" class="hover:text-brand-500 transition-colors px-3 py-2 rounded-md text-sm font-medium">Portafolio</a>
                         <a href="#precios" class="hover:text-brand-500 transition-colors px-3 py-2 rounded-md text-sm font-medium">Precios</a>
@@ -66,6 +76,7 @@
         <div class="md:hidden hidden bg-dark-card border-b border-slate-700" id="mobile-menu">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <a href="#inicio" onclick="toggleMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Inicio</a>
+                <a href="#sobre-mi" onclick="toggleMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Sobre Mí</a>
                 <a href="#servicios" onclick="toggleMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Servicios</a>
                 <a href="#portfolio" onclick="toggleMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Portafolio</a>
                 <a href="#precios" onclick="toggleMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Precios</a>
@@ -116,6 +127,56 @@
         </div>
     </div>
 
+    <!-- SECCIÓN: Sobre Mí -->
+    <section id="sobre-mi" class="py-20 bg-dark-bg border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="reveal">
+                    <!-- Imagen de marcador de posición -->
+                    <div class="relative">
+                        <div class="absolute inset-0 bg-brand-500 rounded-2xl rotate-6 opacity-20"></div>
+                        <img src="https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Sobre DacDacDev" class="relative rounded-2xl shadow-2xl w-full h-auto object-cover grayscale hover:grayscale-0 transition-all duration-500">
+                    </div>
+                </div>
+                <div class="reveal delay-100">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Más allá del código</h2>
+                    <p class="text-slate-400 mb-6 leading-relaxed">
+                        Hola, soy un desarrollador apasionado por crear sistemas robustos y eficientes. No solo escribo código; diseño soluciones que ayudan a escalar negocios. 
+                    </p>
+                    <p class="text-slate-400 mb-8 leading-relaxed">
+                        Con experiencia en el ecosistema JavaScript y Python, me especializo en conectar el frontend con bases de datos potentes, asegurando que cada click del usuario tenga una respuesta inmediata y segura.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-brand-500">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <span class="text-white font-medium">Rápido</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-brand-500">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <span class="text-white font-medium">Seguro</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-brand-500">
+                                <i class="fas fa-expand"></i>
+                            </div>
+                            <span class="text-white font-medium">Escalable</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-brand-500">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <span class="text-white font-medium">Dedicado</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Servicios -->
     <section id="servicios" class="py-20 bg-dark-bg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -159,6 +220,38 @@
                     </div>
                     <h3 class="text-xl font-bold text-white mb-3">E-commerce</h3>
                     <p class="text-slate-400 leading-relaxed">Tiendas online completas con pasarelas de pago seguras, carrito de compras y gestión de inventario.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN: Proceso de Trabajo -->
+    <section class="py-20 bg-dark-card/50 border-y border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Cómo Trabajo</h2>
+                <p class="text-slate-400 max-w-2xl mx-auto">Un proceso simple y transparente para resultados garantizados.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="text-center reveal delay-100">
+                    <div class="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center text-brand-500 text-2xl font-bold mx-auto mb-4 border border-slate-700">1</div>
+                    <h3 class="text-white font-bold mb-2">Análisis</h3>
+                    <p class="text-slate-400 text-sm">Estudiamos tus necesidades y definimos los objetivos clave.</p>
+                </div>
+                <div class="text-center reveal delay-200">
+                    <div class="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center text-brand-500 text-2xl font-bold mx-auto mb-4 border border-slate-700">2</div>
+                    <h3 class="text-white font-bold mb-2">Diseño</h3>
+                    <p class="text-slate-400 text-sm">Creamos la estructura visual y lógica de tu proyecto.</p>
+                </div>
+                <div class="text-center reveal delay-300">
+                    <div class="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center text-brand-500 text-2xl font-bold mx-auto mb-4 border border-slate-700">3</div>
+                    <h3 class="text-white font-bold mb-2">Desarrollo</h3>
+                    <p class="text-slate-400 text-sm">Programación limpia y optimizada con tecnologías modernas.</p>
+                </div>
+                <div class="text-center reveal delay-300">
+                    <div class="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center text-brand-500 text-2xl font-bold mx-auto mb-4 border border-slate-700">4</div>
+                    <h3 class="text-white font-bold mb-2">Lanzamiento</h3>
+                    <p class="text-slate-400 text-sm">Despliegue final y soporte post-lanzamiento.</p>
                 </div>
             </div>
         </div>
@@ -218,7 +311,7 @@
         </div>
     </section>
 
-    <!-- Pricing Section (Nuevo) -->
+    <!-- Pricing Section -->
     <section id="precios" class="py-20 bg-dark-bg border-t border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16 reveal">
@@ -320,11 +413,94 @@
                         <li class="flex items-start gap-3 text-slate-300 text-sm">
                             <i class="fas fa-check text-brand-500 mt-1"></i> Escalabilidad y Alto Rendimiento
                         </li>
-                        <li class="flex items-start gap-3 text-slate-300 text-sm">
-                            <i class="fas fa-clock text-brand-500 mt-1"></i> Entrega dependiendo del tamaño del proyecto
-                        </li>
                     </ul>
                     <a href="#contacto" class="w-full block text-center py-3 border border-slate-600 text-white rounded-lg hover:bg-slate-800 transition-all font-semibold">Consultar</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN: FAQ (Preguntas Frecuentes) -->
+    <section id="faq" class="py-20 bg-dark-bg border-t border-slate-800">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Preguntas Frecuentes</h2>
+                <p class="text-slate-400 max-w-2xl mx-auto">Todo lo que necesitas saber antes de empezar tu proyecto.</p>
+            </div>
+
+            <div class="space-y-4">
+                <!-- Question 1 -->
+                <div class="reveal delay-100 border border-slate-700 rounded-xl bg-dark-card overflow-hidden">
+                    <details class="group">
+                        <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-6 text-white hover:bg-slate-800 transition-colors">
+                            <span>¿Cómo funciona el proceso de pago?</span>
+                            <span class="transition group-open:rotate-180">
+                                <i class="fas fa-chevron-down text-brand-500"></i>
+                            </span>
+                        </summary>
+                        <div class="text-slate-400 p-6 pt-0 leading-relaxed border-t border-slate-700/50 mt-2">
+                            Para iniciar el proyecto, se requiere un anticipo del 50%. El 50% restante se abona una vez finalizado el trabajo y aprobado por tu parte, justo antes de la entrega final y subida a producción. Acepto transferencias bancarias y PayPal.
+                        </div>
+                    </details>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="reveal delay-200 border border-slate-700 rounded-xl bg-dark-card overflow-hidden">
+                    <details class="group">
+                        <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-6 text-white hover:bg-slate-800 transition-colors">
+                            <span>¿Cuánto tiempo tardas en entregar una web?</span>
+                            <span class="transition group-open:rotate-180">
+                                <i class="fas fa-chevron-down text-brand-500"></i>
+                            </span>
+                        </summary>
+                        <div class="text-slate-400 p-6 pt-0 leading-relaxed border-t border-slate-700/50 mt-2">
+                            Los tiempos varían según la complejidad. Un plan Básico suele estar listo en 1 semana. Proyectos más complejos (Estándar o Premium) pueden tomar de 2 a 4 semanas. Definiremos un cronograma exacto durante la fase de análisis.
+                        </div>
+                    </details>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="reveal delay-300 border border-slate-700 rounded-xl bg-dark-card overflow-hidden">
+                    <details class="group">
+                        <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-6 text-white hover:bg-slate-800 transition-colors">
+                            <span>¿Qué necesito para empezar?</span>
+                            <span class="transition group-open:rotate-180">
+                                <i class="fas fa-chevron-down text-brand-500"></i>
+                            </span>
+                        </summary>
+                        <div class="text-slate-400 p-6 pt-0 leading-relaxed border-t border-slate-700/50 mt-2">
+                            Idealmente, necesitaré tu logo, los textos que quieres incluir y las imágenes (si las tienes). Si no tienes imágenes, puedo usar bancos de imágenes libres de derechos. También es útil si tienes referencias de webs que te gusten.
+                        </div>
+                    </details>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="reveal border border-slate-700 rounded-xl bg-dark-card overflow-hidden">
+                    <details class="group">
+                        <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-6 text-white hover:bg-slate-800 transition-colors">
+                            <span>¿Ofreces facturación?</span>
+                            <span class="transition group-open:rotate-180">
+                                <i class="fas fa-chevron-down text-brand-500"></i>
+                            </span>
+                        </summary>
+                        <div class="text-slate-400 p-6 pt-0 leading-relaxed border-t border-slate-700/50 mt-2">
+                            Sí, por supuesto. Todos los servicios se facturan legalmente. Solo necesitaré tus datos fiscales para emitir la factura correspondiente.
+                        </div>
+                    </details>
+                </div>
+                 <!-- Question 5 -->
+                <div class="reveal border border-slate-700 rounded-xl bg-dark-card overflow-hidden">
+                    <details class="group">
+                        <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-6 text-white hover:bg-slate-800 transition-colors">
+                            <span>¿El precio incluye dominio y hosting?</span>
+                            <span class="transition group-open:rotate-180">
+                                <i class="fas fa-chevron-down text-brand-500"></i>
+                            </span>
+                        </summary>
+                        <div class="text-slate-400 p-6 pt-0 leading-relaxed border-t border-slate-700/50 mt-2">
+                            No, el dominio (tu-nombre.com) y el hosting (donde se guardan los archivos) son costos externos que tú debes contratar para tener el control total. Yo te asesoraré y ayudaré a configurarlos sin costo extra.
+                        </div>
+                    </details>
                 </div>
             </div>
         </div>
@@ -364,6 +540,11 @@
         </div>
     </footer>
     
+    <!-- Botón Flotante de WhatsApp -->
+    <a href="https://wa.me/1234567890" target="_blank" class="fixed bottom-8 right-8 z-50 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg transition-all transform hover:scale-110 flex items-center justify-center w-14 h-14" title="Contáctame por WhatsApp">
+        <i class="fab fa-whatsapp text-3xl"></i>
+    </a>
+
     <script src="script.js"></script>
 </body>
 </html>
