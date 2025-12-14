@@ -9,7 +9,11 @@ const menuBtn = document.querySelector('nav button');
 const mobileMenu = document.getElementById('mobile-menu');
 
 if(menuBtn && mobileMenu) {
-    menuBtn.addEventListener('click', () => {
+    // Aquí usamos un clon del botón para limpiar listeners antiguos si los hubiera
+    const newMenuBtn = menuBtn.cloneNode(true);
+    menuBtn.parentNode.replaceChild(newMenuBtn, menuBtn);
+    
+    newMenuBtn.addEventListener('click', () => {
         mobileMenu.classList.toggle('hidden');
     });
 }
@@ -17,7 +21,11 @@ if(menuBtn && mobileMenu) {
 // 3. Formulario de Contacto
 const contactForm = document.getElementById('contactForm');
 if(contactForm) {
-    contactForm.addEventListener('submit', function(e) {
+    // Clonamos para evitar duplicidad de envíos
+    const newForm = contactForm.cloneNode(true);
+    contactForm.parentNode.replaceChild(newForm, contactForm);
+
+    newForm.addEventListener('submit', function(e) {
         e.preventDefault();
         const btn = this.querySelector('button');
         const originalContent = btn.innerHTML;
@@ -66,7 +74,7 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
 
-// --- 6. CHATBOT INTELIGENTE (SOLUCIÓN DEFINITIVA) ---
+// --- 6. CHATBOT INTELIGENTE (LÓGICA UNIFICADA) ---
 
 // Base de conocimientos
 const knowledgeBase = {
@@ -77,24 +85,28 @@ const knowledgeBase = {
     'default': "Gracias por tu consulta. Un técnico especializado analizará tu mensaje y te responderá en breve con una solución personalizada."
 };
 
-// Hacer funciones accesibles globalmente
+// Variables globales para el estado del chat
+let isChatOpen = false;
+
+// Función Principal de Toggle (Apertura/Cierre)
 window.toggleChat = function() {
     const chatWindow = document.getElementById('chat-window');
     const chatInput = document.getElementById('chat-input');
     
-    if (chatWindow) {
-        // Alternar clases de visibilidad de Tailwind
-        if (chatWindow.classList.contains('hidden')) {
-            chatWindow.classList.remove('hidden');
-            chatWindow.classList.add('flex');
-            // Poner foco en el input
-            if (chatInput) setTimeout(() => chatInput.focus(), 100);
-        } else {
-            chatWindow.classList.add('hidden');
-            chatWindow.classList.remove('flex');
-        }
+    if (!chatWindow) return;
+
+    if (chatWindow.classList.contains('hidden')) {
+        // ABRIR
+        chatWindow.classList.remove('hidden');
+        chatWindow.classList.add('flex');
+        isChatOpen = true;
+        // Foco en el input
+        if (chatInput) setTimeout(() => chatInput.focus(), 100);
     } else {
-        console.error("No se encontró el elemento #chat-window. Revisa tu HTML.");
+        // CERRAR
+        chatWindow.classList.add('hidden');
+        chatWindow.classList.remove('flex');
+        isChatOpen = false;
     }
 };
 
@@ -172,21 +184,3 @@ function simulateAIResponse(intent) {
         addMessage(response, 'bot');
     }, 1500);
 }
-
-// INICIALIZACIÓN DE SEGURIDAD
-// Esto asegura que los botones funcionen incluso si falta el atributo onclick en el HTML
-document.addEventListener('DOMContentLoaded', () => {
-    const toggleBtn = document.getElementById('chat-toggle-btn');
-    const closeBtn = document.getElementById('chat-close-btn');
-    const sendBtn = document.getElementById('chat-send-btn');
-    const input = document.getElementById('chat-input');
-
-    if(toggleBtn) toggleBtn.addEventListener('click', window.toggleChat);
-    if(closeBtn) closeBtn.addEventListener('click', window.toggleChat);
-    if(sendBtn) sendBtn.addEventListener('click', window.sendMessage);
-    if(input) {
-        input.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') window.sendMessage();
-        });
-    }
-});
