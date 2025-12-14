@@ -21,22 +21,49 @@ html {
     scroll-behavior: smooth;
 }
 
-/* --- NUEVO: Animaciones de Scroll (Scroll Reveal) --- */
-/* Estado inicial: invisible y desplazado hacia abajo */
+/* --- ANIMACIONES DE SCROLL REVEAL --- */
 .reveal {
     opacity: 0;
     transform: translateY(30px); 
-    transition: all 0.8s ease-out; /* Animación suave de 0.8 segundos */
+    transition: all 0.8s ease-out; 
 }
 
-/* Estado final: visible y en su posición original */
-/* Esta clase se añade con JavaScript cuando el elemento entra en pantalla */
 .reveal.active {
     opacity: 1;
     transform: translateY(0);
 }
 
-/* Retrasos para efecto cascada (que las tarjetas salgan una por una) */
+/* Retrasos para efecto cascada */
 .delay-100 { transition-delay: 0.1s; }
 .delay-200 { transition-delay: 0.2s; }
 .delay-300 { transition-delay: 0.3s; }
+
+/* Estilos adicionales para FAQ */
+details > summary {
+    list-style: none;
+}
+details > summary::-webkit-details-marker {
+    display: none;
+}
+
+/* --- ESTILOS DEL CHATBOT --- */
+.chat-enter {
+    animation: chatSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes chatSlideIn {
+    from { opacity: 0; transform: translateY(20px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.chat-scroll::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+.chat-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+.chat-scroll::-webkit-scrollbar-thumb {
+    background-color: #334155;
+    border-radius: 20px;
+}
