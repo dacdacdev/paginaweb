@@ -28,7 +28,7 @@ if(contactForm) {
 
         setTimeout(() => {
             btn.innerHTML = '<i class="fas fa-check"></i> ¡Enviado!';
-            btn.classList.remove('bg-brand-600', 'hover:bg-brand-500');
+            btn.classList.remove('bg-blue-600', 'hover:bg-blue-500'); // Usamos colores estándar
             btn.classList.add('bg-green-600', 'hover:bg-green-500');
             btn.style.opacity = "1";
             this.reset();
@@ -36,7 +36,7 @@ if(contactForm) {
             setTimeout(() => {
                 btn.innerHTML = originalContent;
                 btn.disabled = false;
-                btn.classList.add('bg-brand-600', 'hover:bg-brand-500');
+                btn.classList.add('bg-blue-600', 'hover:bg-blue-500');
                 btn.classList.remove('bg-green-600', 'hover:bg-green-500');
             }, 3000);
         }, 1500);
@@ -66,14 +66,14 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
 
-// --- CHATBOT: INYECCIÓN AUTOMÁTICA (SOLUCIÓN ROBUSTA) ---
+// --- CHATBOT: INYECCIÓN AUTOMÁTICA (SOLUCIÓN DEFINITIVA) ---
 function injectChatbot() {
     // Verificación de seguridad: si ya existe o no hay body, salir
     if (document.getElementById('chat-widget') || !document.body) return;
 
     console.log("Iniciando inyección del Chatbot...");
 
-    // 1. Crear el HTML del chat
+    // 1. Crear el HTML del chat (CON COLORES ESTÁNDAR E ICONOS SVG)
     const chatHTML = `
         <div id="chat-widget" class="fixed bottom-6 right-6 z-[9999] flex flex-col items-end font-sans">
             <!-- Ventana del chat -->
@@ -85,7 +85,10 @@ function injectChatbot() {
                         <span class="text-white font-bold text-sm">Asistente IA</span>
                     </div>
                     <button id="chat-close-btn" class="text-slate-400 hover:text-white transition-colors">
-                        <i class="fas fa-times"></i>
+                        <!-- SVG Icono Cerrar -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
                     </button>
                 </div>
                 
@@ -98,23 +101,29 @@ function injectChatbot() {
 
                 <!-- Sugerencias -->
                 <div class="p-3 bg-slate-900 flex gap-2 overflow-x-auto border-t border-slate-800">
-                    <button class="chat-suggestion whitespace-nowrap bg-slate-800 hover:bg-slate-700 text-brand-500 text-xs px-3 py-1 rounded-full border border-slate-700 transition-colors" data-msg="¿Cuáles son tus precios?">Precios</button>
-                    <button class="chat-suggestion whitespace-nowrap bg-slate-800 hover:bg-slate-700 text-brand-500 text-xs px-3 py-1 rounded-full border border-slate-700 transition-colors" data-msg="¿Qué servicios ofreces?">Servicios</button>
-                    <button class="chat-suggestion whitespace-nowrap bg-slate-800 hover:bg-slate-700 text-brand-500 text-xs px-3 py-1 rounded-full border border-slate-700 transition-colors" data-msg="Quiero hablar con un humano">Humano</button>
+                    <button class="chat-suggestion whitespace-nowrap bg-slate-800 hover:bg-slate-700 text-blue-500 text-xs px-3 py-1 rounded-full border border-slate-700 transition-colors" data-msg="¿Cuáles son tus precios?">Precios</button>
+                    <button class="chat-suggestion whitespace-nowrap bg-slate-800 hover:bg-slate-700 text-blue-500 text-xs px-3 py-1 rounded-full border border-slate-700 transition-colors" data-msg="¿Qué servicios ofreces?">Servicios</button>
+                    <button class="chat-suggestion whitespace-nowrap bg-slate-800 hover:bg-slate-700 text-blue-500 text-xs px-3 py-1 rounded-full border border-slate-700 transition-colors" data-msg="Quiero hablar con un humano">Humano</button>
                 </div>
 
                 <!-- Input -->
                 <div class="p-3 bg-slate-800 border-t border-slate-700 flex gap-2">
-                    <input type="text" id="chat-input" placeholder="Escribe aquí..." class="flex-1 bg-slate-900 text-white text-sm rounded-full px-4 py-2 border border-slate-600 focus:outline-none focus:border-brand-500">
-                    <button id="chat-send-btn" class="bg-brand-600 hover:bg-brand-500 text-white w-9 h-9 rounded-full flex items-center justify-center transition-colors">
-                        <i class="fas fa-paper-plane text-xs"></i>
+                    <input type="text" id="chat-input" placeholder="Escribe aquí..." class="flex-1 bg-slate-900 text-white text-sm rounded-full px-4 py-2 border border-slate-600 focus:outline-none focus:border-blue-500">
+                    <button id="chat-send-btn" class="bg-blue-600 hover:bg-blue-500 text-white w-9 h-9 rounded-full flex items-center justify-center transition-colors">
+                        <!-- SVG Icono Enviar -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                        </svg>
                     </button>
                 </div>
             </div>
 
             <!-- Botón Flotante -->
-            <button id="chat-toggle-btn" class="bg-brand-600 hover:bg-brand-500 text-white p-4 rounded-full shadow-lg transition-all transform hover:scale-110 flex items-center justify-center w-14 h-14">
-                <i class="fas fa-robot text-2xl"></i>
+            <button id="chat-toggle-btn" class="bg-blue-600 hover:bg-blue-500 text-white p-4 rounded-full shadow-lg transition-all transform hover:scale-110 flex items-center justify-center w-14 h-14">
+                <!-- SVG Icono Robot/Chat -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                </svg>
             </button>
         </div>
     `;
@@ -141,7 +150,7 @@ function injectChatbot() {
     const addMessage = (text, sender) => {
         const div = document.createElement('div');
         div.className = sender === 'user' 
-            ? "self-end bg-brand-600 text-white p-3 rounded-2xl rounded-tr-none max-w-[85%] text-sm shadow-md" 
+            ? "self-end bg-blue-600 text-white p-3 rounded-2xl rounded-tr-none max-w-[85%] text-sm shadow-md" 
             : "self-start bg-slate-800 text-slate-200 p-3 rounded-2xl rounded-tl-none max-w-[85%] text-sm border border-slate-700";
         div.textContent = text;
         messages.appendChild(div);
