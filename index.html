@@ -603,7 +603,51 @@
             <i class="fas fa-robot text-2xl"></i>
         </button>
     </div>
+    <!-- Chatbot Widget -->
+    <div class="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+        <!-- Ventana del chat -->
+        <div id="chat-window" class="hidden flex-col w-80 h-[28rem] bg-dark-card border border-slate-700 rounded-2xl shadow-2xl mb-4 overflow-hidden chat-enter">
+            <!-- Cabecera -->
+            <div class="bg-slate-800 p-4 border-b border-slate-700 flex justify-between items-center">
+                <div class="flex items-center gap-2">
+                    <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    <span class="text-white font-bold text-sm">Asistente IA</span>
+                </div>
+                <!-- Botón cerrar (X) -->
+                <button id="chat-close-btn" class="text-slate-400 hover:text-white transition-colors">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <!-- Área de mensajes -->
+            <div id="chat-messages" class="flex-1 p-4 overflow-y-auto chat-scroll flex flex-col gap-3">
+                <div class="self-start bg-slate-800 text-slate-200 p-3 rounded-2xl rounded-tl-none max-w-[85%] text-sm border border-slate-700">
+                    ¡Hola! Soy la IA de DacDacDev. 👋 ¿En qué puedo ayudarte hoy?
+                </div>
+            </div>
 
+            <!-- Botones de sugerencias -->
+            <div id="chat-suggestions" class="px-4 pb-2 flex gap-2 overflow-x-auto chat-scroll">
+                <button class="suggestion-btn whitespace-nowrap bg-slate-800 hover:bg-slate-700 text-brand-500 text-xs px-3 py-1.5 rounded-full border border-slate-700 transition-colors" data-key="Precios">Precios</button>
+                <button class="suggestion-btn whitespace-nowrap bg-slate-800 hover:bg-slate-700 text-brand-500 text-xs px-3 py-1.5 rounded-full border border-slate-700 transition-colors" data-key="Servicios">Servicios</button>
+                <button class="suggestion-btn whitespace-nowrap bg-slate-800 hover:bg-slate-700 text-brand-500 text-xs px-3 py-1.5 rounded-full border border-slate-700 transition-colors" data-key="Tiempos">Tiempos</button>
+                <button class="suggestion-btn whitespace-nowrap bg-slate-800 hover:bg-slate-700 text-brand-500 text-xs px-3 py-1.5 rounded-full border border-slate-700 transition-colors" data-key="Humano">Hablar con humano</button>
+            </div>
+
+            <!-- Input de texto -->
+            <div class="p-3 bg-slate-900 border-t border-slate-700 flex gap-2">
+                <input type="text" id="chat-input" placeholder="Escribe tu consulta..." class="flex-1 bg-slate-800 text-white text-sm rounded-full px-4 py-2 border border-slate-700 focus:outline-none focus:border-brand-500 placeholder-slate-500">
+                <button id="chat-send-btn" class="bg-brand-600 hover:bg-brand-500 text-white w-9 h-9 rounded-full flex items-center justify-center transition-colors shadow-lg">
+                    <i class="fas fa-paper-plane text-xs"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Botón flotante redondo (El que abre el chat) -->
+        <button id="chat-toggle-btn" class="bg-brand-600 hover:bg-brand-500 text-white p-4 rounded-full shadow-lg transition-all transform hover:scale-110 flex items-center justify-center w-14 h-14">
+            <i class="fas fa-robot text-2xl"></i>
+        </button>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
