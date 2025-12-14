@@ -42,6 +42,14 @@
             }
         }
     </script>
+    <style>
+        details > summary {
+            list-style: none;
+        }
+        details > summary::-webkit-details-marker {
+            display: none;
+        }
+    </style>
 </head>
 <body class="bg-dark-bg text-slate-200 antialiased selection:bg-brand-500 selection:text-white">
 
@@ -549,7 +557,7 @@
                     <span class="text-white font-bold text-sm">Asistente IA</span>
                 </div>
                 <!-- Botón cerrar (X) -->
-                <button id="chat-close-btn" class="text-slate-400 hover:text-white transition-colors">
+                <button id="chat-close-btn" class="text-slate-400 hover:text-white transition-colors" onclick="toggleChat()">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
@@ -563,23 +571,23 @@
 
             <!-- Botones de sugerencias -->
             <div id="chat-suggestions" class="px-4 pb-2 flex gap-2 overflow-x-auto chat-scroll">
-                <button class="suggestion-btn whitespace-nowrap bg-slate-800 hover:bg-slate-700 text-brand-500 text-xs px-3 py-1.5 rounded-full border border-slate-700 transition-colors" data-key="Precios">Precios</button>
-                <button class="suggestion-btn whitespace-nowrap bg-slate-800 hover:bg-slate-700 text-brand-500 text-xs px-3 py-1.5 rounded-full border border-slate-700 transition-colors" data-key="Servicios">Servicios</button>
-                <button class="suggestion-btn whitespace-nowrap bg-slate-800 hover:bg-slate-700 text-brand-500 text-xs px-3 py-1.5 rounded-full border border-slate-700 transition-colors" data-key="Tiempos">Tiempos</button>
-                <button class="suggestion-btn whitespace-nowrap bg-slate-800 hover:bg-slate-700 text-brand-500 text-xs px-3 py-1.5 rounded-full border border-slate-700 transition-colors" data-key="Humano">Hablar con humano</button>
+                <button class="suggestion-btn whitespace-nowrap bg-slate-800 hover:bg-slate-700 text-brand-500 text-xs px-3 py-1.5 rounded-full border border-slate-700 transition-colors" onclick="sendSuggestion('Precios')">Precios</button>
+                <button class="suggestion-btn whitespace-nowrap bg-slate-800 hover:bg-slate-700 text-brand-500 text-xs px-3 py-1.5 rounded-full border border-slate-700 transition-colors" onclick="sendSuggestion('Servicios')">Servicios</button>
+                <button class="suggestion-btn whitespace-nowrap bg-slate-800 hover:bg-slate-700 text-brand-500 text-xs px-3 py-1.5 rounded-full border border-slate-700 transition-colors" onclick="sendSuggestion('Tiempos')">Tiempos</button>
+                <button class="suggestion-btn whitespace-nowrap bg-slate-800 hover:bg-slate-700 text-brand-500 text-xs px-3 py-1.5 rounded-full border border-slate-700 transition-colors" onclick="sendSuggestion('Humano')">Hablar con humano</button>
             </div>
 
             <!-- Input de texto -->
             <div class="p-3 bg-slate-900 border-t border-slate-700 flex gap-2">
-                <input type="text" id="chat-input" placeholder="Escribe tu consulta..." class="flex-1 bg-slate-800 text-white text-sm rounded-full px-4 py-2 border border-slate-700 focus:outline-none focus:border-brand-500 placeholder-slate-500">
-                <button id="chat-send-btn" class="bg-brand-600 hover:bg-brand-500 text-white w-9 h-9 rounded-full flex items-center justify-center transition-colors shadow-lg">
+                <input type="text" id="chat-input" placeholder="Escribe tu consulta..." class="flex-1 bg-slate-800 text-white text-sm rounded-full px-4 py-2 border border-slate-700 focus:outline-none focus:border-brand-500 placeholder-slate-500" onkeypress="handleEnter(event)">
+                <button id="chat-send-btn" class="bg-brand-600 hover:bg-brand-500 text-white w-9 h-9 rounded-full flex items-center justify-center transition-colors shadow-lg" onclick="sendMessage()">
                     <i class="fas fa-paper-plane text-xs"></i>
                 </button>
             </div>
         </div>
 
         <!-- Botón flotante redondo (El que abre el chat) -->
-        <button id="chat-toggle-btn" class="bg-brand-600 hover:bg-brand-500 text-white p-4 rounded-full shadow-lg transition-all transform hover:scale-110 flex items-center justify-center w-14 h-14">
+        <button id="chat-toggle-btn" class="bg-brand-600 hover:bg-brand-500 text-white p-4 rounded-full shadow-lg transition-all transform hover:scale-110 flex items-center justify-center w-14 h-14" onclick="toggleChat()">
             <i class="fas fa-robot text-2xl"></i>
         </button>
     </div>

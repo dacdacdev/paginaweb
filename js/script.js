@@ -5,7 +5,7 @@ const yearEl = document.getElementById('year');
 if(yearEl) yearEl.textContent = new Date().getFullYear();
 
 // 2. Menú Móvil
-const menuBtn = document.querySelector('nav button'); // Busca el botón de menú
+const menuBtn = document.querySelector('nav button'); 
 const mobileMenu = document.getElementById('mobile-menu');
 
 if(menuBtn && mobileMenu) {
@@ -66,107 +66,103 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
 
-// --- 6. CHATBOT INTELIGENTE (Versión Robusta) ---
+// --- 6. CHATBOT INTELIGENTE (FUNCIONES GLOBALES) ---
 
-document.addEventListener('DOMContentLoaded', () => {
-    const chatToggleBtn = document.getElementById('chat-toggle-btn');
+// Base de conocimientos
+const knowledgeBase = {
+    'precios': "Nuestros planes comienzan desde 9.99€ para webs básicas. El plan estándar es de 30€ y el premium desde 99.99€. ¿Te gustaría saber qué incluye alguno en específico?",
+    'servicios': "Ofrezco Desarrollo Web, Bases de Datos, Estructuras Lógicas y E-commerce completo. Todo con tecnologías modernas como React, Node.js y Python.",
+    'tiempos': "Los tiempos dependen del proyecto: aprox. 1 semana para el Básico, y de 2 a 4 semanas para desarrollos más complejos.",
+    'humano': "¡Entendido! Un técnico humano revisará esta conversación y te contactará lo antes posible. Mientras tanto, ¿puedes dejarme tu correo?",
+    'default': "Gracias por tu consulta. Un técnico especializado analizará tu mensaje y te responderá en breve con una solución personalizada."
+};
+
+// Hacer funciones accesibles globalmente para el HTML onclick
+window.toggleChat = function() {
     const chatWindow = document.getElementById('chat-window');
-    const chatCloseBtn = document.getElementById('chat-close-btn');
     const chatInput = document.getElementById('chat-input');
-    const chatSendBtn = document.getElementById('chat-send-btn');
-    const chatMessages = document.getElementById('chat-messages');
-    const suggestionBtns = document.querySelectorAll('.suggestion-btn');
-
-    // Verificar si los elementos existen antes de añadir eventos
-    if (!chatToggleBtn || !chatWindow) {
-        console.error("Error: No se encontró el HTML del Chatbot. Asegúrate de pegar el código HTML en index.html");
-        return;
-    }
-
-    // Base de conocimientos
-    const knowledgeBase = {
-        'precios': "Nuestros planes comienzan desde 9.99€ para webs básicas. El plan estándar es de 30€ y el premium desde 99.99€. ¿Te gustaría saber qué incluye alguno en específico?",
-        'servicios': "Ofrezco Desarrollo Web, Bases de Datos, Estructuras Lógicas y E-commerce completo. Todo con tecnologías modernas como React, Node.js y Python.",
-        'tiempos': "Los tiempos dependen del proyecto: aprox. 1 semana para el Básico, y de 2 a 4 semanas para desarrollos más complejos.",
-        'humano': "¡Entendido! Un técnico humano revisará esta conversación y te contactará lo antes posible. Mientras tanto, ¿puedes dejarme tu correo?",
-        'default': "Gracias por tu consulta. Un técnico especializado analizará tu mensaje y te responderá en breve con una solución personalizada."
-    };
-
-    // Funciones
-    function toggleChat() {
+    
+    if (chatWindow) {
         chatWindow.classList.toggle('hidden');
         chatWindow.classList.toggle('flex');
-        if (!chatWindow.classList.contains('hidden')) {
+        
+        if (!chatWindow.classList.contains('hidden') && chatInput) {
             setTimeout(() => chatInput.focus(), 100);
         }
     }
+};
 
-    function addMessage(text, sender) {
-        const div = document.createElement('div');
-        const isUser = sender === 'user';
-        div.className = isUser 
-            ? "self-end bg-brand-600 text-white p-3 rounded-2xl rounded-tr-none max-w-[85%] text-sm shadow-md"
-            : "self-start bg-slate-800 text-slate-200 p-3 rounded-2xl rounded-tl-none max-w-[85%] text-sm border border-slate-700";
-        div.textContent = text;
-        chatMessages.appendChild(div);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
+window.sendSuggestion = function(key) {
+    let text = "";
+    if(key === 'Precios') text = "¿Cuáles son los precios?";
+    if(key === 'Servicios') text = "¿Qué servicios ofreces?";
+    if(key === 'Tiempos') text = "¿Cuánto tardas en entregar?";
+    if(key === 'Humano') text = "Quiero hablar con un humano";
 
-    function simulateAIResponse(intent) {
-        const typingId = 'typing-' + Date.now();
-        const typingDiv = document.createElement('div');
-        typingDiv.id = typingId;
-        typingDiv.className = "self-start bg-slate-800 p-3 rounded-2xl rounded-tl-none border border-slate-700 w-12 flex items-center justify-center gap-1";
-        typingDiv.innerHTML = `
-            <div class="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce"></div>
-            <div class="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
-            <div class="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
-        `;
-        chatMessages.appendChild(typingDiv);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
+    addMessage(text, 'user');
+    simulateAIResponse(key.toLowerCase());
+};
 
-        setTimeout(() => {
-            const el = document.getElementById(typingId);
-            if(el) el.remove();
-            
-            const response = knowledgeBase[intent] || knowledgeBase['default'];
-            addMessage(response, 'bot');
-        }, 1500);
-    }
+window.sendMessage = function() {
+    const chatInput = document.getElementById('chat-input');
+    if (!chatInput) return;
 
-    function handleSend() {
-        const text = chatInput.value.trim();
-        if (!text) return;
-        
-        addMessage(text, 'user');
-        chatInput.value = '';
+    const text = chatInput.value.trim();
+    if (!text) return;
 
-        let intent = 'default';
-        const lowerText = text.toLowerCase();
-        if (lowerText.includes('precio') || lowerText.includes('costo') || lowerText.includes('vale')) intent = 'precios';
-        else if (lowerText.includes('servicio') || lowerText.includes('haces')) intent = 'servicios';
-        else if (lowerText.includes('tiempo') || lowerText.includes('tarda')) intent = 'tiempos';
-        else if (lowerText.includes('humano') || lowerText.includes('persona')) intent = 'humano';
-
-        simulateAIResponse(intent);
-    }
-
-    // Event Listeners
-    chatToggleBtn.addEventListener('click', toggleChat);
-    if(chatCloseBtn) chatCloseBtn.addEventListener('click', toggleChat);
+    addMessage(text, 'user');
+    chatInput.value = '';
     
-    chatSendBtn.addEventListener('click', handleSend);
-    
-    chatInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') handleSend();
-    });
+    let intent = 'default';
+    const lowerText = text.toLowerCase();
+    if (lowerText.includes('precio') || lowerText.includes('costo') || lowerText.includes('vale')) intent = 'precios';
+    else if (lowerText.includes('servicio') || lowerText.includes('haces')) intent = 'servicios';
+    else if (lowerText.includes('tiempo') || lowerText.includes('tarda')) intent = 'tiempos';
+    else if (lowerText.includes('humano') || lowerText.includes('persona')) intent = 'humano';
 
-    suggestionBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const key = btn.getAttribute('data-key');
-            let text = btn.innerText;
-            addMessage(text, 'user');
-            simulateAIResponse(key.toLowerCase());
-        });
-    });
-});
+    simulateAIResponse(intent);
+};
+
+window.handleEnter = function(e) {
+    if (e.key === 'Enter') sendMessage();
+};
+
+function addMessage(text, sender) {
+    const chatMessages = document.getElementById('chat-messages');
+    if (!chatMessages) return;
+
+    const div = document.createElement('div');
+    const isUser = sender === 'user';
+    
+    div.className = isUser 
+        ? "self-end bg-brand-600 text-white p-3 rounded-2xl rounded-tr-none max-w-[85%] text-sm shadow-md"
+        : "self-start bg-slate-800 text-slate-200 p-3 rounded-2xl rounded-tl-none max-w-[85%] text-sm border border-slate-700";
+    
+    div.textContent = text;
+    chatMessages.appendChild(div);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function simulateAIResponse(intent) {
+    const chatMessages = document.getElementById('chat-messages');
+    if (!chatMessages) return;
+
+    const typingIndicator = document.createElement('div');
+    typingIndicator.className = "self-start bg-slate-800 p-3 rounded-2xl rounded-tl-none border border-slate-700 w-12 flex items-center justify-center gap-1";
+    typingIndicator.id = "typing-indicator";
+    typingIndicator.innerHTML = `
+        <div class="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce"></div>
+        <div class="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
+        <div class="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+    `;
+    chatMessages.appendChild(typingIndicator);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    setTimeout(() => {
+        const indicator = document.getElementById('typing-indicator');
+        if(indicator) indicator.remove();
+
+        const response = knowledgeBase[intent] || knowledgeBase['default'];
+        addMessage(response, 'bot');
+    }, 1500);
+}
