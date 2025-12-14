@@ -66,7 +66,7 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
 
-// --- 6. CHATBOT INTELIGENTE (FUNCIONES GLOBALES) ---
+// --- 6. CHATBOT INTELIGENTE (SOLUCIÓN DEFINITIVA) ---
 
 // Base de conocimientos
 const knowledgeBase = {
@@ -77,18 +77,24 @@ const knowledgeBase = {
     'default': "Gracias por tu consulta. Un técnico especializado analizará tu mensaje y te responderá en breve con una solución personalizada."
 };
 
-// Hacer funciones accesibles globalmente para el HTML onclick
+// Hacer funciones accesibles globalmente
 window.toggleChat = function() {
     const chatWindow = document.getElementById('chat-window');
     const chatInput = document.getElementById('chat-input');
     
     if (chatWindow) {
-        chatWindow.classList.toggle('hidden');
-        chatWindow.classList.toggle('flex');
-        
-        if (!chatWindow.classList.contains('hidden') && chatInput) {
-            setTimeout(() => chatInput.focus(), 100);
+        // Alternar clases de visibilidad de Tailwind
+        if (chatWindow.classList.contains('hidden')) {
+            chatWindow.classList.remove('hidden');
+            chatWindow.classList.add('flex');
+            // Poner foco en el input
+            if (chatInput) setTimeout(() => chatInput.focus(), 100);
+        } else {
+            chatWindow.classList.add('hidden');
+            chatWindow.classList.remove('flex');
         }
+    } else {
+        console.error("No se encontró el elemento #chat-window. Revisa tu HTML.");
     }
 };
 
@@ -124,7 +130,7 @@ window.sendMessage = function() {
 };
 
 window.handleEnter = function(e) {
-    if (e.key === 'Enter') sendMessage();
+    if (e.key === 'Enter') window.sendMessage();
 };
 
 function addMessage(text, sender) {
@@ -166,3 +172,21 @@ function simulateAIResponse(intent) {
         addMessage(response, 'bot');
     }, 1500);
 }
+
+// INICIALIZACIÓN DE SEGURIDAD
+// Esto asegura que los botones funcionen incluso si falta el atributo onclick en el HTML
+document.addEventListener('DOMContentLoaded', () => {
+    const toggleBtn = document.getElementById('chat-toggle-btn');
+    const closeBtn = document.getElementById('chat-close-btn');
+    const sendBtn = document.getElementById('chat-send-btn');
+    const input = document.getElementById('chat-input');
+
+    if(toggleBtn) toggleBtn.addEventListener('click', window.toggleChat);
+    if(closeBtn) closeBtn.addEventListener('click', window.toggleChat);
+    if(sendBtn) sendBtn.addEventListener('click', window.sendMessage);
+    if(input) {
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') window.sendMessage();
+        });
+    }
+});
