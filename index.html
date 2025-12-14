@@ -6,9 +6,7 @@
     <title>DacDacDev | Desarrollador Back End</title>
     <meta name="description" content="Portafolio profesional de desarrollo web y software.">
     
-    <!-- NOTA: Para producción, reemplaza este script por tu CSS compilado -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     
@@ -60,7 +58,7 @@
                     </div>
                 </div>
                 <div class="-mr-2 flex md:hidden">
-                    <button id="mobile-menu-btn" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-slate-700 focus:outline-none">
+                    <button id="mobile-menu-btn" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-slate-700 focus:outline-none">
                         <i class="fas fa-bars text-xl"></i>
                     </button>
                 </div>
@@ -68,12 +66,12 @@
         </div>
         <div class="md:hidden hidden bg-dark-card border-b border-slate-700" id="mobile-menu">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="#inicio" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Inicio</a>
-                <a href="#sobre-mi" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Sobre Mí</a>
-                <a href="#servicios" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Servicios</a>
-                <a href="#portfolio" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Portafolio</a>
-                <a href="#precios" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Precios</a>
-                <a href="#contacto" class="text-brand-500 font-bold block px-3 py-2 rounded-md text-base">Contrátame</a>
+                <a href="#inicio" onclick="toggleMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Inicio</a>
+                <a href="#sobre-mi" onclick="toggleMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Sobre Mí</a>
+                <a href="#servicios" onclick="toggleMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Servicios</a>
+                <a href="#portfolio" onclick="toggleMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Portafolio</a>
+                <a href="#precios" onclick="toggleMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Precios</a>
+                <a href="#contacto" onclick="toggleMenu()" class="text-brand-500 font-bold block px-3 py-2 rounded-md text-base">Contrátame</a>
             </div>
         </div>
     </nav>
@@ -127,7 +125,6 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                 <div class="reveal">
-                    <!-- Imagen de marcador de posición -->
                     <div class="relative">
                         <div class="absolute inset-0 bg-brand-500 rounded-2xl rotate-6 opacity-20"></div>
                         <img src="https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Sobre DacDacDev" class="relative rounded-2xl shadow-2xl w-full h-auto object-cover grayscale hover:grayscale-0 transition-all duration-500">
@@ -179,9 +176,8 @@
                 <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Mis Servicios</h2>
                 <p class="text-slate-400 max-w-2xl mx-auto">Soluciones a medida para cada etapa de tu negocio digital.</p>
             </div>
-            <!-- Cambiado a grid de 2 columnas para acomodar 4 servicios -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Servicio 1: Páginas Web -->
+                <!-- Servicio 1 -->
                 <div class="bg-dark-card p-8 rounded-2xl border border-slate-700/50 card-hover transition-all duration-300 reveal delay-100">
                     <div class="w-14 h-14 bg-brand-900/50 rounded-lg flex items-center justify-center mb-6 text-brand-500">
                         <i class="fas fa-globe text-2xl"></i>
@@ -189,8 +185,7 @@
                     <h3 class="text-xl font-bold text-white mb-3">Páginas Web</h3>
                     <p class="text-slate-400 leading-relaxed">Sitios web corporativos, landing pages y aplicaciones web modernas. Diseño responsive y optimizado.</p>
                 </div>
-                
-                <!-- Servicio 2: Bases de Datos (Nuevo) -->
+                <!-- Servicio 2 -->
                 <div class="bg-dark-card p-8 rounded-2xl border border-slate-700/50 card-hover transition-all duration-300 reveal delay-200">
                     <div class="w-14 h-14 bg-purple-900/50 rounded-lg flex items-center justify-center mb-6 text-purple-400">
                         <i class="fas fa-database text-2xl"></i>
@@ -198,8 +193,7 @@
                     <h3 class="text-xl font-bold text-white mb-3">Bases de Datos</h3>
                     <p class="text-slate-400 leading-relaxed">Diseño, gestión y optimización de bases de datos SQL y NoSQL para asegurar la integridad y rapidez de tu información.</p>
                 </div>
-
-                <!-- Servicio 3: Estructuras Lógicas (Nuevo) -->
+                <!-- Servicio 3 -->
                 <div class="bg-dark-card p-8 rounded-2xl border border-slate-700/50 card-hover transition-all duration-300 reveal delay-300">
                     <div class="w-14 h-14 bg-blue-900/50 rounded-lg flex items-center justify-center mb-6 text-blue-400">
                         <i class="fas fa-project-diagram text-2xl"></i>
@@ -207,8 +201,7 @@
                     <h3 class="text-xl font-bold text-white mb-3">Estructuras Lógicas</h3>
                     <p class="text-slate-400 leading-relaxed">Desarrollo de algoritmos complejos, arquitectura de software escalable y lógica de negocio eficiente.</p>
                 </div>
-
-                <!-- Servicio 4: E-commerce -->
+                <!-- Servicio 4 -->
                 <div class="bg-dark-card p-8 rounded-2xl border border-slate-700/50 card-hover transition-all duration-300 reveal delay-300">
                     <div class="w-14 h-14 bg-green-900/50 rounded-lg flex items-center justify-center mb-6 text-green-400">
                         <i class="fas fa-shopping-cart text-2xl"></i>
@@ -266,7 +259,7 @@
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 
-                <!-- Proyecto 1: SoloCorte -->
+                <!-- Proyecto 1 -->
                 <div class="group bg-dark-card rounded-xl overflow-hidden border border-slate-700/50 hover:border-brand-500/50 transition-all reveal delay-100">
                     <div class="h-48 overflow-hidden relative">
                         <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="SoloCorte" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
@@ -284,7 +277,7 @@
                     </div>
                 </div>
                 
-                <!-- Proyecto 2: Proyecto 00 Juego -->
+                <!-- Proyecto 2 -->
                 <div class="group bg-dark-card rounded-xl overflow-hidden border border-slate-700/50 hover:border-brand-500/50 transition-all reveal delay-200">
                     <div class="h-48 overflow-hidden relative">
                         <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Proyecto Juego" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
@@ -348,7 +341,7 @@
                     <a href="#contacto" class="w-full block text-center py-3 border border-slate-600 text-white rounded-lg hover:bg-slate-800 transition-all font-semibold">Seleccionar</a>
                 </div>
 
-                <!-- Plan Estándar (Destacado) -->
+                <!-- Plan Estándar -->
                 <div class="bg-dark-card p-8 rounded-2xl border-2 border-brand-500 shadow-lg shadow-brand-500/10 relative flex flex-col reveal delay-200 transform md:-translate-y-4">
                     <div class="absolute top-0 right-0 bg-brand-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">POPULAR</div>
                     <div class="mb-6">
@@ -415,7 +408,7 @@
         </div>
     </section>
 
-    <!-- SECCIÓN: FAQ (Preguntas Frecuentes) -->
+    <!-- SECCIÓN: FAQ -->
     <section id="faq" class="py-20 bg-dark-bg border-t border-slate-800">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16 reveal">
@@ -424,79 +417,18 @@
             </div>
 
             <div class="space-y-4">
-                <!-- Question 1 -->
                 <div class="reveal delay-100 border border-slate-700 rounded-xl bg-dark-card overflow-hidden">
                     <details class="group">
                         <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-6 text-white hover:bg-slate-800 transition-colors">
                             <span>¿Cómo funciona el proceso de pago?</span>
-                            <span class="transition group-open:rotate-180">
-                                <i class="fas fa-chevron-down text-brand-500"></i>
-                            </span>
+                            <span class="transition group-open:rotate-180"><i class="fas fa-chevron-down text-brand-500"></i></span>
                         </summary>
                         <div class="text-slate-400 p-6 pt-0 leading-relaxed border-t border-slate-700/50 mt-2">
-                            Para iniciar el proyecto, se requiere un anticipo del 50%. El 50% restante se abona una vez finalizado el trabajo y aprobado por tu parte, justo antes de la entrega final y subida a producción. Acepto transferencias bancarias y PayPal.
+                            Para iniciar el proyecto, se requiere un anticipo del 50%. El 50% restante se abona una vez finalizado el trabajo y aprobado por tu parte, justo antes de la entrega final. Acepto transferencias y PayPal.
                         </div>
                     </details>
                 </div>
-
-                <!-- Question 2 -->
-                <div class="reveal delay-200 border border-slate-700 rounded-xl bg-dark-card overflow-hidden">
-                    <details class="group">
-                        <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-6 text-white hover:bg-slate-800 transition-colors">
-                            <span>¿Cuánto tiempo tardas en entregar una web?</span>
-                            <span class="transition group-open:rotate-180">
-                                <i class="fas fa-chevron-down text-brand-500"></i>
-                            </span>
-                        </summary>
-                        <div class="text-slate-400 p-6 pt-0 leading-relaxed border-t border-slate-700/50 mt-2">
-                            Los tiempos varían según la complejidad. Un plan Básico suele estar listo en 1 semana. Proyectos más complejos (Estándar o Premium) pueden tomar de 2 a 4 semanas. Definiremos un cronograma exacto durante la fase de análisis.
-                        </div>
-                    </details>
-                </div>
-
-                <!-- Question 3 -->
-                <div class="reveal delay-300 border border-slate-700 rounded-xl bg-dark-card overflow-hidden">
-                    <details class="group">
-                        <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-6 text-white hover:bg-slate-800 transition-colors">
-                            <span>¿Qué necesito para empezar?</span>
-                            <span class="transition group-open:rotate-180">
-                                <i class="fas fa-chevron-down text-brand-500"></i>
-                            </span>
-                        </summary>
-                        <div class="text-slate-400 p-6 pt-0 leading-relaxed border-t border-slate-700/50 mt-2">
-                            Idealmente, necesitaré tu logo, los textos que quieres incluir y las imágenes (si las tienes). Si no tienes imágenes, puedo usar bancos de imágenes libres de derechos. También es útil si tienes referencias de webs que te gusten.
-                        </div>
-                    </details>
-                </div>
-
-                <!-- Question 4 -->
-                <div class="reveal border border-slate-700 rounded-xl bg-dark-card overflow-hidden">
-                    <details class="group">
-                        <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-6 text-white hover:bg-slate-800 transition-colors">
-                            <span>¿Ofreces facturación?</span>
-                            <span class="transition group-open:rotate-180">
-                                <i class="fas fa-chevron-down text-brand-500"></i>
-                            </span>
-                        </summary>
-                        <div class="text-slate-400 p-6 pt-0 leading-relaxed border-t border-slate-700/50 mt-2">
-                            Sí, por supuesto. Todos los servicios se facturan legalmente. Solo necesitaré tus datos fiscales para emitir la factura correspondiente.
-                        </div>
-                    </details>
-                </div>
-                 <!-- Question 5 -->
-                <div class="reveal border border-slate-700 rounded-xl bg-dark-card overflow-hidden">
-                    <details class="group">
-                        <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-6 text-white hover:bg-slate-800 transition-colors">
-                            <span>¿El precio incluye dominio y hosting?</span>
-                            <span class="transition group-open:rotate-180">
-                                <i class="fas fa-chevron-down text-brand-500"></i>
-                            </span>
-                        </summary>
-                        <div class="text-slate-400 p-6 pt-0 leading-relaxed border-t border-slate-700/50 mt-2">
-                            No, el dominio (tu-nombre.com) y el hosting (donde se guardan los archivos) son costos externos que tú debes contratar para tener el control total. Yo te asesoraré y ayudaré a configurarlos sin costo extra.
-                        </div>
-                    </details>
-                </div>
+                <!-- Más preguntas aquí si quieres... -->
             </div>
         </div>
     </section>
@@ -522,7 +454,6 @@
                 <a href="https://www.instagram.com/dacdac06/?next=%2F" target="_blank" class="text-slate-400 hover:text-white text-2xl transition-colors"><i class="fab fa-instagram"></i></a>
                 <a href="https://www.youtube.com/@dacdacdev00" target="_blank" class="text-slate-400 hover:text-white text-2xl transition-colors"><i class="fab fa-youtube"></i></a>
                 <a href="https://discord.com/users/notd__" target="_blank" title="Usuario: notd__" class="text-slate-400 hover:text-white text-2xl transition-colors"><i class="fab fa-discord"></i></a>
-                <!-- <a href="#" class="text-slate-400 hover:text-white text-2xl transition-colors" title="Próximamente"><i class="fab fa-tiktok"></i></a> -->
                 <!-- <a href="mailto:dacdacdev@gmail.com" class="text-slate-400 hover:text-white text-2xl transition-colors"><i class="fas fa-envelope"></i></a> -->
             </div>
         </div>
@@ -533,53 +464,6 @@
             <p class="text-slate-500 text-sm">&copy; <span id="year"></span> DacDacDev - Todos los derechos reservados.</p>
         </div>
     </footer>
-    
-    <!-- Chatbot Widget (Pegar antes del script y del cierre de body) -->
-    <div class="fixed bottom-6 right-6 z-50 flex flex-col items-end">
-        <!-- Ventana del chat -->
-        <div id="chat-window" class="hidden flex-col w-80 h-[28rem] bg-dark-card border border-slate-700 rounded-2xl shadow-2xl mb-4 overflow-hidden chat-enter">
-            <!-- Cabecera -->
-            <div class="bg-slate-800 p-4 border-b border-slate-700 flex justify-between items-center">
-                <div class="flex items-center gap-2">
-                    <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                    <span class="text-white font-bold text-sm">Asistente IA</span>
-                </div>
-                <!-- Botón cerrar (X) -->
-                <button id="chat-close-btn" class="text-slate-400 hover:text-white transition-colors">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            
-            <!-- Área de mensajes -->
-            <div id="chat-messages" class="flex-1 p-4 overflow-y-auto chat-scroll flex flex-col gap-3">
-                <div class="self-start bg-slate-800 text-slate-200 p-3 rounded-2xl rounded-tl-none max-w-[85%] text-sm border border-slate-700">
-                    ¡Hola! Soy la IA de DacDacDev. 👋 ¿En qué puedo ayudarte hoy?
-                </div>
-            </div>
-
-            <!-- Botones de sugerencias -->
-            <div id="chat-suggestions" class="px-4 pb-2 flex gap-2 overflow-x-auto chat-scroll">
-                <button class="suggestion-btn whitespace-nowrap bg-slate-800 hover:bg-slate-700 text-brand-500 text-xs px-3 py-1.5 rounded-full border border-slate-700 transition-colors" data-key="Precios">Precios</button>
-                <button class="suggestion-btn whitespace-nowrap bg-slate-800 hover:bg-slate-700 text-brand-500 text-xs px-3 py-1.5 rounded-full border border-slate-700 transition-colors" data-key="Servicios">Servicios</button>
-                <button class="suggestion-btn whitespace-nowrap bg-slate-800 hover:bg-slate-700 text-brand-500 text-xs px-3 py-1.5 rounded-full border border-slate-700 transition-colors" data-key="Tiempos">Tiempos</button>
-                <button class="suggestion-btn whitespace-nowrap bg-slate-800 hover:bg-slate-700 text-brand-500 text-xs px-3 py-1.5 rounded-full border border-slate-700 transition-colors" data-key="Humano">Hablar con humano</button>
-            </div>
-
-            <!-- Input de texto -->
-            <div class="p-3 bg-slate-900 border-t border-slate-700 flex gap-2">
-                <input type="text" id="chat-input" placeholder="Escribe tu consulta..." class="flex-1 bg-slate-800 text-white text-sm rounded-full px-4 py-2 border border-slate-700 focus:outline-none focus:border-brand-500 placeholder-slate-500">
-                <button id="chat-send-btn" class="bg-brand-600 hover:bg-brand-500 text-white w-9 h-9 rounded-full flex items-center justify-center transition-colors shadow-lg">
-                    <i class="fas fa-paper-plane text-xs"></i>
-                </button>
-            </div>
-        </div>
-
-        <!-- Botón flotante redondo (El que abre el chat) -->
-        <button id="chat-toggle-btn" class="bg-brand-600 hover:bg-brand-500 text-white p-4 rounded-full shadow-lg transition-all transform hover:scale-110 flex items-center justify-center w-14 h-14">
-            <i class="fas fa-robot text-2xl"></i>
-        </button>
-    </div>
-
     <script src="script.js"></script>
 </body>
 </html>
