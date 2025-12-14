@@ -22,22 +22,16 @@ if(contactForm) {
         const btn = this.querySelector('button');
         const originalContent = btn.innerHTML;
         
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+        btn.innerHTML = 'Enviando...';
         btn.disabled = true;
         btn.style.opacity = "0.7";
 
         setTimeout(() => {
-            btn.innerHTML = '<i class="fas fa-check"></i> ¡Enviado!';
-            btn.classList.remove('bg-blue-600', 'hover:bg-blue-500'); // Usamos colores estándar
-            btn.classList.add('bg-green-600', 'hover:bg-green-500');
-            btn.style.opacity = "1";
+            btn.innerHTML = '¡Enviado!';
             this.reset();
-
             setTimeout(() => {
                 btn.innerHTML = originalContent;
                 btn.disabled = false;
-                btn.classList.add('bg-blue-600', 'hover:bg-blue-500');
-                btn.classList.remove('bg-green-600', 'hover:bg-green-500');
             }, 3000);
         }, 1500);
     });
@@ -52,7 +46,7 @@ window.addEventListener('scroll', function() {
     }
 });
 
-// 5. Animaciones Scroll Reveal
+// 5. Animaciones Scroll Reveal (Mantenemos esto si usas el CSS general)
 const observerOptions = { threshold: 0.1 };
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -66,142 +60,243 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
 
-// --- CHATBOT: INYECCIÓN AUTOMÁTICA (SOLUCIÓN DEFINITIVA) ---
+// --- CHATBOT: VERSIÓN SIN DEPENDENCIAS (CSS NATIVO) ---
+// Esta función inyecta sus propios estilos para no depender de Tailwind
 function injectChatbot() {
-    // Verificación de seguridad: si ya existe o no hay body, salir
-    if (document.getElementById('chat-widget') || !document.body) return;
+    // Evitar duplicados
+    if (document.getElementById('chat-widget-container')) return;
 
-    console.log("Iniciando inyección del Chatbot...");
+    // 1. DEFINIR ESTILOS NATIVOS (Garantiza que se vea)
+    const cssStyles = `
+        #chat-widget-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 10000;
+            font-family: system-ui, -apple-system, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+        #chat-window {
+            width: 320px;
+            height: 450px;
+            background-color: #0f172a; /* Fondo oscuro */
+            border: 1px solid #334155;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            margin-bottom: 16px;
+            display: none; /* Oculto por defecto */
+            flex-direction: column;
+            overflow: hidden;
+            animation: slideIn 0.3s ease-out;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        #chat-window.open { display: flex; }
+        .chat-header {
+            background-color: #1e293b;
+            padding: 16px;
+            border-bottom: 1px solid #334155;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+        .chat-title { font-weight: bold; display: flex; align-items: center; gap: 8px; font-size: 14px; }
+        .status-dot { width: 8px; height: 8px; background-color: #22c55e; border-radius: 50%; }
+        .chat-close { background: none; border: none; color: #94a3b8; cursor: pointer; font-size: 20px; padding: 0; }
+        .chat-close:hover { color: white; }
+        
+        #chat-messages {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background-color: #0f172a;
+        }
+        .msg { padding: 10px 14px; border-radius: 12px; font-size: 14px; max-width: 85%; line-height: 1.4; }
+        .msg.bot { background-color: #1e293b; color: #e2e8f0; border-top-left-radius: 0; border: 1px solid #334155; align-self: flex-start; }
+        .msg.user { background-color: #2563eb; color: white; border-top-right-radius: 0; align-self: flex-end; }
+        
+        .chat-suggestions { padding: 12px; display: flex; gap: 8px; overflow-x: auto; border-top: 1px solid #1e293b; background-color: #0f172a; }
+        .suggestion-btn {
+            background-color: #1e293b;
+            color: #60a5fa;
+            border: 1px solid #334155;
+            border-radius: 20px;
+            padding: 6px 12px;
+            font-size: 12px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+        .suggestion-btn:hover { background-color: #334155; color: white; border-color: #60a5fa; }
 
-    // 1. Crear el HTML del chat (CON COLORES ESTÁNDAR E ICONOS SVG)
+        .chat-input-area { padding: 12px; border-top: 1px solid #334155; background-color: #1e293b; display: flex; gap: 8px; }
+        #chat-input {
+            flex: 1;
+            background-color: #0f172a;
+            border: 1px solid #475569;
+            border-radius: 20px;
+            padding: 8px 16px;
+            color: white;
+            font-size: 14px;
+            outline: none;
+        }
+        #chat-input:focus { border-color: #3b82f6; }
+        #chat-send {
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+        #chat-send:hover { background-color: #1d4ed8; }
+
+        #chat-toggle-btn {
+            width: 60px;
+            height: 60px;
+            background-color: #2563eb; /* Azul brillante */
+            border-radius: 50%;
+            border: none;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+        }
+        #chat-toggle-btn:hover { transform: scale(1.1); background-color: #1d4ed8; }
+    `;
+
+    // 2. INYECTAR ESTILOS
+    const styleSheet = document.createElement("style");
+    styleSheet.textContent = cssStyles;
+    document.head.appendChild(styleSheet);
+
+    // 3. INYECTAR HTML (Con iconos SVG directos)
     const chatHTML = `
-        <div id="chat-widget" class="fixed bottom-6 right-6 z-[9999] flex flex-col items-end font-sans">
-            <!-- Ventana del chat -->
-            <div id="chat-window" class="hidden flex-col w-80 h-[28rem] bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl mb-4 overflow-hidden transform transition-all duration-300 origin-bottom-right">
-                <!-- Header -->
-                <div class="bg-slate-800 p-4 border-b border-slate-700 flex justify-between items-center">
-                    <div class="flex items-center gap-2">
-                        <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                        <span class="text-white font-bold text-sm">Asistente IA</span>
+        <div id="chat-widget-container">
+            <div id="chat-window">
+                <div class="chat-header">
+                    <div class="chat-title">
+                        <div class="status-dot"></div> Asistente IA
                     </div>
-                    <button id="chat-close-btn" class="text-slate-400 hover:text-white transition-colors">
-                        <!-- SVG Icono Cerrar -->
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
+                    <button class="chat-close" id="chat-close-btn">&times;</button>
                 </div>
                 
-                <!-- Mensajes -->
-                <div id="chat-messages" class="flex-1 p-4 overflow-y-auto flex flex-col gap-3 bg-slate-900">
-                    <div class="self-start bg-slate-800 text-slate-200 p-3 rounded-2xl rounded-tl-none max-w-[85%] text-sm border border-slate-700">
-                        ¡Hola! Soy la IA de DacDacDev. 👋 ¿En qué puedo ayudarte hoy?
-                    </div>
+                <div id="chat-messages">
+                    <div class="msg bot">¡Hola! Soy la IA de DacDacDev. 👋 ¿En qué puedo ayudarte hoy?</div>
                 </div>
 
-                <!-- Sugerencias -->
-                <div class="p-3 bg-slate-900 flex gap-2 overflow-x-auto border-t border-slate-800">
-                    <button class="chat-suggestion whitespace-nowrap bg-slate-800 hover:bg-slate-700 text-blue-500 text-xs px-3 py-1 rounded-full border border-slate-700 transition-colors" data-msg="¿Cuáles son tus precios?">Precios</button>
-                    <button class="chat-suggestion whitespace-nowrap bg-slate-800 hover:bg-slate-700 text-blue-500 text-xs px-3 py-1 rounded-full border border-slate-700 transition-colors" data-msg="¿Qué servicios ofreces?">Servicios</button>
-                    <button class="chat-suggestion whitespace-nowrap bg-slate-800 hover:bg-slate-700 text-blue-500 text-xs px-3 py-1 rounded-full border border-slate-700 transition-colors" data-msg="Quiero hablar con un humano">Humano</button>
+                <div class="chat-suggestions">
+                    <button class="suggestion-btn" data-msg="¿Cuáles son tus precios?">Precios</button>
+                    <button class="suggestion-btn" data-msg="¿Qué servicios ofreces?">Servicios</button>
+                    <button class="suggestion-btn" data-msg="Quiero hablar con un humano">Humano</button>
                 </div>
 
-                <!-- Input -->
-                <div class="p-3 bg-slate-800 border-t border-slate-700 flex gap-2">
-                    <input type="text" id="chat-input" placeholder="Escribe aquí..." class="flex-1 bg-slate-900 text-white text-sm rounded-full px-4 py-2 border border-slate-600 focus:outline-none focus:border-blue-500">
-                    <button id="chat-send-btn" class="bg-blue-600 hover:bg-blue-500 text-white w-9 h-9 rounded-full flex items-center justify-center transition-colors">
-                        <!-- SVG Icono Enviar -->
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                        </svg>
-                    </button>
+                <div class="chat-input-area">
+                    <input type="text" id="chat-input" placeholder="Escribe aquí...">
+                    <button id="chat-send">➤</button>
                 </div>
             </div>
 
-            <!-- Botón Flotante -->
-            <button id="chat-toggle-btn" class="bg-blue-600 hover:bg-blue-500 text-white p-4 rounded-full shadow-lg transition-all transform hover:scale-110 flex items-center justify-center w-14 h-14">
-                <!-- SVG Icono Robot/Chat -->
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+            <button id="chat-toggle-btn">
+                <!-- Icono de Chat SVG -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                 </svg>
             </button>
         </div>
     `;
-
-    // 2. Insertar en el body
     document.body.insertAdjacentHTML('beforeend', chatHTML);
 
-    // 3. Capturar elementos
+    // 4. LÓGICA DEL CHAT
     const toggleBtn = document.getElementById('chat-toggle-btn');
     const closeBtn = document.getElementById('chat-close-btn');
     const windowEl = document.getElementById('chat-window');
     const input = document.getElementById('chat-input');
-    const sendBtn = document.getElementById('chat-send-btn');
-    const messages = document.getElementById('chat-messages');
-    const suggestions = document.querySelectorAll('.chat-suggestion');
+    const sendBtn = document.getElementById('chat-send');
+    const messagesEl = document.getElementById('chat-messages');
+    const suggestions = document.querySelectorAll('.suggestion-btn');
 
-    // 4. Lógica del Chat
-    const toggleChat = () => {
-        windowEl.classList.toggle('hidden');
-        windowEl.classList.toggle('flex');
-        if(!windowEl.classList.contains('hidden')) input.focus();
+    // Base de conocimiento
+    const knowledgeBase = {
+        'precios': "Nuestros planes: Básico (9.99€), Estándar (30€), Premium (99.99€).",
+        'servicios': "Desarrollo Web, Bases de Datos, APIs y E-commerce.",
+        'humano': "He notificado a un técnico. Te contactaremos pronto.",
+        'default': "Gracias. Un técnico analizará tu consulta."
     };
 
-    const addMessage = (text, sender) => {
+    const toggleChat = () => {
+        windowEl.classList.toggle('open');
+        if(windowEl.classList.contains('open')) input.focus();
+    };
+
+    const addMsg = (text, sender) => {
         const div = document.createElement('div');
-        div.className = sender === 'user' 
-            ? "self-end bg-blue-600 text-white p-3 rounded-2xl rounded-tr-none max-w-[85%] text-sm shadow-md" 
-            : "self-start bg-slate-800 text-slate-200 p-3 rounded-2xl rounded-tl-none max-w-[85%] text-sm border border-slate-700";
+        div.className = `msg ${sender}`;
         div.textContent = text;
-        messages.appendChild(div);
-        messages.scrollTop = messages.scrollHeight;
+        messagesEl.appendChild(div);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
     };
 
     const botReply = (text) => {
+        // Indicador escribiendo
         const typing = document.createElement('div');
-        typing.className = "self-start bg-slate-800 p-3 rounded-2xl w-12 flex gap-1 border border-slate-700";
-        typing.innerHTML = '<div class="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce"></div><div class="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 0.1s"></div><div class="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>';
-        messages.appendChild(typing);
-        messages.scrollTop = messages.scrollHeight;
+        typing.className = 'msg bot';
+        typing.textContent = '...';
+        messagesEl.appendChild(typing);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
 
         setTimeout(() => {
             typing.remove();
-            let reply = "Gracias. Un técnico revisará tu mensaje pronto.";
+            let reply = knowledgeBase['default'];
             const lower = text.toLowerCase();
+            if(lower.includes('precio')) reply = knowledgeBase['precios'];
+            else if(lower.includes('servicio')) reply = knowledgeBase['servicios'];
+            else if(lower.includes('humano')) reply = knowledgeBase['humano'];
             
-            if(lower.includes('precio')) reply = "Precios desde: 9.99€ (Básico), 30€ (Estándar), 99.99€ (Premium).";
-            else if(lower.includes('servicio')) reply = "Ofrezco Desarrollo Web, Bases de Datos y E-commerce completo.";
-            else if(lower.includes('humano')) reply = "He notificado a un humano. Te contactarán por email.";
-            else if(lower.includes('tiempo')) reply = "Los tiempos de entrega varían entre 1 y 4 semanas según el plan.";
-            
-            addMessage(reply, 'bot');
-        }, 1000);
+            addMsg(reply, 'bot');
+        }, 800);
     };
 
     const send = () => {
         const text = input.value.trim();
         if(!text) return;
-        addMessage(text, 'user');
+        addMsg(text, 'user');
         input.value = '';
         botReply(text);
     };
 
-    // 5. Asignar Eventos
+    // Eventos
     toggleBtn.addEventListener('click', toggleChat);
     closeBtn.addEventListener('click', toggleChat);
     sendBtn.addEventListener('click', send);
     input.addEventListener('keypress', (e) => { if(e.key === 'Enter') send(); });
-
+    
     suggestions.forEach(btn => {
         btn.addEventListener('click', () => {
             const text = btn.getAttribute('data-msg');
-            addMessage(text, 'user');
+            addMsg(text, 'user');
             botReply(text);
         });
     });
 }
 
-// Ejecutar la inyección solo cuando el DOM esté listo
+// Iniciar inyección cuando el DOM esté listo
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', injectChatbot);
 } else {
