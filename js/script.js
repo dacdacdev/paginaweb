@@ -1,4 +1,4 @@
-// --- LÓGICA GENERAL ---
+// --- LÓGICA GENERAL DE LA WEB ---
 
 // 1. Footer: Año actual
 const yearEl = document.getElementById('year');
@@ -9,7 +9,7 @@ const menuBtn = document.getElementById('mobile-menu-btn');
 const mobileMenu = document.getElementById('mobile-menu');
 
 if(menuBtn && mobileMenu) {
-    // Clonamos para eliminar listeners antiguos
+    // Clonamos para asegurar limpieza de eventos
     const newMenuBtn = menuBtn.cloneNode(true);
     menuBtn.parentNode.replaceChild(newMenuBtn, menuBtn);
     
@@ -67,260 +67,193 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
 
-// --- 6. CHATBOT: VERSIÓN A PRUEBA DE FALLOS ---
-function injectChatbot() {
-    // 1. LIMPIEZA DE CÓDIGO ZOMBIE
-    // Buscamos y eliminamos cualquier widget antiguo que pueda estar oculto o roto
-    const oldIds = ['chat-widget', 'chat-widget-container', 'ai-bot-container'];
-    oldIds.forEach(id => {
-        const el = document.getElementById(id);
-        if(el) el.remove();
-    });
+// --- 6. CHATBOT: VERSIÓN "FUERZA BRUTA" (Inyección Directa Garantizada) ---
+(function() {
+    function initChat() {
+        // 1. Limpieza preventiva
+        const existing = document.getElementById('support-widget-container');
+        if (existing) existing.remove();
 
-    console.log("Inyectando nuevo Chatbot...");
-
-    // 2. ESTILOS FORZADOS (Garantiza visibilidad sobre cualquier otra cosa)
-    const cssStyles = `
-        #ai-bot-container {
-            position: fixed !important;
-            bottom: 25px !important;
-            right: 25px !important;
-            z-index: 999999 !important; /* Capa más alta posible */
-            font-family: 'Inter', system-ui, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            pointer-events: none; /* Permite clicks a través del contenedor vacío */
-        }
+        // 2. Crear contenedor principal
+        const container = document.createElement('div');
+        container.id = 'support-widget-container';
         
-        /* Elementos interactivos activan el puntero */
-        #ai-bot-window, #ai-bot-toggle {
-            pointer-events: auto; 
-        }
+        // Estilos FORZADOS con JavaScript (No depende de CSS externo)
+        Object.assign(container.style, {
+            position: 'fixed',
+            bottom: '20px',
+            right: '20px',
+            zIndex: '2147483647', // El valor más alto posible
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-end',
+            fontFamily: 'sans-serif',
+            pointerEvents: 'none' // Permite clicks a través del área vacía
+        });
 
-        #ai-bot-window {
-            width: 320px;
-            height: 480px;
-            background-color: #0f172a;
-            border: 1px solid #334155;
-            border-radius: 16px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            margin-bottom: 20px;
-            display: none;
-            flex-direction: column;
-            overflow: hidden;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.3s ease;
-        }
-        #ai-bot-window.open { 
-            display: flex; 
-            opacity: 1; 
-            transform: translateY(0); 
-        }
+        // 3. HTML del Chat (Con estilos inline para asegurar visualización)
+        container.innerHTML = `
+            <style>
+                /* Estilos internos para asegurar que se vea bien */
+                #support-window {
+                    width: 320px;
+                    height: 450px;
+                    background: #1e293b; /* Slate 800 */
+                    border: 1px solid #475569;
+                    border-radius: 16px;
+                    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+                    display: none; /* Oculto al inicio */
+                    flex-direction: column;
+                    margin-bottom: 15px;
+                    overflow: hidden;
+                    pointer-events: auto; /* Reactivar clicks */
+                }
+                #support-header {
+                    background: #0f172a;
+                    padding: 15px;
+                    color: white;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    border-bottom: 1px solid #334155;
+                }
+                #support-messages {
+                    flex: 1;
+                    padding: 15px;
+                    overflow-y: auto;
+                    color: #cbd5e1;
+                    font-size: 14px;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                    background: #1e293b;
+                }
+                .msg-bot { align-self: flex-start; background: #334155; padding: 10px 14px; border-radius: 12px 12px 12px 0; max-width: 85%; }
+                .msg-user { align-self: flex-end; background: #2563eb; color: white; padding: 10px 14px; border-radius: 12px 12px 0 12px; max-width: 85%; }
+                
+                #support-controls {
+                    padding: 12px;
+                    background: #0f172a;
+                    border-top: 1px solid #334155;
+                    pointer-events: auto;
+                    display: flex;
+                    gap: 8px;
+                    overflow-x: auto;
+                }
+                .quick-reply {
+                    background: #334155;
+                    border: 1px solid #475569;
+                    color: #60a5fa;
+                    padding: 6px 12px;
+                    border-radius: 20px;
+                    cursor: pointer;
+                    font-size: 12px;
+                    white-space: nowrap;
+                    transition: 0.2s;
+                }
+                .quick-reply:hover { background: #475569; color: white; }
 
-        .ai-header {
-            background-color: #1e293b;
-            padding: 16px;
-            border-bottom: 1px solid #334155;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: white;
-        }
-        
-        #ai-messages {
-            flex: 1;
-            padding: 16px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            background-color: #0f172a;
-        }
-        
-        .ai-msg { padding: 10px 14px; border-radius: 12px; font-size: 14px; max-width: 85%; line-height: 1.4; }
-        .ai-msg.bot { background-color: #1e293b; color: #e2e8f0; border-top-left-radius: 0; border: 1px solid #334155; align-self: flex-start; }
-        .ai-msg.user { background-color: #2563eb; color: white; border-top-right-radius: 0; align-self: flex-end; }
-        
-        .ai-suggestions { padding: 12px; display: flex; gap: 8px; overflow-x: auto; border-top: 1px solid #1e293b; background-color: #0f172a; }
-        .ai-chip {
-            background-color: #1e293b;
-            color: #60a5fa;
-            border: 1px solid #334155;
-            border-radius: 20px;
-            padding: 6px 12px;
-            font-size: 12px;
-            cursor: pointer;
-            white-space: nowrap;
-            transition: 0.2s;
-        }
-        .ai-chip:hover { background-color: #2563eb; color: white; border-color: #2563eb; }
+                /* BOTÓN FLOTANTE */
+                #support-btn {
+                    width: 60px;
+                    height: 60px;
+                    background: #2563eb; /* Azul brillante */
+                    border-radius: 50%;
+                    border: none;
+                    cursor: pointer;
+                    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.5);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: white;
+                    font-size: 30px;
+                    pointer-events: auto;
+                    transition: transform 0.2s;
+                }
+                #support-btn:hover { transform: scale(1.1); }
+            </style>
 
-        .ai-input-area { padding: 12px; border-top: 1px solid #334155; background-color: #1e293b; display: flex; gap: 8px; }
-        #ai-input {
-            flex: 1;
-            background-color: #0f172a;
-            border: 1px solid #475569;
-            border-radius: 20px;
-            padding: 8px 16px;
-            color: white;
-            font-size: 14px;
-            outline: none;
-        }
-        
-        #ai-bot-toggle {
-            width: 60px;
-            height: 60px;
-            background-color: #2563eb;
-            border-radius: 50%;
-            border: none;
-            color: white;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.2s;
-        }
-        #ai-bot-toggle:hover { transform: scale(1.1); }
-    `;
-
-    // Inyectar estilos (evitando duplicados)
-    if (!document.getElementById('ai-chat-styles')) {
-        const styleSheet = document.createElement("style");
-        styleSheet.id = 'ai-chat-styles';
-        styleSheet.textContent = cssStyles;
-        document.head.appendChild(styleSheet);
-    }
-
-    // 3. HTML DEL CHAT (Con IDs únicos 'ai-')
-    const chatHTML = `
-        <div id="ai-bot-container">
-            <div id="ai-bot-window">
-                <div class="ai-header">
+            <!-- Ventana del Chat -->
+            <div id="support-window">
+                <div id="support-header">
                     <div style="display:flex; align-items:center; gap:8px;">
                         <div style="width:8px; height:8px; background:#22c55e; border-radius:50%;"></div>
                         <strong>Asistente IA</strong>
                     </div>
-                    <button id="ai-close-btn" style="background:none; border:none; color:#94a3b8; font-size:24px; cursor:pointer;">&times;</button>
+                    <button id="close-chat" style="background:none; border:none; color:#94a3b8; cursor:pointer; font-size:24px;">&times;</button>
                 </div>
-                
-                <div id="ai-messages">
-                    <div class="ai-msg bot">¡Hola! Soy la IA de DacDacDev. 🤖<br>¿En qué puedo ayudarte?</div>
+                <div id="support-messages">
+                    <div class="msg-bot">¡Hola! 👋 Soy la IA de DacDacDev.<br>¿En qué puedo ayudarte hoy?</div>
                 </div>
-
-                <div class="ai-suggestions">
-                    <button class="ai-chip" data-msg="Ver precios">Precios</button>
-                    <button class="ai-chip" data-msg="Servicios">Servicios</button>
-                    <button class="ai-chip" data-msg="Hablar con humano">Humano</button>
-                </div>
-
-                <div class="ai-input-area">
-                    <input type="text" id="ai-input" placeholder="Escribe aquí...">
-                    <button id="ai-send" style="background:none; border:none; color:#60a5fa; cursor:pointer; font-size:18px;">➤</button>
+                <div id="support-controls">
+                    <button class="quick-reply" data-msg="Ver precios">Precios</button>
+                    <button class="quick-reply" data-msg="Ver servicios">Servicios</button>
+                    <button class="quick-reply" data-msg="Hablar con humano">Humano</button>
                 </div>
             </div>
 
-            <button id="ai-bot-toggle">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                </svg>
-            </button>
-        </div>
-    `;
-    
-    document.body.insertAdjacentHTML('beforeend', chatHTML);
+            <!-- Botón Principal -->
+            <button id="support-btn">💬</button>
+        `;
 
-    // 4. LÓGICA DE INTERACCIÓN
-    const toggleBtn = document.getElementById('ai-bot-toggle');
-    const closeBtn = document.getElementById('ai-close-btn');
-    const windowEl = document.getElementById('ai-bot-window');
-    const input = document.getElementById('ai-input');
-    const sendBtn = document.getElementById('ai-send');
-    const messagesEl = document.getElementById('ai-messages');
-    const chips = document.querySelectorAll('.ai-chip');
+        document.body.appendChild(container);
 
-    // Base de conocimiento
-    const answers = {
-        'precios': "Plan Básico: 9.99€ | Estándar: 30€ | Premium: 99.99€",
-        'servicios': "Desarrollo Web, Bases de Datos, APIs y E-commerce completo.",
-        'humano': "He notificado a un técnico. Te escribiremos a tu correo pronto.",
-        'default': "Entendido. Un especialista revisará tu consulta en breve."
-    };
+        // 4. FUNCIONALIDAD
+        const btn = document.getElementById('support-btn');
+        const windowEl = document.getElementById('support-window');
+        const closeEl = document.getElementById('close-chat');
+        const msgsEl = document.getElementById('support-messages');
+        const replies = document.querySelectorAll('.quick-reply');
 
-    const toggle = () => {
-        const isOpen = windowEl.classList.contains('open');
-        if (isOpen) {
-            windowEl.classList.remove('open');
-            setTimeout(() => windowEl.style.display = 'none', 300); // Esperar animación
-        } else {
-            windowEl.style.display = 'flex';
-            // Pequeño timeout para permitir que el display:flex se aplique antes de la opacidad
-            setTimeout(() => windowEl.classList.add('open'), 10);
-            input.focus();
+        // Función Toggle
+        function toggle() {
+            if (windowEl.style.display === 'none' || windowEl.style.display === '') {
+                windowEl.style.display = 'flex';
+                btn.style.display = 'none'; // Ocultar botón al abrir
+            } else {
+                windowEl.style.display = 'none';
+                btn.style.display = 'flex'; // Mostrar botón al cerrar
+            }
         }
-    };
 
-    const addMsg = (text, type) => {
-        const div = document.createElement('div');
-        div.className = `ai-msg ${type}`;
-        div.innerHTML = text;
-        messagesEl.appendChild(div);
-        messagesEl.scrollTop = messagesEl.scrollHeight;
-    };
+        btn.onclick = toggle;
+        closeEl.onclick = toggle;
 
-    const processInput = (text) => {
-        addMsg(text, 'user');
-        
-        // Simular "escribiendo..."
-        const typing = document.createElement('div');
-        typing.className = 'ai-msg bot';
-        typing.innerText = '...';
-        messagesEl.appendChild(typing);
-        messagesEl.scrollTop = messagesEl.scrollHeight;
+        // Base de Respuestas
+        const responses = {
+            'Ver precios': 'Plan Básico: 9.99€ | Estándar: 30€ | Premium: 99.99€',
+            'Ver servicios': 'Desarrollo Web, Bases de Datos, APIs y E-commerce completo.',
+            'Hablar con humano': 'He notificado a un técnico. Te escribiremos a tu correo pronto.'
+        };
 
-        setTimeout(() => {
-            typing.remove();
-            let reply = answers['default'];
-            const lower = text.toLowerCase();
-            
-            if(lower.includes('precio') || lower.includes('costo')) reply = answers['precios'];
-            else if(lower.includes('servicio')) reply = answers['servicios'];
-            else if(lower.includes('humano') || lower.includes('persona')) reply = answers['humano'];
-            
-            addMsg(reply, 'bot');
-        }, 800);
-    };
-
-    // Listeners
-    toggleBtn.addEventListener('click', toggle);
-    closeBtn.addEventListener('click', toggle);
-    
-    sendBtn.addEventListener('click', () => {
-        if(input.value.trim()) {
-            processInput(input.value.trim());
-            input.value = '';
-        }
-    });
-
-    input.addEventListener('keypress', (e) => {
-        if(e.key === 'Enter' && input.value.trim()) {
-            processInput(input.value.trim());
-            input.value = '';
-        }
-    });
-
-    chips.forEach(chip => {
-        chip.addEventListener('click', () => {
-            processInput(chip.getAttribute('data-msg'));
+        // Click en sugerencias
+        replies.forEach(r => {
+            r.onclick = function() {
+                const text = this.getAttribute('data-msg'); // Usar el texto de datos
+                
+                // Mensaje usuario
+                const uDiv = document.createElement('div');
+                uDiv.className = 'msg-user';
+                uDiv.innerText = text;
+                msgsEl.appendChild(uDiv);
+                msgsEl.scrollTop = msgsEl.scrollHeight;
+                
+                // Respuesta bot (simulada)
+                setTimeout(() => {
+                    const bDiv = document.createElement('div');
+                    bDiv.className = 'msg-bot';
+                    bDiv.innerText = responses[text] || 'Entendido, un técnico revisará tu consulta.';
+                    msgsEl.appendChild(bDiv);
+                    msgsEl.scrollTop = msgsEl.scrollHeight;
+                }, 600);
+            }
         });
-    });
-}
+    }
 
-// Iniciar cuando el contenido esté listo
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', injectChatbot);
-} else {
-    injectChatbot();
-}
+    // Ejecutar inicialización (Soporte para carga asíncrona)
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        initChat();
+    } else {
+        window.addEventListener('DOMContentLoaded', initChat);
+    }
+})();
