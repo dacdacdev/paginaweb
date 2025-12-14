@@ -66,10 +66,12 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
 
-// --- CHATBOT: INYECCIÓN AUTOMÁTICA (SOLUCIÓN DEFINITIVA) ---
+// --- CHATBOT: INYECCIÓN AUTOMÁTICA (SOLUCIÓN ROBUSTA) ---
 function injectChatbot() {
-    // Evitar duplicados
-    if (document.getElementById('chat-widget')) return;
+    // Verificación de seguridad: si ya existe o no hay body, salir
+    if (document.getElementById('chat-widget') || !document.body) return;
+
+    console.log("Iniciando inyección del Chatbot...");
 
     // 1. Crear el HTML del chat
     const chatHTML = `
@@ -147,14 +149,12 @@ function injectChatbot() {
     };
 
     const botReply = (text) => {
-        // Indicador escribiendo
         const typing = document.createElement('div');
         typing.className = "self-start bg-slate-800 p-3 rounded-2xl w-12 flex gap-1 border border-slate-700";
         typing.innerHTML = '<div class="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce"></div><div class="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 0.1s"></div><div class="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>';
         messages.appendChild(typing);
         messages.scrollTop = messages.scrollHeight;
 
-        // Respuesta simple
         setTimeout(() => {
             typing.remove();
             let reply = "Gracias. Un técnico revisará tu mensaje pronto.";
@@ -163,6 +163,7 @@ function injectChatbot() {
             if(lower.includes('precio')) reply = "Precios desde: 9.99€ (Básico), 30€ (Estándar), 99.99€ (Premium).";
             else if(lower.includes('servicio')) reply = "Ofrezco Desarrollo Web, Bases de Datos y E-commerce completo.";
             else if(lower.includes('humano')) reply = "He notificado a un humano. Te contactarán por email.";
+            else if(lower.includes('tiempo')) reply = "Los tiempos de entrega varían entre 1 y 4 semanas según el plan.";
             
             addMessage(reply, 'bot');
         }, 1000);
@@ -191,5 +192,9 @@ function injectChatbot() {
     });
 }
 
-// Ejecutar la inyección
-injectChatbot();
+// Ejecutar la inyección solo cuando el DOM esté listo
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', injectChatbot);
+} else {
+    injectChatbot();
+}
