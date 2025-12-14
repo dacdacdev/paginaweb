@@ -8,7 +8,7 @@
     
     <!-- 
         NOTA PARA PRODUCCIÓN: 
-        Recuerda reemplazar este script por tu archivo CSS compilado.
+        Recuerda reemplazar este script por tu archivo CSS compilado siguiendo la guía.
     -->
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -42,26 +42,6 @@
             }
         }
     </script>
-    <style>
-        details > summary {
-            list-style: none;
-        }
-        details > summary::-webkit-details-marker {
-            display: none;
-        }
-        /* Animación para el chat */
-        .chat-enter {
-            animation: chatSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        @keyframes chatSlideIn {
-            from { opacity: 0; transform: translateY(20px) scale(0.95); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-        /* Scrollbar del chat */
-        .chat-scroll::-webkit-scrollbar { width: 6px; }
-        .chat-scroll::-webkit-scrollbar-track { background: transparent; }
-        .chat-scroll::-webkit-scrollbar-thumb { background-color: #334155; border-radius: 20px; }
-    </style>
 </head>
 <body class="bg-dark-bg text-slate-200 antialiased selection:bg-brand-500 selection:text-white">
 
@@ -558,52 +538,7 @@
         </div>
     </footer>
     
-    <!-- Chatbot Widget -->
-    <div class="fixed bottom-6 right-6 z-50 flex flex-col items-end">
-        <!-- Ventana del chat (oculta por defecto) -->
-        <div id="chat-window" class="hidden flex-col w-80 h-[28rem] bg-dark-card border border-slate-700 rounded-2xl shadow-2xl mb-4 overflow-hidden chat-enter">
-            <!-- Header -->
-            <div class="bg-slate-800 p-4 border-b border-slate-700 flex justify-between items-center">
-                <div class="flex items-center gap-2">
-                    <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                    <span class="text-white font-bold text-sm">Asistente IA</span>
-                </div>
-                <button onclick="toggleChat()" class="text-slate-400 hover:text-white transition-colors">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            
-            <!-- Mensajes -->
-            <div id="chat-messages" class="flex-1 p-4 overflow-y-auto chat-scroll flex flex-col gap-3">
-                <!-- Mensaje de bienvenida -->
-                <div class="self-start bg-slate-800 text-slate-200 p-3 rounded-2xl rounded-tl-none max-w-[85%] text-sm border border-slate-700">
-                    ¡Hola! Soy la IA de DacDacDev. 👋 ¿En qué puedo ayudarte hoy?
-                </div>
-            </div>
-
-            <!-- Sugerencias -->
-            <div id="chat-suggestions" class="px-4 pb-2 flex gap-2 overflow-x-auto chat-scroll">
-                <button onclick="sendSuggestion('Precios')" class="whitespace-nowrap bg-slate-800 hover:bg-slate-700 text-brand-500 text-xs px-3 py-1.5 rounded-full border border-slate-700 transition-colors">Precios</button>
-                <button onclick="sendSuggestion('Servicios')" class="whitespace-nowrap bg-slate-800 hover:bg-slate-700 text-brand-500 text-xs px-3 py-1.5 rounded-full border border-slate-700 transition-colors">Servicios</button>
-                <button onclick="sendSuggestion('Tiempos')" class="whitespace-nowrap bg-slate-800 hover:bg-slate-700 text-brand-500 text-xs px-3 py-1.5 rounded-full border border-slate-700 transition-colors">Tiempos</button>
-                <button onclick="sendSuggestion('Humano')" class="whitespace-nowrap bg-slate-800 hover:bg-slate-700 text-brand-500 text-xs px-3 py-1.5 rounded-full border border-slate-700 transition-colors">Hablar con humano</button>
-            </div>
-
-            <!-- Input -->
-            <div class="p-3 bg-slate-900 border-t border-slate-700 flex gap-2">
-                <input type="text" id="chat-input" placeholder="Escribe tu consulta..." class="flex-1 bg-slate-800 text-white text-sm rounded-full px-4 py-2 border border-slate-700 focus:outline-none focus:border-brand-500 placeholder-slate-500" onkeypress="handleEnter(event)">
-                <button onclick="sendMessage()" class="bg-brand-600 hover:bg-brand-500 text-white w-9 h-9 rounded-full flex items-center justify-center transition-colors shadow-lg">
-                    <i class="fas fa-paper-plane text-xs"></i>
-                </button>
-            </div>
-        </div>
-
-        <!-- Botón flotante para abrir -->
-        <button id="chat-toggle-btn" onclick="toggleChat()" class="bg-brand-600 hover:bg-brand-500 text-white p-4 rounded-full shadow-lg transition-all transform hover:scale-110 flex items-center justify-center w-14 h-14">
-            <i class="fas fa-robot text-2xl"></i>
-        </button>
-    </div>
-    <!-- Chatbot Widget -->
+    <!-- Chatbot Widget (Pegar antes del script y del cierre de body) -->
     <div class="fixed bottom-6 right-6 z-50 flex flex-col items-end">
         <!-- Ventana del chat -->
         <div id="chat-window" class="hidden flex-col w-80 h-[28rem] bg-dark-card border border-slate-700 rounded-2xl shadow-2xl mb-4 overflow-hidden chat-enter">
@@ -648,6 +583,7 @@
             <i class="fas fa-robot text-2xl"></i>
         </button>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
