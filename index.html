@@ -8,12 +8,8 @@
     
     <!-- 
         NOTA PARA PRODUCCIÓN: 
-        El uso de cdn.tailwindcss.com aquí es exclusivamente para fines de desarrollo y previsualización 
-        en este entorno sin build-step.
-        
-        Para desplegar en producción, elimina este script e instala Tailwind CSS siguiendo la documentación oficial 
-        (PostCSS o CLI) para generar un archivo CSS optimizado:
-        https://tailwindcss.com/docs/installation
+        Recuerda que para el despliegue final debes seguir la guía de instalación
+        y reemplazar este script por tu archivo CSS compilado.
     -->
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -47,7 +43,6 @@
             }
         }
     </script>
-    <!-- Estilo adicional para ocultar el marcador por defecto en algunos navegadores -->
     <style>
         details > summary {
             list-style: none;
@@ -196,9 +191,8 @@
                 <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Mis Servicios</h2>
                 <p class="text-slate-400 max-w-2xl mx-auto">Soluciones a medida para cada etapa de tu negocio digital.</p>
             </div>
-            <!-- Cambiado a grid de 2 columnas para acomodar 4 servicios -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Servicio 1: Páginas Web -->
+                <!-- Servicio 1 -->
                 <div class="bg-dark-card p-8 rounded-2xl border border-slate-700/50 card-hover transition-all duration-300 reveal delay-100">
                     <div class="w-14 h-14 bg-brand-900/50 rounded-lg flex items-center justify-center mb-6 text-brand-500">
                         <i class="fas fa-globe text-2xl"></i>
@@ -206,8 +200,7 @@
                     <h3 class="text-xl font-bold text-white mb-3">Páginas Web</h3>
                     <p class="text-slate-400 leading-relaxed">Sitios web corporativos, landing pages y aplicaciones web modernas. Diseño responsive y optimizado.</p>
                 </div>
-                
-                <!-- Servicio 2: Bases de Datos (Nuevo) -->
+                <!-- Servicio 2 -->
                 <div class="bg-dark-card p-8 rounded-2xl border border-slate-700/50 card-hover transition-all duration-300 reveal delay-200">
                     <div class="w-14 h-14 bg-purple-900/50 rounded-lg flex items-center justify-center mb-6 text-purple-400">
                         <i class="fas fa-database text-2xl"></i>
@@ -215,8 +208,7 @@
                     <h3 class="text-xl font-bold text-white mb-3">Bases de Datos</h3>
                     <p class="text-slate-400 leading-relaxed">Diseño, gestión y optimización de bases de datos SQL y NoSQL para asegurar la integridad y rapidez de tu información.</p>
                 </div>
-
-                <!-- Servicio 3: Estructuras Lógicas (Nuevo) -->
+                <!-- Servicio 3 -->
                 <div class="bg-dark-card p-8 rounded-2xl border border-slate-700/50 card-hover transition-all duration-300 reveal delay-300">
                     <div class="w-14 h-14 bg-blue-900/50 rounded-lg flex items-center justify-center mb-6 text-blue-400">
                         <i class="fas fa-project-diagram text-2xl"></i>
@@ -224,8 +216,7 @@
                     <h3 class="text-xl font-bold text-white mb-3">Estructuras Lógicas</h3>
                     <p class="text-slate-400 leading-relaxed">Desarrollo de algoritmos complejos, arquitectura de software escalable y lógica de negocio eficiente.</p>
                 </div>
-
-                <!-- Servicio 4: E-commerce -->
+                <!-- Servicio 4 -->
                 <div class="bg-dark-card p-8 rounded-2xl border border-slate-700/50 card-hover transition-all duration-300 reveal delay-300">
                     <div class="w-14 h-14 bg-green-900/50 rounded-lg flex items-center justify-center mb-6 text-green-400">
                         <i class="fas fa-shopping-cart text-2xl"></i>
@@ -500,7 +491,7 @@
                         </div>
                     </details>
                 </div>
-                 <!-- Question 5 -->
+                <!-- Question 5 -->
                 <div class="reveal border border-slate-700 rounded-xl bg-dark-card overflow-hidden">
                     <details class="group">
                         <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-6 text-white hover:bg-slate-800 transition-colors">
@@ -535,13 +526,13 @@
             </form>
             
             <div class="mt-12 flex justify-center space-x-8 flex-wrap gap-y-4 reveal delay-200">
-                <a href="#" class="text-slate-400 hover:text-white text-2xl"><i class="fab fa-github"></i></a>
-                <a href="#" class="text-slate-400 hover:text-white text-2xl"><i class="fab fa-linkedin"></i></a>
-                <a href="#" class="text-slate-400 hover:text-white text-2xl"><i class="fab fa-instagram"></i></a>
-                <a href="#" class="text-slate-400 hover:text-white text-2xl"><i class="fab fa-youtube"></i></a>
-                <a href="#" class="text-slate-400 hover:text-white text-2xl"><i class="fab fa-discord"></i></a>
-                <a href="#" class="text-slate-400 hover:text-white text-2xl"><i class="fab fa-tiktok"></i></a>
-                <a href="mailto:tu@email.com" class="text-slate-400 hover:text-white text-2xl"><i class="fas fa-envelope"></i></a>
+                <a href="https://github.com/dacdacdev" target="_blank" class="text-slate-400 hover:text-white text-2xl transition-colors"><i class="fab fa-github"></i></a>
+                <a href="#" class="text-slate-400 hover:text-white text-2xl transition-colors" title="Próximamente"><i class="fab fa-linkedin"></i></a>
+                <a href="https://www.instagram.com/dacdac06/?next=%2F" target="_blank" class="text-slate-400 hover:text-white text-2xl transition-colors"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.youtube.com/@dacdacdev00" target="_blank" class="text-slate-400 hover:text-white text-2xl transition-colors"><i class="fab fa-youtube"></i></a>
+                <a href="https://discord.com/users/notd__" target="_blank" title="Usuario: notd__" class="text-slate-400 hover:text-white text-2xl transition-colors"><i class="fab fa-discord"></i></a>
+                <a href="#" class="text-slate-400 hover:text-white text-2xl transition-colors" title="Próximamente"><i class="fab fa-tiktok"></i></a>
+                <a href="mailto:dacdacdev@gmail.com" class="text-slate-400 hover:text-white text-2xl transition-colors"><i class="fas fa-envelope"></i></a>
             </div>
         </div>
     </section>
@@ -553,7 +544,7 @@
     </footer>
     
     <!-- Botón Flotante de WhatsApp -->
-    <a href="https://wa.me/611030269" target="_blank" class="fixed bottom-8 right-8 z-50 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg transition-all transform hover:scale-110 flex items-center justify-center w-14 h-14" title="Contáctame por WhatsApp">
+    <a href="https://wa.me/1234567890" target="_blank" class="fixed bottom-8 right-8 z-50 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg transition-all transform hover:scale-110 flex items-center justify-center w-14 h-14" title="Contáctame por WhatsApp">
         <i class="fab fa-whatsapp text-3xl"></i>
     </a>
 
