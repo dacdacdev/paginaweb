@@ -1,9 +1,8 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
 import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
-// --- CONFIGURACIÓN FIREBASE (Mantén tus datos aquí) ---
+// --- CONFIGURACIÓN FIREBASE (Asegúrate de que tus datos siguen aquí) ---
 const firebaseConfig = {
-
     apiKey: "AIzaSyDqWjgoi8DwcZiXwp3nF1gQ0vvxZ39CUtQ",
     authDomain: "chatbot-web-v1.firebaseapp.com",
     projectId: "chatbot-web-v1",
@@ -11,14 +10,16 @@ const firebaseConfig = {
     messagingSenderId: "7994049270",
     appId: "1:7994049270:web:f5e6a2652065bf4680a2d7",
 };
+
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+
+// ID DE SESIÓN
 const sessionID = localStorage.getItem('chatSessionID') || 'sess_' + Math.random().toString(36).substr(2, 9);
 localStorage.setItem('chatSessionID', sessionID);
 
-// --- VARIABLE DE CONTROL (NUEVO) ---
-// Recuperamos si el bot ya fue silenciado en esta sesión para que no se olvide al refrescar
-let botMuted = localStorage.getItem('botMuted_' + sessionID) === 'true';
+// CLAVE PARA EL SILENCIO (Usamos una clave única por sesión)
+const MUTE_KEY = 'botMuted_' + sessionID;
 
 const botKnowledge = {
     "precios": "Nuestros servicios empiezan desde 0€ para el plan básico.",
@@ -33,7 +34,7 @@ const defaultQuestions = [
     { text: "Soporte Humano", keyword: "contacto" }
 ];
 
-// --- FUNCIONES AUXILIARES UI ---
+// --- FUNCIONES UI ---
 function showTypingIndicator() {
     const msgsDiv = document.getElementById('chat-messages');
     if(document.getElementById('typing-dots-loader')) return;
@@ -77,27 +78,31 @@ function appendMessage(text, sender) {
     msgsDiv.scrollTop = msgsDiv.scrollHeight;
 }
 
-// --- LÓGICA PRINCIPAL DEL BOT (MODIFICADA) ---
+// --- LÓGICA PRINCIPAL DEL BOT (CORREGIDA) ---
 async function handleUserMessage(text, keyword = null) {
     appendMessage(text, 'user');
 
-    // 1. Guardar mensaje del usuario siempre
+    // 1. Guardar mensaje del usuario
     try {
         await addDoc(collection(db, "mensajes_chat"), {
             sessionID: sessionID, text: text, sender: "user", timestamp: serverTimestamp(), read: false
         });
     } catch (e) { console.error("Error DB:", e); }
 
-    // 2. Comprobar si debemos responder o callarnos
+    // 2. LEER ESTADO DE SILENCIO DIRECTAMENTE DEL STORAGE
+    // Esto asegura que leemos el valor real actual
+    const isMuted = localStorage.getItem(MUTE_KEY) === 'true';
+    console.log("Estado del Bot (Silenciado):", isMuted);
+
     let response = null;
     let shouldReply = true;
     const lower = text.toLowerCase();
 
-    // Prioridad 1: ¿Es una palabra clave que conocemos? (Siempre respondemos a esto)
+    // Prioridad 1: Palabras clave conocidas (El bot SIEMPRE responde a esto, aunque esté silenciado)
     if (keyword && botKnowledge[keyword]) {
         response = botKnowledge[keyword];
     } else {
-        // Búsqueda manual de keywords
+        // Buscar keywords en el texto
         let found = false;
         for (const key in botKnowledge) {
             if (key !== "default" && lower.includes(key)) {
@@ -107,22 +112,23 @@ async function handleUserMessage(text, keyword = null) {
             }
         }
 
-        // Prioridad 2: No sabemos la respuesta...
+        // Prioridad 2: No entendió nada
         if (!found) {
-            // (NUEVO) AQUÍ ESTÁ EL TRUCO:
-            if (botMuted) {
-                // Si el bot ya está silenciado (ya avisó al humano), NO responde nada.
-                shouldReply = false; 
+            if (isMuted) {
+                // SI YA ESTÁ SILENCIADO -> NO HACEMOS NADA
+                console.log("El bot está silenciado. No responderá.");
+                shouldReply = false;
             } else {
-                // Si es la primera vez que falla, manda el mensaje default y se silencia.
+                // SI ES LA PRIMERA VEZ -> RESPONDE Y SE SILENCIA
+                console.log("No entiendo. Respondo default y me silencio.");
                 response = botKnowledge["default"];
-                botMuted = true; // <--- Activamos el silencio
-                localStorage.setItem('botMuted_' + sessionID, 'true'); // Guardamos estado
+                // Activamos el silencio inmediatamente
+                localStorage.setItem(MUTE_KEY, 'true');
             }
         }
     }
 
-    // 3. Si decidimos responder, ejecutamos la animación y el envío
+    // 3. Ejecutar respuesta si corresponde
     if (shouldReply && response) {
         showTypingIndicator();
         setTimeout(async () => {
@@ -136,28 +142,22 @@ async function handleUserMessage(text, keyword = null) {
     }
 }
 
-// --- ESCUCHAR AL HUMANO (ADMIN) ---
+// --- ESCUCHAR AL ADMIN---
 const q = query(collection(db, "mensajes_chat"), orderBy("timestamp"));
 onSnapshot(q, (snapshot) => {
     snapshot.docChanges().forEach((change) => {
         if (change.type === "added") {
             const data = change.doc.data();
-            
-            // Si el mensaje es del ADMIN y es para mí
             if (data.sender === 'admin' && data.sessionID === sessionID) {
                 appendMessage(data.text, 'bot');
-                
-                // (NUEVO) Si el humano habla, el bot se calla para siempre en esta sesión
-                if (!botMuted) {
-                    botMuted = true;
-                    localStorage.setItem('botMuted_' + sessionID, 'true');
-                }
+                localStorage.setItem(MUTE_KEY, 'true'); 
+                console.log("Admin habló. Bot mantenido en silencio.");
             }
         }
     });
 });
 
-// --- INICIALIZACIÓN ---
+// --- EVENT LISTENERS ---
 document.addEventListener('DOMContentLoaded', () => {
     const toggleBtn = document.querySelector('.chat-toggle-btn');
     if(toggleBtn) toggleBtn.addEventListener('click', toggleChat);
@@ -186,4 +186,4 @@ document.addEventListener('DOMContentLoaded', () => {
             optionsContainer.appendChild(btn);
         });
     }
-});
+}); 
