@@ -1,5 +1,3 @@
-// --- LÓGICA GENERAL DE LA WEB ---
-
 // 1. Footer: Año actual
 const yearEl = document.getElementById('year');
 if(yearEl) yearEl.textContent = new Date().getFullYear();
