@@ -1,27 +1,27 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
 import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
-// --- CONFIGURACIÓN (PEGA TUS DATOS AQUÍ) ---
+// --- CONFIGURACIÓN FIREBASE ---
 const firebaseConfig = {
-    apiKey: "TU_API_KEY",
+    apiKey: "TU_API_KEY_AQUI",
     authDomain: "TU_PROYECTO.firebaseapp.com",
     projectId: "TU_PROYECTO_ID",
     storageBucket: "TU_PROYECTO.appspot.com",
-    messagingSenderId: "NUMEROS",
+    messagingSenderId: "TUS_NUMEROS",
     appId: "TU_APP_ID"
 };
 
-// Inicialización
+// Inicializar
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const sessionID = localStorage.getItem('chatSessionID') || 'sess_' + Math.random().toString(36).substr(2, 9);
 localStorage.setItem('chatSessionID', sessionID);
 
-// --- CONOCIMIENTO DEL BOT ---
+// --- BASE DE CONOCIMIENTO ---
 const botKnowledge = {
     "precios": "Nuestros servicios empiezan desde 0€ para el plan básico.",
     "horario": "Estamos abiertos de Lunes a Viernes de 9:00 a 18:00.",
-    "contacto": "Te paso con un humano. Escribe tu correo y te contactaremos.",
+    "contacto": "Te paso con un humano. Deja tu correo y te escribimos.",
     "default": "Entiendo. Un agente humano revisará tu mensaje en breve."
 };
 
@@ -31,41 +31,67 @@ const defaultQuestions = [
     { text: "Soporte Humano", keyword: "contacto" }
 ];
 
-// --- FUNCIONES GLOBALES (Expuestas al HTML) ---
-window.toggleChat = () => {
+// --- FUNCIONES LÓGICAS ---
+function toggleChat() {
     const chat = document.getElementById('chat-window');
-    chat.style.display = chat.style.display === 'flex' ? 'none' : 'flex';
-};
+    // Si usas flex en CSS, cambiamos entre 'flex' y 'none'
+    const isVisible = window.getComputedStyle(chat).display !== 'none';
+    chat.style.display = isVisible ? 'none' : 'flex';
+}
 
-window.sendMessage = () => {
+async function sendMessage() {
     const input = document.getElementById('chat-user-input');
     const text = input.value.trim();
     if (text) {
         handleUserMessage(text);
         input.value = '';
     }
-};
-
-window.handleKeyPress = (e) => {
-    if (e.key === 'Enter') window.sendMessage();
-};
-
-window.handleOptionClick = (text, keyword) => {
-    handleUserMessage(text, keyword);
-};
-
-// --- RENDERIZADO INICIAL ---
-const optionsContainer = document.getElementById('options-container');
-if(optionsContainer){
-    defaultQuestions.forEach(q => {
-        const btn = document.createElement('button');
-        btn.className = 'option-btn';
-        btn.innerText = q.text;
-        btn.onclick = () => window.handleOptionClick(q.text, q.keyword);
-        optionsContainer.appendChild(btn);
-    });
 }
 
+function handleOptionClick(text, keyword) {
+    handleUserMessage(text, keyword);
+}
+
+// --- ASIGNACIÓN DE EVENTOS (LA SOLUCIÓN AL ERROR) ---
+// Esperamos a que el documento cargue y asignamos los clics desde JS
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // 1. Botón Flotante (Abrir/Cerrar)
+    const toggleBtn = document.querySelector('.chat-toggle-btn');
+    if(toggleBtn) toggleBtn.addEventListener('click', toggleChat);
+
+    // 2. Botón Cerrar (La X)
+    const closeBtn = document.querySelector('.close-chat');
+    if(closeBtn) closeBtn.addEventListener('click', toggleChat);
+
+    // 3. Botón Enviar
+    const sendBtn = document.getElementById('chat-send-btn');
+    if(sendBtn) sendBtn.addEventListener('click', sendMessage);
+
+    // 4. Input (Tecla Enter)
+    const inputField = document.getElementById('chat-user-input');
+    if(inputField) {
+        inputField.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+    }
+
+    // 5. Generar preguntas por defecto
+    const optionsContainer = document.getElementById('options-container');
+    if(optionsContainer) {
+        optionsContainer.innerHTML = ''; // Limpiar por si acaso
+        defaultQuestions.forEach(q => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.innerText = q.text;
+            // Aquí asignamos el clic directamente al crear el botón
+            btn.addEventListener('click', () => handleOptionClick(q.text, q.keyword));
+            optionsContainer.appendChild(btn);
+        });
+    }
+});
+
+// --- LÓGICA DE MENSAJES ---
 function appendMessage(text, sender) {
     const msgsDiv = document.getElementById('chat-messages');
     const div = document.createElement('div');
@@ -75,18 +101,15 @@ function appendMessage(text, sender) {
     msgsDiv.scrollTop = msgsDiv.scrollHeight;
 }
 
-// --- LÓGICA PRINCIPAL ---
 async function handleUserMessage(text, keyword = null) {
     appendMessage(text, 'user');
 
-    // 1. Guardar mensaje del usuario en Firebase
     try {
         await addDoc(collection(db, "mensajes_chat"), {
             sessionID: sessionID, text: text, sender: "user", timestamp: serverTimestamp(), read: false
         });
     } catch (e) { console.error("Error DB:", e); }
 
-    // 2. Respuesta automática local
     setTimeout(async () => {
         let response = botKnowledge["default"];
         const lower = text.toLowerCase();
@@ -99,21 +122,18 @@ async function handleUserMessage(text, keyword = null) {
         }
 
         appendMessage(response, 'bot');
-        
-        // Guardar respuesta del bot
         await addDoc(collection(db, "mensajes_chat"), {
             sessionID: sessionID, text: response, sender: "bot", timestamp: serverTimestamp()
         });
     }, 600);
 }
 
-// --- ESCUCHA DE RESPUESTAS DEL ADMINISTRADOR ---
+// Escuchar respuestas del Admin
 const q = query(collection(db, "mensajes_chat"), orderBy("timestamp"));
 onSnapshot(q, (snapshot) => {
     snapshot.docChanges().forEach((change) => {
         if (change.type === "added") {
             const data = change.doc.data();
-            // Solo mostrar si es admin y para esta sesión
             if (data.sender === 'admin' && data.sessionID === sessionID) {
                 appendMessage(data.text, 'bot');
             }
