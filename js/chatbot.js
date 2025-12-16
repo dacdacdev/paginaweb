@@ -1,27 +1,30 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
 import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
-// --- CONFIGURACIÓN FIREBASE---
+// --- CONFIGURACIÓN FIREBASE (Mantén tus datos aquí) ---
 const firebaseConfig = {
+
     apiKey: "AIzaSyDqWjgoi8DwcZiXwp3nF1gQ0vvxZ39CUtQ",
     authDomain: "chatbot-web-v1.firebaseapp.com",
     projectId: "chatbot-web-v1",
     storageBucket: "chatbot-web-v1.firebasestorage.app",
     messagingSenderId: "7994049270",
     appId: "1:7994049270:web:f5e6a2652065bf4680a2d7",
-    measurementId: "G-H4VMDPG9SP"
 };
-
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const sessionID = localStorage.getItem('chatSessionID') || 'sess_' + Math.random().toString(36).substr(2, 9);
 localStorage.setItem('chatSessionID', sessionID);
 
+// --- VARIABLE DE CONTROL (NUEVO) ---
+// Recuperamos si el bot ya fue silenciado en esta sesión para que no se olvide al refrescar
+let botMuted = localStorage.getItem('botMuted_' + sessionID) === 'true';
+
 const botKnowledge = {
     "precios": "Nuestros servicios empiezan desde 0€ para el plan básico.",
     "horario": "Estamos abiertos de Lunes a Viernes de 9:00 a 18:00.",
     "contacto": "Te paso con un humano. Deja tu correo y te escribimos.",
-    "default": "Entiendo. Un agente humano revisará tu mensaje en breve."
+    "default": "Entiendo. He notificado a un agente humano. Te responderemos pronto y dejaré de interrumpir."
 };
 
 const defaultQuestions = [
@@ -30,31 +33,22 @@ const defaultQuestions = [
     { text: "Soporte Humano", keyword: "contacto" }
 ];
 
-// Función para mostrar los 3 puntitos de "escribiendo..."
+// --- FUNCIONES AUXILIARES UI ---
 function showTypingIndicator() {
     const msgsDiv = document.getElementById('chat-messages');
     if(document.getElementById('typing-dots-loader')) return;
-
     const loaderDiv = document.createElement('div');
     loaderDiv.id = 'typing-dots-loader';
     loaderDiv.className = 'typing-indicator bot-msg';
-    loaderDiv.innerHTML = `
-        <div class="typing-dot"></div>
-        <div class="typing-dot"></div>
-        <div class="typing-dot"></div>
-    `;
+    loaderDiv.innerHTML = `<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>`;
     msgsDiv.appendChild(loaderDiv);
     msgsDiv.scrollTop = msgsDiv.scrollHeight;
 }
 
-// Función para quitar los 3 puntitos
 function hideTypingIndicator() {
     const loader = document.getElementById('typing-dots-loader');
     if (loader) loader.remove();
 }
-
-
-// --- FUNCIONES LÓGICAS PRINCIPALES ---
 
 function toggleChat() {
     const chat = document.getElementById('chat-window');
@@ -78,54 +72,92 @@ function appendMessage(text, sender) {
     const msgsDiv = document.getElementById('chat-messages');
     const div = document.createElement('div');
     div.className = `message ${sender === 'bot' ? 'bot-msg' : 'user-msg'}`;
-    // Usamos innerHTML para permitir saltos de línea si la respuesta los tuviera
-    div.innerHTML = text; 
+    div.innerHTML = text;
     msgsDiv.appendChild(div);
     msgsDiv.scrollTop = msgsDiv.scrollHeight;
 }
 
-
-// --- LÓGICA DEL BOT MEJORADA CON INDICADOR DE CARGA ---
+// --- LÓGICA PRINCIPAL DEL BOT (MODIFICADA) ---
 async function handleUserMessage(text, keyword = null) {
-    // 1. Mostrar mensaje del usuario inmediatamente
     appendMessage(text, 'user');
 
-    // 2. Guardar en Firebase (en segundo plano)
+    // 1. Guardar mensaje del usuario siempre
     try {
-        addDoc(collection(db, "mensajes_chat"), {
+        await addDoc(collection(db, "mensajes_chat"), {
             sessionID: sessionID, text: text, sender: "user", timestamp: serverTimestamp(), read: false
         });
     } catch (e) { console.error("Error DB:", e); }
 
-    // 3. MOSTRAR INDICADOR DE ESCRIBIENDO...
-    showTypingIndicator();
+    // 2. Comprobar si debemos responder o callarnos
+    let response = null;
+    let shouldReply = true;
+    const lower = text.toLowerCase();
 
-    // 4. Simular tiempo de "pensar"
-    setTimeout(async () => {
-        // Calcular respuesta
-        let response = botKnowledge["default"];
-        const lower = text.toLowerCase();
-        if (keyword && botKnowledge[keyword]) response = botKnowledge[keyword];
-        else {
-            for (const key in botKnowledge) {
-                if (lower.includes(key)) { response = botKnowledge[key]; break; }
+    // Prioridad 1: ¿Es una palabra clave que conocemos? (Siempre respondemos a esto)
+    if (keyword && botKnowledge[keyword]) {
+        response = botKnowledge[keyword];
+    } else {
+        // Búsqueda manual de keywords
+        let found = false;
+        for (const key in botKnowledge) {
+            if (key !== "default" && lower.includes(key)) {
+                response = botKnowledge[key];
+                found = true;
+                break;
             }
         }
 
-        // 5. OCULTAR INDICADOR Y MOSTRAR RESPUESTA
-        hideTypingIndicator();
-        appendMessage(response, 'bot');
-        
-        // Guardar respuesta del bot
-        await addDoc(collection(db, "mensajes_chat"), {
-            sessionID: sessionID, text: response, sender: "bot", timestamp: serverTimestamp()
-        });
+        // Prioridad 2: No sabemos la respuesta...
+        if (!found) {
+            // (NUEVO) AQUÍ ESTÁ EL TRUCO:
+            if (botMuted) {
+                // Si el bot ya está silenciado (ya avisó al humano), NO responde nada.
+                shouldReply = false; 
+            } else {
+                // Si es la primera vez que falla, manda el mensaje default y se silencia.
+                response = botKnowledge["default"];
+                botMuted = true; // <--- Activamos el silencio
+                localStorage.setItem('botMuted_' + sessionID, 'true'); // Guardamos estado
+            }
+        }
+    }
 
-    }, 1500);
+    // 3. Si decidimos responder, ejecutamos la animación y el envío
+    if (shouldReply && response) {
+        showTypingIndicator();
+        setTimeout(async () => {
+            hideTypingIndicator();
+            appendMessage(response, 'bot');
+            
+            await addDoc(collection(db, "mensajes_chat"), {
+                sessionID: sessionID, text: response, sender: "bot", timestamp: serverTimestamp()
+            });
+        }, 1000);
+    }
 }
 
+// --- ESCUCHAR AL HUMANO (ADMIN) ---
+const q = query(collection(db, "mensajes_chat"), orderBy("timestamp"));
+onSnapshot(q, (snapshot) => {
+    snapshot.docChanges().forEach((change) => {
+        if (change.type === "added") {
+            const data = change.doc.data();
+            
+            // Si el mensaje es del ADMIN y es para mí
+            if (data.sender === 'admin' && data.sessionID === sessionID) {
+                appendMessage(data.text, 'bot');
+                
+                // (NUEVO) Si el humano habla, el bot se calla para siempre en esta sesión
+                if (!botMuted) {
+                    botMuted = true;
+                    localStorage.setItem('botMuted_' + sessionID, 'true');
+                }
+            }
+        }
+    });
+});
 
-// --- INICIALIZACIÓN DE EVENTOS ---
+// --- INICIALIZACIÓN ---
 document.addEventListener('DOMContentLoaded', () => {
     const toggleBtn = document.querySelector('.chat-toggle-btn');
     if(toggleBtn) toggleBtn.addEventListener('click', toggleChat);
@@ -154,17 +186,4 @@ document.addEventListener('DOMContentLoaded', () => {
             optionsContainer.appendChild(btn);
         });
     }
-});
-
-// Escuchar respuestas del Admin
-const q = query(collection(db, "mensajes_chat"), orderBy("timestamp"));
-onSnapshot(q, (snapshot) => {
-    snapshot.docChanges().forEach((change) => {
-        if (change.type === "added") {
-            const data = change.doc.data();
-            if (data.sender === 'admin' && data.sessionID === sessionID) {
-                appendMessage(data.text, 'bot');
-            }
-        }
-    });
 });
