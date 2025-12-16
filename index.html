@@ -13,6 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="chatbot.css">
 
     <script>
         tailwind.config = {
@@ -544,5 +545,27 @@
     </footer>
     
     <script src="script.js"></script>
+    <button class="chat-toggle-btn" onclick="toggleChat()">
+        <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+    </button>
+
+    <div class="chat-container" id="chat-window">
+        <div class="chat-header">
+            <span>Asistente Virtual</span>
+            <span class="close-chat" onclick="toggleChat()">✕</span>
+        </div>
+        <div id="chat-messages">
+            <div class="message bot-msg">
+                Hola, ¿en qué puedo ayudarte?
+                <div class="quick-options" id="options-container"></div>
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chat-user-input" placeholder="Escribe aquí..." onkeypress="handleKeyPress(event)">
+            <button id="chat-send-btn" onclick="sendMessage()">Enviar</button>
+        </div>
+    </div>
+
+    <script type="module" src="chatbot.js"></script>
 </body>
 </html>
