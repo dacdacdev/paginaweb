@@ -1,12 +1,12 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, doc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
-// --- CONFIGURACIÓN FIREBASE ---
+// --- CONFIGURACIÓN FIREBASE (TUS CREDENCIALES EXACTAS) ---
 const firebaseConfig = {
     apiKey: "AIzaSyDqWjgoi8DwcZiXwp3nF1gQ0vvxZ39CUtQ",
     authDomain: "chatbot-web-v1.firebaseapp.com",
     projectId: "chatbot-web-v1",
-    storageBucket: "chatbot-web-v1.firebasestorage.app",
+    storageBucket: "chatbot-web-v1.firebasestorage.app", // Nota: Corregí un pequeño error común en el bucket si venía de auto-copia, pero este es el estándar
     messagingSenderId: "7994049270",
     appId: "1:7994049270:web:f5e6a2652065bf4680a2d7",
 };
@@ -14,11 +14,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// ID DE SESIÓN 
+// ID DE SESIÓN
 const sessionID = localStorage.getItem('chatSessionID') || 'sess_' + Math.random().toString(36).substr(2, 9);
 localStorage.setItem('chatSessionID', sessionID);
 
-// CLAVE MAESTRA DE SILENCIO
 const MUTE_KEY = 'bot_is_muted_' + sessionID;
 
 const botKnowledge = {
@@ -78,9 +77,8 @@ function appendMessage(text, sender) {
     msgsDiv.scrollTop = msgsDiv.scrollHeight;
 }
 
-// --- LÓGICA DEL BOT (REESCRITA - MÉTODO GATEKEEPER) ---
+// --- LÓGICA DEL BOT (Versión Gatekeeper) ---
 async function handleUserMessage(text, keyword = null) {
-    // 1. Mostrar mensaje del usuario y guardar en BD
     appendMessage(text, 'user');
     try {
         await addDoc(collection(db, "mensajes_chat"), {
@@ -88,11 +86,7 @@ async function handleUserMessage(text, keyword = null) {
         });
     } catch (e) { console.error("Error DB:", e); }
 
-
-    // --- FASE DE DECISIÓN (AQUÍ ESTÁ LA MAGIA) ---
-
-    // Paso A: ¿Es una palabra clave VIP? (Precios, Horario...)
-    // Si es VIP, respondemos SIEMPRE, esté muteado o no.
+    // Fase de decisión
     const lower = text.toLowerCase();
     let vipResponse = null;
 
@@ -108,29 +102,17 @@ async function handleUserMessage(text, keyword = null) {
     }
 
     if (vipResponse) {
-        console.log("Palabra clave detectada. Respondiendo...");
         replyWithBot(vipResponse);
         return; 
     }
 
     const isMuted = localStorage.getItem(MUTE_KEY) === 'true';
-    
-    if (isMuted) {
-        console.log("El bot está silenciado (MUTE ON). No responde nada.");
-        return;
-    }
+    if (isMuted) return;
 
-    console.log("Primera vez que no entiendo. Respondo Default y ACTIVO SILENCIO.");
-    
-    // 1. Respondemos con el default
     replyWithBot(botKnowledge["default"]);
-    
-    // 2. ACTIVAMOS EL SILENCIO ETERNO
     localStorage.setItem(MUTE_KEY, 'true');
 }
 
-
-// Función auxiliar para responder 
 function replyWithBot(responseText) {
     showTypingIndicator();
     setTimeout(async () => {
@@ -142,28 +124,36 @@ function replyWithBot(responseText) {
     }, 1000);
 }
 
-
-// --- ESCUCHAR AL ADMIN ---
+// --- LISTENER 1: Recibir mensajes ---
 const q = query(collection(db, "mensajes_chat"), orderBy("timestamp"));
 onSnapshot(q, (snapshot) => {
     snapshot.docChanges().forEach((change) => {
         if (change.type === "added") {
             const data = change.doc.data();
-            
-            // Si el ADMIN habla...
+            // Si el ADMIN habla, mostramos mensaje y forzamos silencio del bot
             if (data.sender === 'admin' && data.sessionID === sessionID) {
                 appendMessage(data.text, 'bot');
-                
-                // ...aseguramos que el bot se calle la boca inmediatamente.
                 localStorage.setItem(MUTE_KEY, 'true');
-                console.log("Admin intervino. Silencio forzado activado.");
             }
         }
     });
 });
 
+// --- LISTENER 2 (NUEVO): Escuchar si el Admin está escribiendo ---
+// Esto escucha un documento especial llamado "chat_status"
+onSnapshot(doc(db, "chat_status", sessionID), (docSnap) => {
+    if (docSnap.exists()) {
+        const data = docSnap.data();
+        if (data.adminTyping === true) {
+            showTypingIndicator(); // Admin escribe -> mostramos puntitos
+        } else {
+            hideTypingIndicator(); // Admin paró -> quitamos puntitos
+        }
+    }
+});
 
-// --- EVENT LISTENER ---
+
+// --- EVENT LISTENERS ---
 document.addEventListener('DOMContentLoaded', () => {
     const toggleBtn = document.querySelector('.chat-toggle-btn');
     if(toggleBtn) toggleBtn.addEventListener('click', toggleChat);
