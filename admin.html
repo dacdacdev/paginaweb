@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel de Control - Chatbot</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; height: 100vh; background: #f3f4f6; }
+        
+        /* BARRA LATERAL (LISTA DE USUARIOS) */
+        #sidebar {
+            width: 300px; background: white; border-right: 1px solid #ddd;
+            display: flex; flex-direction: column;
+        }
+        .sidebar-header { padding: 20px; background: #4F46E5; color: white; font-weight: bold; }
+        #user-list { flex: 1; overflow-y: auto; }
+        .user-item {
+            padding: 15px; border-bottom: 1px solid #eee; cursor: pointer; transition: 0.2s;
+        }
+        .user-item:hover, .user-item.active { background: #e0e7ff; }
+        .user-item strong { display: block; margin-bottom: 5px; }
+        .user-item span { font-size: 0.8em; color: #666; }
+
+        /* ÁREA PRINCIPAL DE CHAT */
+        #chat-area { flex: 1; display: flex; flex-direction: column; background: #fff; }
+        #current-chat-header {
+            padding: 15px; border-bottom: 1px solid #ddd; background: #f9fafb; font-weight: bold; color: #333;
+        }
+        #messages-container { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; background: #f3f4f6; }
+        
+        /* BURBUJAS */
+        .msg { max-width: 70%; padding: 10px 15px; border-radius: 10px; font-size: 0.9em; position: relative; }
+        .msg-user { align-self: flex-start; background: white; border: 1px solid #ddd; color: #333; }
+        .msg-bot { align-self: flex-end; background: #e5e7eb; color: #333; font-style: italic; } /* Respuestas automáticas */
+        .msg-admin { align-self: flex-end; background: #4F46E5; color: white; } /* TUS RESPUESTAS */
+
+        .sender-tag { font-size: 0.7em; opacity: 0.7; margin-bottom: 3px; display: block; }
+
+        /* INPUT AREA */
+        #input-area { padding: 20px; border-top: 1px solid #ddd; display: flex; gap: 10px; background: white; }
+        input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
+        button { padding: 10px 20px; background: #4F46E5; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        button:disabled { background: #ccc; }
+
+    </style>
+</head>
+<body>
+
+    <div id="sidebar">
+        <div class="sidebar-header">Bandeja de Entrada</div>
+        <div id="user-list">
+            <div style="padding:20px; color:#888">Cargando chats...</div>
+        </div>
+    </div>
+
+    <div id="chat-area">
+        <div id="current-chat-header">Selecciona un chat de la izquierda</div>
+        <div id="messages-container"></div>
+        
+        <div id="input-area">
+            <input type="text" id="admin-input" placeholder="Escribe tu respuesta..." disabled>
+            <button id="send-btn" onclick="sendAdminReply()" disabled>Enviar</button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+        // --- PEGA AQUÍ TU CONFIGURACIÓN (LA MISMA QUE EN CHATBOT.JS) ---
+        const firebaseConfig = {
+            apiKey: "TU_API_KEY",
+            authDomain: "TU_PROYECTO.firebaseapp.com",
+            projectId: "TU_PROYECTO_ID",
+            storageBucket: "TU_PROYECTO.appspot.com",
+            messagingSenderId: "NUMEROS",
+            appId: "TU_APP_ID"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        let allMessages = [];
+        let groupedChats = {};
+        let currentSessionID = null;
+
+        // 1. ESCUCHAR TODOS LOS MENSAJES DE LA BASE DE DATOS
+        const q = query(collection(db, "mensajes_chat"), orderBy("timestamp", "asc"));
+        
+        onSnapshot(q, (snapshot) => {
+            allMessages = [];
+            groupedChats = {}; // Reiniciamos agrupación
+
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                allMessages.push(data);
+                
+                // Agrupar mensajes por SessionID
+                if (!groupedChats[data.sessionID]) {
+                    groupedChats[data.sessionID] = [];
+                }
+                groupedChats[data.sessionID].push(data);
+            });
+
+            renderSidebar();
+            if (currentSessionID) {
+                renderChat(currentSessionID); // Refrescar chat si está abierto
+            }
+        });
+
+        // 2. MOSTRAR LISTA DE USUARIOS (BARRA LATERAL)
+        function renderSidebar() {
+            const listDiv = document.getElementById('user-list');
+            listDiv.innerHTML = '';
+
+            // Obtener IDs únicos y ordenarlos por mensaje más reciente (invertido)
+            const sessionIDs = Object.keys(groupedChats).sort((a,b) => {
+                const lastMsgA = groupedChats[a][groupedChats[a].length -1].timestamp;
+                const lastMsgB = groupedChats[b][groupedChats[b].length -1].timestamp;
+                return (lastMsgB?.seconds || 0) - (lastMsgA?.seconds || 0); 
+            });
+
+            sessionIDs.forEach(id => {
+                const msgs = groupedChats[id];
+                const lastMsg = msgs[msgs.length - 1];
+                
+                const div = document.createElement('div');
+                div.className = `user-item ${id === currentSessionID ? 'active' : ''}`;
+                div.innerHTML = `
+                    <strong>Usuario: ${id.substring(0,6)}...</strong>
+                    <span>${lastMsg.text.substring(0, 30)}...</span>
+                `;
+                div.onclick = () => selectChat(id);
+                listDiv.appendChild(div);
+            });
+        }
+
+        // 3. SELECCIONAR UN CHAT
+        window.selectChat = (sessionID) => {
+            currentSessionID = sessionID;
+            document.getElementById('current-chat-header').innerText = `Chat con sesión: ${sessionID}`;
+            document.getElementById('admin-input').disabled = false;
+            document.getElementById('send-btn').disabled = false;
+            renderChat(sessionID);
+            renderSidebar(); // Para actualizar el marcado "active"
+        };
+
+        // 4. MOSTRAR MENSAJES DEL CHAT SELECCIONADO
+        function renderChat(sessionID) {
+            const container = document.getElementById('messages-container');
+            container.innerHTML = '';
+            
+            const msgs = groupedChats[sessionID] || [];
+            
+            msgs.forEach(msg => {
+                const div = document.createElement('div');
+                // Estilo según quién envía
+                let typeClass = 'msg-user';
+                if (msg.sender === 'bot') typeClass = 'msg-bot';
+                if (msg.sender === 'admin') typeClass = 'msg-admin';
+
+                div.className = `msg ${typeClass}`;
+                div.innerHTML = `
+                    <span class="sender-tag">${msg.sender.toUpperCase()}</span>
+                    ${msg.text}
+                `;
+                container.appendChild(div);
+            });
+            container.scrollTop = container.scrollHeight;
+        }
+
+        // 5. ENVIAR RESPUESTA (AQUÍ ESTÁ LA AUTOMATIZACIÓN)
+        window.sendAdminReply = async () => {
+            const input = document.getElementById('admin-input');
+            const text = input.value.trim();
+
+            if (!text || !currentSessionID) return;
+
+            // AQUÍ OCURRE LA MAGIA AUTOMÁTICA
+            // El código rellena los campos tediosos por ti
+            try {
+                await addDoc(collection(db, "mensajes_chat"), {
+                    text: text,
+                    sender: "admin",       // <-- Automático
+                    sessionID: currentSessionID, // <-- Automático (el que tienes seleccionado)
+                    timestamp: serverTimestamp(), // <-- Automático
+                    read: true
+                });
+                input.value = ''; // Limpiar input
+            } catch (e) {
+                alert("Error al enviar: " + e.message);
+            }
+        };
+
+        // Permitir enviar con Enter
+        document.getElementById('admin-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendAdminReply();
+        });
+
+    </script>
+</body>
+</html>
