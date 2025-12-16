@@ -29,8 +29,6 @@ const defaultQuestions = [
     { text: "Soporte Humano", keyword: "contacto" }
 ];
 
-// --- FUNCIONES AUXILIARES DE UI (NUEVAS) ---
-
 // Función para mostrar los 3 puntitos de "escribiendo..."
 function showTypingIndicator() {
     const msgsDiv = document.getElementById('chat-messages');
