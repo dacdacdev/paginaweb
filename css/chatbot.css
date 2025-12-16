@@ -1,7 +1,5 @@
-/* chatbot.css - Versión Premium V2 */
 :root {
-    /* Usamos un degradado moderno en lugar de color plano */
-    --chat-gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); /* Índigo a morado */
+    --chat-gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
     --chat-bg: #ffffff;
     --chat-text: #1f2937;
     --chat-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
@@ -24,7 +22,6 @@
 }
 .chat-toggle-btn:hover { transform: scale(1.1) rotate(5deg); box-shadow: 0 15px 30px -5px rgba(79, 70, 229, 0.3); }
 .chat-toggle-btn svg { fill: white; width: 32px; height: 32px; transition: transform 0.3s; }
-/* Pequeño truco: rotar el icono si el chat está abierto (se controla con JS si quisieras) */
 .chat-toggle-btn.open svg { transform: rotate(45deg); }
 
 
@@ -44,7 +41,7 @@
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ESTADO ABIERTO (Se activa con JS) */
+/* ESTADO ABIERTO*/
 .chat-container.open {
     opacity: 1;
     visibility: visible;
@@ -67,7 +64,7 @@
     background-color: #f8fafc; /* Fondo ligeramente gris */
     display: flex; flex-direction: column; gap: 12px;
 }
-/* Scrollbar moderna y fina */
+/* Scrollbar */
 #chat-messages::-webkit-scrollbar { width: 6px; }
 #chat-messages::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 10px; }
 
@@ -113,7 +110,7 @@
 }
 #chat-send-btn:hover { opacity: 0.9; }
 
-/* --- INDICADOR DE "ESCRIBIENDO..." (NUEVO) --- */
+/* --- Escribiendo*/
 .typing-indicator {
     display: flex; align-items: center; gap: 4px;
     padding: 12px 16px; background: white; border: 1px solid #e5e7eb;

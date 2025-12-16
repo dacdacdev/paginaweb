@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
 import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
-// --- CONFIGURACIÓN FIREBASE (PON TUS DATOS AQUÍ) ---
+// --- CONFIGURACIÓN FIREBASE---
 const firebaseConfig = {
     apiKey: "TU_API_KEY_AQUI",
     authDomain: "TU_PROYECTO.firebaseapp.com",
@@ -32,7 +32,6 @@ const defaultQuestions = [
 // Función para mostrar los 3 puntitos de "escribiendo..."
 function showTypingIndicator() {
     const msgsDiv = document.getElementById('chat-messages');
-    // Si ya existe, no lo creamos de nuevo
     if(document.getElementById('typing-dots-loader')) return;
 
     const loaderDiv = document.createElement('div');
@@ -56,10 +55,8 @@ function hideTypingIndicator() {
 
 // --- FUNCIONES LÓGICAS PRINCIPALES ---
 
-// Modificado para usar clases CSS para animaciones suaves
 function toggleChat() {
     const chat = document.getElementById('chat-window');
-    // Alternamos la clase 'open' que activa las transiciones CSS
     chat.classList.toggle('open');
 }
 
@@ -99,10 +96,10 @@ async function handleUserMessage(text, keyword = null) {
         });
     } catch (e) { console.error("Error DB:", e); }
 
-    // 3. MOSTRAR INDICADOR DE "ESCRIBIENDO..."
+    // 3. MOSTRAR INDICADOR DE ESCRIBIENDO...
     showTypingIndicator();
 
-    // 4. Simular tiempo de "pensar" (aumentado un poco para que se vea la animación)
+    // 4. Simular tiempo de "pensar"
     setTimeout(async () => {
         // Calcular respuesta
         let response = botKnowledge["default"];
@@ -123,7 +120,7 @@ async function handleUserMessage(text, keyword = null) {
             sessionID: sessionID, text: response, sender: "bot", timestamp: serverTimestamp()
         });
 
-    }, 1500); // Retraso de 1.5 segundos para que parezca más real
+    }, 1500);
 }
 
 
@@ -158,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Escuchar respuestas del Admin (Aquí no ponemos typing indicator, debe ser inmediato)
+// Escuchar respuestas del Admin
 const q = query(collection(db, "mensajes_chat"), orderBy("timestamp"));
 onSnapshot(q, (snapshot) => {
     snapshot.docChanges().forEach((change) => {
