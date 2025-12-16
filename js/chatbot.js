@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
 import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
-// --- CONFIGURACIÓN FIREBASE (Asegúrate de que tus datos siguen aquí) ---
+// --- CONFIGURACIÓN FIREBASE ---
 const firebaseConfig = {
     apiKey: "AIzaSyDqWjgoi8DwcZiXwp3nF1gQ0vvxZ39CUtQ",
     authDomain: "chatbot-web-v1.firebaseapp.com",
@@ -14,18 +14,18 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// ID DE SESIÓN
+// ID DE SESIÓN 
 const sessionID = localStorage.getItem('chatSessionID') || 'sess_' + Math.random().toString(36).substr(2, 9);
 localStorage.setItem('chatSessionID', sessionID);
 
-// CLAVE PARA EL SILENCIO (Usamos una clave única por sesión)
-const MUTE_KEY = 'botMuted_' + sessionID;
+// CLAVE MAESTRA DE SILENCIO
+const MUTE_KEY = 'bot_is_muted_' + sessionID;
 
 const botKnowledge = {
     "precios": "Nuestros servicios empiezan desde 0€ para el plan básico.",
     "horario": "Estamos abiertos de Lunes a Viernes de 9:00 a 18:00.",
     "contacto": "Te paso con un humano. Deja tu correo y te escribimos.",
-    "default": "Entiendo. He notificado a un agente humano. Te responderemos pronto y dejaré de interrumpir."
+    "default": "Entiendo. Un agente humano revisará tu mensaje en breve."
 };
 
 const defaultQuestions = [
@@ -34,7 +34,7 @@ const defaultQuestions = [
     { text: "Soporte Humano", keyword: "contacto" }
 ];
 
-// --- FUNCIONES UI ---
+// --- FUNCIONES VISUALES ---
 function showTypingIndicator() {
     const msgsDiv = document.getElementById('chat-messages');
     if(document.getElementById('typing-dots-loader')) return;
@@ -78,102 +78,101 @@ function appendMessage(text, sender) {
     msgsDiv.scrollTop = msgsDiv.scrollHeight;
 }
 
-// --- LÓGICA PRINCIPAL DEL BOT (CORREGIDA) ---
+// --- LÓGICA DEL BOT (REESCRITA - MÉTODO GATEKEEPER) ---
 async function handleUserMessage(text, keyword = null) {
+    // 1. Mostrar mensaje del usuario y guardar en BD
     appendMessage(text, 'user');
-
-    // 1. Guardar mensaje del usuario
     try {
         await addDoc(collection(db, "mensajes_chat"), {
             sessionID: sessionID, text: text, sender: "user", timestamp: serverTimestamp(), read: false
         });
     } catch (e) { console.error("Error DB:", e); }
 
-    // 2. LEER ESTADO DE SILENCIO DIRECTAMENTE DEL STORAGE
-    // Esto asegura que leemos el valor real actual
-    const isMuted = localStorage.getItem(MUTE_KEY) === 'true';
-    console.log("Estado del Bot (Silenciado):", isMuted);
 
-    let response = null;
-    let shouldReply = true;
+    // --- FASE DE DECISIÓN (AQUÍ ESTÁ LA MAGIA) ---
+
+    // Paso A: ¿Es una palabra clave VIP? (Precios, Horario...)
+    // Si es VIP, respondemos SIEMPRE, esté muteado o no.
     const lower = text.toLowerCase();
+    let vipResponse = null;
 
-    // Prioridad 1: Palabras clave conocidas (El bot SIEMPRE responde a esto, aunque esté silenciado)
     if (keyword && botKnowledge[keyword]) {
-        response = botKnowledge[keyword];
+        vipResponse = botKnowledge[keyword];
     } else {
-        // Buscar keywords en el texto
-        let found = false;
         for (const key in botKnowledge) {
             if (key !== "default" && lower.includes(key)) {
-                response = botKnowledge[key];
-                found = true;
+                vipResponse = botKnowledge[key];
                 break;
             }
         }
-
-        // Prioridad 2: No entendió nada
-        if (!found) {
-            if (isMuted) {
-                // SI YA ESTÁ SILENCIADO -> NO HACEMOS NADA
-                console.log("El bot está silenciado. No responderá.");
-                shouldReply = false;
-            } else {
-                // SI ES LA PRIMERA VEZ -> RESPONDE Y SE SILENCIA
-                console.log("No entiendo. Respondo default y me silencio.");
-                response = botKnowledge["default"];
-                // Activamos el silencio inmediatamente
-                localStorage.setItem(MUTE_KEY, 'true');
-            }
-        }
     }
 
-    // 3. Ejecutar respuesta si corresponde
-    if (shouldReply && response) {
-        showTypingIndicator();
-        setTimeout(async () => {
-            hideTypingIndicator();
-            appendMessage(response, 'bot');
-            
-            await addDoc(collection(db, "mensajes_chat"), {
-                sessionID: sessionID, text: response, sender: "bot", timestamp: serverTimestamp()
-            });
-        }, 1000);
+    if (vipResponse) {
+        console.log("Palabra clave detectada. Respondiendo...");
+        replyWithBot(vipResponse);
+        return; 
     }
+
+    const isMuted = localStorage.getItem(MUTE_KEY) === 'true';
+    
+    if (isMuted) {
+        console.log("El bot está silenciado (MUTE ON). No responde nada.");
+        return;
+    }
+
+    console.log("Primera vez que no entiendo. Respondo Default y ACTIVO SILENCIO.");
+    
+    // 1. Respondemos con el default
+    replyWithBot(botKnowledge["default"]);
+    
+    // 2. ACTIVAMOS EL SILENCIO ETERNO
+    localStorage.setItem(MUTE_KEY, 'true');
 }
 
-// --- ESCUCHAR AL ADMIN---
+
+// Función auxiliar para responder 
+function replyWithBot(responseText) {
+    showTypingIndicator();
+    setTimeout(async () => {
+        hideTypingIndicator();
+        appendMessage(responseText, 'bot');
+        await addDoc(collection(db, "mensajes_chat"), {
+            sessionID: sessionID, text: responseText, sender: "bot", timestamp: serverTimestamp()
+        });
+    }, 1000);
+}
+
+
+// --- ESCUCHAR AL ADMIN ---
 const q = query(collection(db, "mensajes_chat"), orderBy("timestamp"));
 onSnapshot(q, (snapshot) => {
     snapshot.docChanges().forEach((change) => {
         if (change.type === "added") {
             const data = change.doc.data();
+            
+            // Si el ADMIN habla...
             if (data.sender === 'admin' && data.sessionID === sessionID) {
                 appendMessage(data.text, 'bot');
-                localStorage.setItem(MUTE_KEY, 'true'); 
-                console.log("Admin habló. Bot mantenido en silencio.");
+                
+                // ...aseguramos que el bot se calle la boca inmediatamente.
+                localStorage.setItem(MUTE_KEY, 'true');
+                console.log("Admin intervino. Silencio forzado activado.");
             }
         }
     });
 });
 
-// --- EVENT LISTENERS ---
+
+// --- EVENT LISTENER ---
 document.addEventListener('DOMContentLoaded', () => {
     const toggleBtn = document.querySelector('.chat-toggle-btn');
     if(toggleBtn) toggleBtn.addEventListener('click', toggleChat);
-
     const closeBtn = document.querySelector('.close-chat');
     if(closeBtn) closeBtn.addEventListener('click', toggleChat);
-
     const sendBtn = document.getElementById('chat-send-btn');
     if(sendBtn) sendBtn.addEventListener('click', sendMessage);
-
     const inputField = document.getElementById('chat-user-input');
-    if(inputField) {
-        inputField.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') sendMessage();
-        });
-    }
+    if(inputField) inputField.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendMessage(); });
 
     const optionsContainer = document.getElementById('options-container');
     if(optionsContainer) {
@@ -186,4 +185,4 @@ document.addEventListener('DOMContentLoaded', () => {
             optionsContainer.appendChild(btn);
         });
     }
-}); 
+});
