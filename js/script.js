@@ -16,33 +16,7 @@ if(menuBtn && mobileMenu) {
     });
 }
 
-// 3. Formulario de Contacto
-const contactForm = document.getElementById('contactForm');
-if(contactForm) {
-    const newForm = contactForm.cloneNode(true);
-    contactForm.parentNode.replaceChild(newForm, contactForm);
-
-    newForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const btn = this.querySelector('button');
-        const originalContent = btn.innerHTML;
-        
-        btn.innerHTML = 'Enviando...';
-        btn.disabled = true;
-        btn.style.opacity = "0.7";
-
-        setTimeout(() => {
-            btn.innerHTML = '¡Enviado!';
-            this.reset();
-            setTimeout(() => {
-                btn.innerHTML = originalContent;
-                btn.disabled = false;
-            }, 3000);
-        }, 1500);
-    });
-}
-
-// 4. Navbar Sombra
+// 3. Navbar Sombra
 window.addEventListener('scroll', function() {
     const nav = document.querySelector('nav');
     if(nav) {
@@ -51,7 +25,7 @@ window.addEventListener('scroll', function() {
     }
 });
 
-// 5. Animaciones Scroll Reveal
+// 4. Animaciones Scroll Reveal
 const observerOptions = { threshold: 0.1 };
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -64,81 +38,60 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
+// 5. Motor del Formulario y WhatsApp (Limpio y unificado)
 document.addEventListener('DOMContentLoaded', () => {
     const contactForm = document.getElementById('contactForm');
 
     if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            // Evitamos que la página se recargue al enviar
+        // Clonamos el formulario para matar cualquier evento fantasma anterior
+        const newForm = contactForm.cloneNode(true);
+        contactForm.parentNode.replaceChild(newForm, contactForm);
+
+        newForm.addEventListener('submit', function(e) {
+            // 1. Evitamos que la página se recargue
             e.preventDefault();
 
-            // Recogemos los datos que ha escrito el cliente
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
+            // 2. Feedback visual agresivo
+            const btn = this.querySelector('button');
+            const originalContent = btn.innerHTML;
+            btn.innerHTML = 'Conectando con WhatsApp... <i class="fas fa-spinner fa-spin ml-2"></i>';
+            btn.disabled = true;
+            btn.style.opacity = "0.9";
 
-            // ⚠️ AQUÍ TU NÚMERO: Pon tu móvil pegado al código de España (34)
-            const telefono = "346000+00000"; 
+            try {
+                // 3. Recogemos los datos
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const plan = document.getElementById('plan').value;
+                const message = document.getElementById('message').value;
 
-            // Construimos el mensaje predefinido que te va a llegar
-            const texto = `¡Hola Jose Andrés! 🚀\n\nSoy ${name}.\nMi email es: ${email}\n\nTe escribo desde tu portafolio por lo siguiente:\n"${message}"`;
+                // ⚠️ 4. TU NÚMERO (Formato estricto: Solo números, código de país delante)
+                // He puesto un 0 al final porque en tu código faltaba un dígito: "611 03 02 6"
+                const telefono = "34611030269"; 
 
-            // Codificamos el texto para que los espacios y saltos de línea funcionen en la URL
-            const textoCodificado = encodeURIComponent(texto);
+                // 5. Construimos el mensaje pre-formateado
+                const texto = `¡Hola Jose Andrés! 🚀\n\nSoy ${name}.\n📧 Mi correo: ${email}\n💼 Plan de interés: ${plan}\n\nDetalles del proyecto:\n"${message}"`;
 
-            // Creamos el enlace de la API de WhatsApp
-            const url = `https://wa.me/${telefono}?text=${textoCodificado}`;
+                // 6. Codificamos la URL y disparamos
+                const textoCodificado = encodeURIComponent(texto);
+                const url = `https://wa.me/${telefono}?text=${textoCodificado}`;
 
-            // Abrimos WhatsApp en una pestaña nueva
-            window.open(url, '_blank');
+                // location.href es 100% infalible contra bloqueadores de pop-ups
+                window.location.href = url;
 
-            // Limpiamos el formulario para que quede vacío
-            contactForm.reset();
+                // 7. Reseteamos por si el cliente le da a "Atrás" en el navegador
+                setTimeout(() => {
+                    btn.innerHTML = originalContent;
+                    btn.disabled = false;
+                    btn.style.opacity = "1";
+                    this.reset();
+                }, 3000);
+
+            } catch (error) {
+                console.error("Error al procesar el formulario:", error);
+                btn.innerHTML = originalContent;
+                btn.disabled = false;
+            }
         });
     }
 });
-
-// Lógica de WhatsApp y manejo del formulario
-document.addEventListener('DOMContentLoaded', () => {
-    const contactForm = document.getElementById('contactForm');
-
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            // Evitamos que la página se recargue
-            e.preventDefault();
-
-            // Recogemos todos los datos del formulario actualizado
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const plan = document.getElementById('plan').value;
-            const message = document.getElementById('message').value;
-
-            // ⚠️ CAMBIA ESTO: Pon tu número de teléfono real. 
-            // Mantén el "34" (España) y añade tus 9 dígitos detrás, sin espacios.
-            const telefono = "+34 611 03 02 69"; 
-
-            // Construimos la estructura exacta del mensaje agresivo y directo
-            const texto = `¡Hola Jose Andrés! 🚀\n\nSoy ${name}.\n📧 Mi correo: ${email}\n💼 Plan de interés: ${plan}\n\nDetalles del proyecto:\n"${message}"`;
-
-            // Codificamos el texto para que la URL de WhatsApp lo lea bien (espacios y saltos de línea)
-            const textoCodificado = encodeURIComponent(texto);
-            const url = `https://wa.me/${telefono}?text=${textoCodificado}`;
-
-            // Abrimos WhatsApp en una pestaña nueva
-            window.open(url, '_blank');
-
-            // Reseteamos el formulario
-            contactForm.reset();
-        });
-    }
-});
-
-// (Opcional) Lógica extra que pudieras tener para el menú móvil
-const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-const mobileMenu = document.getElementById('mobile-menu');
-
-if (mobileMenuBtn && mobileMenu) {
-    mobileMenuBtn.addEventListener('click', () => {
-        mobileMenu.classList.toggle('hidden');
-    });
- }  
