@@ -63,3 +63,37 @@ const observer = new IntersectionObserver((entries) => {
 }, observerOptions);
 
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+document.addEventListener('DOMContentLoaded', () => {
+    const contactForm = document.getElementById('contactForm');
+
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            // Evitamos que la página se recargue al enviar
+            e.preventDefault();
+
+            // Recogemos los datos que ha escrito el cliente
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            // ⚠️ AQUÍ TU NÚMERO: Pon tu móvil pegado al código de España (34)
+            const telefono = "34600000000"; 
+
+            // Construimos el mensaje predefinido que te va a llegar
+            const texto = `¡Hola Jose Andrés! 🚀\n\nSoy ${name}.\nMi email es: ${email}\n\nTe escribo desde tu portafolio por lo siguiente:\n"${message}"`;
+
+            // Codificamos el texto para que los espacios y saltos de línea funcionen en la URL
+            const textoCodificado = encodeURIComponent(texto);
+
+            // Creamos el enlace de la API de WhatsApp
+            const url = `https://wa.me/${telefono}?text=${textoCodificado}`;
+
+            // Abrimos WhatsApp en una pestaña nueva
+            window.open(url, '_blank');
+
+            // Limpiamos el formulario para que quede vacío
+            contactForm.reset();
+        });
+    }
+});
