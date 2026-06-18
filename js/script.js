@@ -97,3 +97,48 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// Lógica de WhatsApp y manejo del formulario
+document.addEventListener('DOMContentLoaded', () => {
+    const contactForm = document.getElementById('contactForm');
+
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            // Evitamos que la página se recargue
+            e.preventDefault();
+
+            // Recogemos todos los datos del formulario actualizado
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const plan = document.getElementById('plan').value;
+            const message = document.getElementById('message').value;
+
+            // ⚠️ CAMBIA ESTO: Pon tu número de teléfono real. 
+            // Mantén el "34" (España) y añade tus 9 dígitos detrás, sin espacios.
+            const telefono = "34600000000"; 
+
+            // Construimos la estructura exacta del mensaje agresivo y directo
+            const texto = `¡Hola Jose Andrés! 🚀\n\nSoy ${name}.\n📧 Mi correo: ${email}\n💼 Plan de interés: ${plan}\n\nDetalles del proyecto:\n"${message}"`;
+
+            // Codificamos el texto para que la URL de WhatsApp lo lea bien (espacios y saltos de línea)
+            const textoCodificado = encodeURIComponent(texto);
+            const url = `https://wa.me/${telefono}?text=${textoCodificado}`;
+
+            // Abrimos WhatsApp en una pestaña nueva
+            window.open(url, '_blank');
+
+            // Reseteamos el formulario
+            contactForm.reset();
+        });
+    }
+});
+
+// (Opcional) Lógica extra que pudieras tener para el menú móvil
+const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+const mobileMenu = document.getElementById('mobile-menu');
+
+if (mobileMenuBtn && mobileMenu) {
+    mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+}
