@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const message = document.getElementById('message').value;
 
             // ⚠️ AQUÍ TU NÚMERO: Pon tu móvil pegado al código de España (34)
-            const telefono = "34600000000"; 
+            const telefono = "346000+00000"; 
 
             // Construimos el mensaje predefinido que te va a llegar
             const texto = `¡Hola Jose Andrés! 🚀\n\nSoy ${name}.\nMi email es: ${email}\n\nTe escribo desde tu portafolio por lo siguiente:\n"${message}"`;
@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // ⚠️ CAMBIA ESTO: Pon tu número de teléfono real. 
             // Mantén el "34" (España) y añade tus 9 dígitos detrás, sin espacios.
-            const telefono = "34600000000"; 
+            const telefono = "+34 611 03 02 69"; 
 
             // Construimos la estructura exacta del mensaje agresivo y directo
             const texto = `¡Hola Jose Andrés! 🚀\n\nSoy ${name}.\n📧 Mi correo: ${email}\n💼 Plan de interés: ${plan}\n\nDetalles del proyecto:\n"${message}"`;
@@ -141,4 +141,4 @@ if (mobileMenuBtn && mobileMenu) {
     mobileMenuBtn.addEventListener('click', () => {
         mobileMenu.classList.toggle('hidden');
     });
-}
+ }  
