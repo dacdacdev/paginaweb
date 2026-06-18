@@ -6,13 +6,12 @@
     <title>DacDacDev | Desarrollador Back End</title>
     <meta name="description" content="Portafolio profesional de desarrollo web y software.">
     
+    <!-- NOTA: Para producción, reemplaza este script por tu CSS compilado -->
     <script src="https://cdn.tailwindcss.com"></script>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/chatbot.css">
     <script>
         tailwind.config = {
             theme: {
@@ -45,16 +44,33 @@
         details > summary::-webkit-details-marker {
             display: none;
         }
+        .gradient-text {
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
     </style>
 </head>
 <body class="bg-dark-bg text-slate-200 antialiased selection:bg-brand-500 selection:text-white">
 
     <!-- Navbar -->
-    <nav class="fixed w-full z-50 bg-dark-bg/80 backdrop-blur-md border-b border-slate-700/50">
+    <nav class="fixed w-full z-50 bg-dark-bg/80 backdrop-blur-md border-b border-slate-700/50 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex-shrink-0 cursor-pointer" onclick="window.scrollTo(0,0)">
-                    <span class="text-xl font-bold text-white">&lt;DacDac/<span class="text-brand-500">Dev</span>&gt;</span>
+                    <span class="text-xl font-bold text-white">&lt;Dac/<span class="text-brand-500">Dac</span>&gt;</span>
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-8">
@@ -75,12 +91,12 @@
         </div>
         <div class="md:hidden hidden bg-dark-card border-b border-slate-700" id="mobile-menu">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="#inicio" onclick="toggleMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Inicio</a>
-                <a href="#sobre-mi" onclick="toggleMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Sobre Mí</a>
-                <a href="#servicios" onclick="toggleMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Servicios</a>
-                <a href="#portfolio" onclick="toggleMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Portafolio</a>
-                <a href="#precios" onclick="toggleMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Precios</a>
-                <a href="#contacto" onclick="toggleMenu()" class="text-brand-500 font-bold block px-3 py-2 rounded-md text-base">Contrátame</a>
+                <a href="#inicio" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Inicio</a>
+                <a href="#sobre-mi" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Sobre Mí</a>
+                <a href="#servicios" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Servicios</a>
+                <a href="#portfolio" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Portafolio</a>
+                <a href="#precios" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Precios</a>
+                <a href="#contacto" class="text-brand-500 font-bold block px-3 py-2 rounded-md text-base">Contrátame</a>
             </div>
         </div>
     </nav>
@@ -134,7 +150,6 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                 <div class="reveal">
-                    <!-- Imagen de marcador de posición -->
                     <div class="relative">
                         <div class="absolute inset-0 bg-brand-500 rounded-2xl rotate-6 opacity-20"></div>
                         <img src="https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Sobre DacDacDev" class="relative rounded-2xl shadow-2xl w-full h-auto object-cover grayscale hover:grayscale-0 transition-all duration-500">
@@ -187,7 +202,6 @@
                 <p class="text-slate-400 max-w-2xl mx-auto">Soluciones a medida para cada etapa de tu negocio digital.</p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Servicio 1: Páginas Web -->
                 <div class="bg-dark-card p-8 rounded-2xl border border-slate-700/50 card-hover transition-all duration-300 reveal delay-100">
                     <div class="w-14 h-14 bg-brand-900/50 rounded-lg flex items-center justify-center mb-6 text-brand-500">
                         <i class="fas fa-globe text-2xl"></i>
@@ -196,7 +210,6 @@
                     <p class="text-slate-400 leading-relaxed">Sitios web corporativos, landing pages y aplicaciones web modernas. Diseño responsive y optimizado.</p>
                 </div>
                 
-                <!-- Servicio 2: Bases de Datos (Nuevo) -->
                 <div class="bg-dark-card p-8 rounded-2xl border border-slate-700/50 card-hover transition-all duration-300 reveal delay-200">
                     <div class="w-14 h-14 bg-purple-900/50 rounded-lg flex items-center justify-center mb-6 text-purple-400">
                         <i class="fas fa-database text-2xl"></i>
@@ -205,7 +218,6 @@
                     <p class="text-slate-400 leading-relaxed">Diseño, gestión y optimización de bases de datos SQL y NoSQL para asegurar la integridad y rapidez de tu información.</p>
                 </div>
 
-                <!-- Servicio 3: Estructuras Lógicas (Nuevo) -->
                 <div class="bg-dark-card p-8 rounded-2xl border border-slate-700/50 card-hover transition-all duration-300 reveal delay-300">
                     <div class="w-14 h-14 bg-blue-900/50 rounded-lg flex items-center justify-center mb-6 text-blue-400">
                         <i class="fas fa-project-diagram text-2xl"></i>
@@ -214,7 +226,6 @@
                     <p class="text-slate-400 leading-relaxed">Desarrollo de algoritmos complejos, arquitectura de software escalable y lógica de negocio eficiente.</p>
                 </div>
 
-                <!-- Servicio 4: E-commerce -->
                 <div class="bg-dark-card p-8 rounded-2xl border border-slate-700/50 card-hover transition-all duration-300 reveal delay-300">
                     <div class="w-14 h-14 bg-green-900/50 rounded-lg flex items-center justify-center mb-6 text-green-400">
                         <i class="fas fa-shopping-cart text-2xl"></i>
@@ -226,53 +237,19 @@
         </div>
     </section>
 
-    <!-- SECCIÓN: Proceso de Trabajo -->
-    <section class="py-20 bg-dark-card/50 border-y border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16 reveal">
-                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Cómo Trabajo</h2>
-                <p class="text-slate-400 max-w-2xl mx-auto">Un proceso simple y transparente para resultados garantizados.</p>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div class="text-center reveal delay-100">
-                    <div class="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center text-brand-500 text-2xl font-bold mx-auto mb-4 border border-slate-700">1</div>
-                    <h3 class="text-white font-bold mb-2">Análisis</h3>
-                    <p class="text-slate-400 text-sm">Estudiamos tus necesidades y definimos los objetivos clave.</p>
-                </div>
-                <div class="text-center reveal delay-200">
-                    <div class="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center text-brand-500 text-2xl font-bold mx-auto mb-4 border border-slate-700">2</div>
-                    <h3 class="text-white font-bold mb-2">Diseño</h3>
-                    <p class="text-slate-400 text-sm">Creamos la estructura visual y lógica de tu proyecto.</p>
-                </div>
-                <div class="text-center reveal delay-300">
-                    <div class="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center text-brand-500 text-2xl font-bold mx-auto mb-4 border border-slate-700">3</div>
-                    <h3 class="text-white font-bold mb-2">Desarrollo</h3>
-                    <p class="text-slate-400 text-sm">Programación limpia y optimizada con tecnologías modernas.</p>
-                </div>
-                <div class="text-center reveal delay-300">
-                    <div class="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center text-brand-500 text-2xl font-bold mx-auto mb-4 border border-slate-700">4</div>
-                    <h3 class="text-white font-bold mb-2">Lanzamiento</h3>
-                    <p class="text-slate-400 text-sm">Despliegue final y soporte post-lanzamiento.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Portfolio -->
-    <section id="portfolio" class="py-20 bg-slate-900/50">
+    <section id="portfolio" class="py-20 bg-slate-900/50 border-y border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-between items-end mb-12 reveal">
                 <div>
                     <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Proyectos Destacados</h2>
                     <p class="text-slate-400">Una selección de mis últimos trabajos.</p>
                 </div>
-                <a href="#" class="hidden md:flex text-brand-500 font-semibold hover:text-brand-400 items-center gap-2 mt-4 md:mt-0">
+                <a href="https://github.com/dacdacdev" target="_blank" class="hidden md:flex text-brand-500 font-semibold hover:text-brand-400 items-center gap-2 mt-4 md:mt-0">
                     Ver todo en GitHub <i class="fab fa-github"></i>
                 </a>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                
-                <!-- Proyecto 1: SoloCorte -->
                 <div class="group bg-dark-card rounded-xl overflow-hidden border border-slate-700/50 hover:border-brand-500/50 transition-all reveal delay-100">
                     <div class="h-48 overflow-hidden relative">
                         <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="SoloCorte" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
@@ -290,7 +267,6 @@
                     </div>
                 </div>
                 
-                <!-- Proyecto 2: Proyecto 00 Juego -->
                 <div class="group bg-dark-card rounded-xl overflow-hidden border border-slate-700/50 hover:border-brand-500/50 transition-all reveal delay-200">
                     <div class="h-48 overflow-hidden relative">
                         <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Proyecto Juego" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
@@ -307,130 +283,102 @@
                         <p class="text-slate-400 text-sm mb-4">Experiencia interactiva y divertida disponible online.</p>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
 
-    <!-- Pricing Section -->
-    <section id="precios" class="py-20 bg-dark-bg border-t border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Pricing Section (ACTUALIZADA: 2 PLANES AGRESIVOS) -->
+    <section id="precios" class="py-20 bg-dark-bg border-b border-slate-800">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16 reveal">
-                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Planes y Precios</h2>
-                <p class="text-slate-400 max-w-2xl mx-auto">Inversión transparente para impulsar tu proyecto al siguiente nivel.</p>
+                <h2 class="text-3xl md:text-5xl font-bold text-white mb-4 uppercase tracking-tight">Elige tu arsenal</h2>
+                <p class="text-slate-400 text-lg max-w-2xl mx-auto">Deja de perder clientes por no tener una infraestructura a la altura. Sin costes ocultos. Sin rodeos.</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Plan Básico -->
-                <div class="bg-dark-card p-8 rounded-2xl border border-slate-700/50 hover:border-slate-500 transition-all flex flex-col reveal delay-100">
+            <!-- Grid de 2 columnas -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+                
+                <!-- PLAN 1: DESPEGUE RÁPIDO (BÁSICO) -->
+                <div class="bg-dark-card p-8 rounded-2xl border border-slate-700/50 hover:border-slate-500 transition-all flex flex-col reveal delay-100 shadow-xl">
                     <div class="mb-6">
-                        <h3 class="text-xl font-semibold text-white mb-2">Básico</h3>
-                        <div class="flex items-baseline gap-1">
-                            <span class="text-4xl font-bold text-white">9.99€</span>
+                        <div class="inline-block px-3 py-1 bg-slate-800 text-slate-300 rounded-full text-xs font-bold tracking-wider mb-4 border border-slate-700">FASE 1</div>
+                        <h3 class="text-2xl font-bold text-white mb-2">Despegue Rápido</h3>
+                        <div class="flex items-baseline gap-1 mt-4">
+                            <span class="text-4xl font-black text-white">49.99€</span>
                             <span class="text-slate-500 text-sm">/ proyecto</span>
                         </div>
-                        <p class="text-slate-400 text-sm mt-4">Ideal para landing pages personales o pequeños negocios que necesitan presencia online.</p>
+                        <p class="text-slate-400 mt-4 leading-relaxed">Para negocios que necesitan existir en internet <span class="text-white font-bold">hoy mismo</span>. Tu tarjeta de presentación digital ultrarrápida, sin florituras innecesarias.</p>
                     </div>
-                    <ul class="space-y-4 mb-8 flex-1">
-                        <li class="flex items-start gap-3 text-slate-300 text-sm">
-                            <i class="fas fa-check text-brand-500 mt-1"></i> Creación de una sola página web (HTML, CSS, Js)
+                    <ul class="space-y-4 mb-8 flex-1 mt-4">
+                        <li class="flex items-start gap-3 text-slate-200">
+                            <i class="fas fa-bolt text-yellow-500 mt-1"></i> 
+                            <div><strong class="block">Código Puro (HTML5/CSS3/JS)</strong>Sin plantillas lentas. Carga instantánea.</div>
                         </li>
-                        <li class="flex items-start gap-3 text-slate-300 text-sm">
-                            <i class="fas fa-check text-brand-500 mt-1"></i> Soporte de un mes
+                        <li class="flex items-start gap-3 text-slate-200">
+                            <i class="fas fa-mobile-alt text-brand-500 mt-1"></i> 
+                            <div><strong class="block">100% Responsive</strong>Perfecta en móviles, tablets y escritorio.</div>
                         </li>
-                        <li class="flex items-start gap-3 text-slate-300 text-sm">
-                            <i class="fas fa-check text-brand-500 mt-1"></i> Entrega en 1 semana
+                        <li class="flex items-start gap-3 text-slate-200">
+                            <i class="fas fa-paper-plane text-green-500 mt-1"></i> 
+                            <div><strong class="block">Formulario de Contacto Directo</strong>Tus clientes a un clic de tu bandeja de entrada.</div>
                         </li>
-                        <li class="flex items-start gap-3 text-slate-400/50 text-sm">
-                            <i class="fas fa-times text-red-500 mt-1"></i> Sin soporte 24/7
+                        <li class="flex items-start gap-3 text-slate-500 opacity-75">
+                            <i class="fas fa-times text-red-500 mt-1"></i> 
+                            <span class="line-through">Bases de Datos y Panel de Control</span>
                         </li>
-                        <li class="flex items-start gap-3 text-slate-400/50 text-sm">
-                            <i class="fas fa-times text-red-500 mt-1"></i> Sin cambios
-                        </li>
-                        <li class="flex items-start gap-3 text-slate-400/50 text-sm">
-                            <i class="fas fa-times text-red-500 mt-1"></i> Sin pasarelas de pago
+                        <li class="flex items-start gap-3 text-slate-500 opacity-75">
+                            <i class="fas fa-times text-red-500 mt-1"></i> 
+                            <span class="line-through">Pasarelas de Pago Integradas</span>
                         </li>
                     </ul>
-                    <a href="#contacto" class="w-full block text-center py-3 border border-slate-600 text-white rounded-lg hover:bg-slate-800 transition-all font-semibold">Seleccionar</a>
+                    <a href="#contacto" class="w-full block text-center py-4 border border-slate-500 text-white rounded-xl hover:bg-slate-800 transition-all font-bold uppercase tracking-wider">Lanzar mi web</a>
                 </div>
 
-                <!-- Plan Estándar -->
-                <div class="bg-dark-card p-8 rounded-2xl border-2 border-brand-500 shadow-lg shadow-brand-500/10 relative flex flex-col reveal delay-200 transform md:-translate-y-4">
-                    <div class="absolute top-0 right-0 bg-brand-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">POPULAR</div>
-                    <div class="mb-6">
-                        <h3 class="text-xl font-semibold text-white mb-2">Estándar</h3>
-                        <div class="flex items-baseline gap-1">
-                            <span class="text-4xl font-bold text-white">30€</span>
-                            <span class="text-slate-500 text-sm">/ proyecto</span>
-                        </div>
-                        <p class="text-slate-400 text-sm mt-4">Perfecto para webs corporativas completas o MVPs con funcionalidad dinámica.</p>
-                    </div>
-                    <ul class="space-y-4 mb-8 flex-1">
-                        <li class="flex items-start gap-3 text-slate-300 text-sm">
-                            <i class="fas fa-check text-brand-500 mt-1"></i> Creación de 5 páginas webs (HTML, CSS, Js)
-                        </li>
-                        <li class="flex items-start gap-3 text-slate-300 text-sm">
-                            <i class="fas fa-check text-brand-500 mt-1"></i> Soporte trimestral
-                        </li>
-                        <li class="flex items-start gap-3 text-slate-300 text-sm">
-                            <i class="fas fa-check text-brand-500 mt-1"></i> Soporte diurno
-                        </li>
-                        <li class="flex items-start gap-3 text-slate-300 text-sm">
-                            <i class="fas fa-check text-brand-500 mt-1"></i> Con cambios semanales
-                        </li>
-                        <li class="flex items-start gap-3 text-slate-300 text-sm">
-                            <i class="fas fa-check text-brand-500 mt-1"></i> Pasarelas de pago
-                        </li>
-                        <li class="flex items-start gap-3 text-slate-300 text-sm">
-                            <i class="fas fa-clock text-brand-500 mt-1"></i> Entrega dependiendo del tamaño del proyecto
-                        </li>
-                    </ul>
-                    <a href="#contacto" class="w-full block text-center py-3 bg-brand-600 text-white rounded-lg hover:bg-brand-500 transition-all font-bold">Seleccionar</a>
-                </div>
-
-                <!-- Plan Premium -->
-                <div class="bg-dark-card p-8 rounded-2xl border border-slate-700/50 hover:border-slate-500 transition-all flex flex-col reveal delay-300">
-                    <div class="mb-6">
-                        <h3 class="text-xl font-semibold text-white mb-2">Premium</h3>
-                        <div class="flex items-baseline gap-1">
-                            <span class="text-4xl font-bold text-white">99.99€</span>
+                <!-- PLAN 2: DOMINIO TOTAL (AVANZADO) -->
+                <div class="bg-dark-card p-8 rounded-2xl border-2 border-brand-500 shadow-[0_0_40px_rgba(14,165,233,0.15)] relative flex flex-col reveal delay-200 transform md:-translate-y-4">
+                    <div class="absolute top-0 right-0 bg-gradient-to-r from-brand-600 to-brand-400 text-white text-xs font-black px-4 py-2 rounded-bl-xl rounded-tr-xl uppercase tracking-widest">El Motor Definitivo</div>
+                    <div class="mb-6 mt-2">
+                        <div class="inline-block px-3 py-1 bg-brand-900/50 text-brand-400 rounded-full text-xs font-bold tracking-wider mb-4 border border-brand-500/30">FASE 2</div>
+                        <h3 class="text-2xl font-bold text-white mb-2">Dominio Total</h3>
+                        <div class="flex items-baseline gap-1 mt-4">
+                            <span class="text-4xl font-black text-white">299.99€</span>
                             <span class="text-slate-500 text-sm">/ desde</span>
                         </div>
-                        <p class="text-slate-400 text-sm mt-4">Soluciones avanzadas para negocios digitales, E-commerce y aplicaciones SaaS.</p>
+                        <p class="text-slate-400 mt-4 leading-relaxed">El arsenal pesado. Para proyectos ambiciosos que requieren <span class="text-white font-bold">gestionar datos, cobrar en piloto automático</span> y escalar sin límites.</p>
                     </div>
-                    <ul class="space-y-4 mb-8 flex-1">
-                        <li class="flex items-start gap-3 text-slate-300 text-sm">
-                            <i class="fas fa-check text-brand-500 mt-1"></i> Desarrollo Web a Medida (Full Stack)
+                    <ul class="space-y-4 mb-8 flex-1 mt-4">
+                        <li class="flex items-start gap-3 text-slate-200">
+                            <i class="fas fa-database text-purple-500 mt-1"></i> 
+                            <div><strong class="block">Bases de Datos Escalables</strong>Almacenamiento seguro e inmediato de usuarios y datos (SQL/NoSQL).</div>
                         </li>
-                        <li class="flex items-start gap-3 text-slate-300 text-sm">
-                            <i class="fas fa-check text-brand-500 mt-1"></i> Soporte Prioritario 24/7
+                        <li class="flex items-start gap-3 text-slate-200">
+                            <i class="fas fa-credit-card text-green-500 mt-1"></i> 
+                            <div><strong class="block">Pasarelas de Pago Seguras</strong>Integración con Stripe o PayPal. Factura mientras duermes.</div>
                         </li>
-                        <li class="flex items-start gap-3 text-slate-300 text-sm">
-                            <i class="fas fa-check text-brand-500 mt-1"></i> Cambios y Mantenimiento Ilimitado
+                        <li class="flex items-start gap-3 text-slate-200">
+                            <i class="fas fa-cogs text-orange-500 mt-1"></i> 
+                            <div><strong class="block">Lógica de Negocio (Back-End)</strong>APIs personalizadas, autenticación de usuarios y paneles de control.</div>
                         </li>
-                        <li class="flex items-start gap-3 text-slate-300 text-sm">
-                            <i class="fas fa-check text-brand-500 mt-1"></i> Pasarelas de Pago & E-commerce
-                        </li>
-                        <li class="flex items-start gap-3 text-slate-300 text-sm">
-                            <i class="fas fa-check text-brand-500 mt-1"></i> Escalabilidad y Alto Rendimiento
+                        <li class="flex items-start gap-3 text-slate-200">
+                            <i class="fas fa-rocket text-brand-500 mt-1"></i> 
+                            <div><strong class="block">Soporte y Despliegue Premium</strong>Tu servidor configurado y optimizado para soportar picos de tráfico.</div>
                         </li>
                     </ul>
-                    <a href="#contacto" class="w-full block text-center py-3 border border-slate-600 text-white rounded-lg hover:bg-slate-800 transition-all font-semibold">Consultar</a>
+                    <a href="#contacto" class="w-full block text-center py-4 bg-gradient-to-r from-brand-600 to-brand-500 text-white rounded-xl hover:from-brand-500 hover:to-brand-400 transition-all font-bold uppercase tracking-wider shadow-lg shadow-brand-500/25">Construir mi Imperio</a>
                 </div>
+
             </div>
         </div>
     </section>
 
-    <!-- SECCIÓN: FAQ (Preguntas Frecuentes) -->
-    <section id="faq" class="py-20 bg-dark-bg border-t border-slate-800">
+    <!-- FAQ -->
+    <section id="faq" class="py-20 bg-dark-bg border-b border-slate-800">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16 reveal">
                 <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Preguntas Frecuentes</h2>
                 <p class="text-slate-400 max-w-2xl mx-auto">Todo lo que necesitas saber antes de empezar tu proyecto.</p>
             </div>
-
             <div class="space-y-4">
-                <!-- Question 1 -->
                 <div class="reveal delay-100 border border-slate-700 rounded-xl bg-dark-card overflow-hidden">
                     <details class="group">
                         <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-6 text-white hover:bg-slate-800 transition-colors">
@@ -444,8 +392,6 @@
                         </div>
                     </details>
                 </div>
-
-                <!-- Question 2 -->
                 <div class="reveal delay-200 border border-slate-700 rounded-xl bg-dark-card overflow-hidden">
                     <details class="group">
                         <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-6 text-white hover:bg-slate-800 transition-colors">
@@ -455,28 +401,11 @@
                             </span>
                         </summary>
                         <div class="text-slate-400 p-6 pt-0 leading-relaxed border-t border-slate-700/50 mt-2">
-                            Los tiempos varían según la complejidad. Un plan Básico suele estar listo en 1 semana. Proyectos más complejos (Estándar o Premium) pueden tomar de 2 a 4 semanas. Definiremos un cronograma exacto durante la fase de análisis.
+                            Los tiempos varían según la complejidad. El Plan Básico suele estar listo en 1 semana. Proyectos más complejos (Plan Dominio Total) pueden tomar de 3 a 6 semanas. Definiremos un cronograma exacto durante la fase de análisis.
                         </div>
                     </details>
                 </div>
-
-                <!-- Question 3 -->
                 <div class="reveal delay-300 border border-slate-700 rounded-xl bg-dark-card overflow-hidden">
-                    <details class="group">
-                        <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-6 text-white hover:bg-slate-800 transition-colors">
-                            <span>¿Qué necesito para empezar?</span>
-                            <span class="transition group-open:rotate-180">
-                                <i class="fas fa-chevron-down text-brand-500"></i>
-                            </span>
-                        </summary>
-                        <div class="text-slate-400 p-6 pt-0 leading-relaxed border-t border-slate-700/50 mt-2">
-                            Idealmente, necesitaré tu logo, los textos que quieres incluir y las imágenes (si las tienes). Si no tienes imágenes, puedo usar bancos de imágenes libres de derechos. También es útil si tienes referencias de webs que te gusten.
-                        </div>
-                    </details>
-                </div>
-
-                <!-- Question 4 -->
-                <div class="reveal border border-slate-700 rounded-xl bg-dark-card overflow-hidden">
                     <details class="group">
                         <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-6 text-white hover:bg-slate-800 transition-colors">
                             <span>¿Ofreces facturación?</span>
@@ -486,20 +415,6 @@
                         </summary>
                         <div class="text-slate-400 p-6 pt-0 leading-relaxed border-t border-slate-700/50 mt-2">
                             Sí, por supuesto. Todos los servicios se facturan legalmente. Solo necesitaré tus datos fiscales para emitir la factura correspondiente.
-                        </div>
-                    </details>
-                </div>
-                <!-- Question 5 -->
-                <div class="reveal border border-slate-700 rounded-xl bg-dark-card overflow-hidden">
-                    <details class="group">
-                        <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-6 text-white hover:bg-slate-800 transition-colors">
-                            <span>¿El precio incluye dominio y hosting?</span>
-                            <span class="transition group-open:rotate-180">
-                                <i class="fas fa-chevron-down text-brand-500"></i>
-                            </span>
-                        </summary>
-                        <div class="text-slate-400 p-6 pt-0 leading-relaxed border-t border-slate-700/50 mt-2">
-                            No, el dominio (tu-nombre.com) y el hosting (donde se guardan los archivos) son costos externos que tú debes contratar para tener el control total. Yo te asesoraré y ayudaré a configurarlos sin costo extra.
                         </div>
                     </details>
                 </div>
@@ -525,44 +440,33 @@
             
             <div class="mt-12 flex justify-center space-x-8 flex-wrap gap-y-4 reveal delay-200">
                 <a href="https://github.com/dacdacdev" target="_blank" class="text-slate-400 hover:text-white text-2xl transition-colors"><i class="fab fa-github"></i></a>
-                <!-- <a href="#" class="text-slate-400 hover:text-white text-2xl transition-colors" title="Próximamente"><i class="fab fa-linkedin"></i></a> -->
                 <a href="https://www.instagram.com/dacdac06/?next=%2F" target="_blank" class="text-slate-400 hover:text-white text-2xl transition-colors"><i class="fab fa-instagram"></i></a>
                 <a href="https://www.youtube.com/@dacdacdev00" target="_blank" class="text-slate-400 hover:text-white text-2xl transition-colors"><i class="fab fa-youtube"></i></a>
                 <a href="https://discord.com/users/notd__" target="_blank" title="Usuario: notd__" class="text-slate-400 hover:text-white text-2xl transition-colors"><i class="fab fa-discord"></i></a>
-                <!-- <a href="#" class="text-slate-400 hover:text-white text-2xl transition-colors" title="Próximamente"><i class="fab fa-tiktok"></i></a> -->
-                <!-- <a href="mailto:dacdacdev@gmail.com" class="text-slate-400 hover:text-white text-2xl transition-colors"><i class="fas fa-envelope"></i></a> -->
             </div>
         </div>
     </section>
 
     <footer class="bg-dark-bg border-t border-slate-800 py-8">
         <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="text-slate-500 text-sm">&copy; <span id="year"></span> DacHub - Todos los derechos reservados.</p>
+            <p class="text-slate-500 text-sm">&copy; <span id="year"></span> DacDacDev - Todos los derechos reservados.</p>
         </div>
     </footer>
     
-    <script src="js/script.js"></script>
-    <button class="chat-toggle-btn" onclick="toggleChat()">
-        <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
-    </button>
+    <script src="script.js"></script>
+    <script>
+        // Animaciones Scroll Reveal
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
 
-    <div class="chat-container" id="chat-window">
-        <div class="chat-header">
-            <span>Asistente Virtual</span>
-            <span class="close-chat" onclick="toggleChat()">✕</span>
-        </div>
-        <div id="chat-messages">
-            <div class="message bot-msg">
-                Hola, ¿en qué puedo ayudarte?
-                <div class="quick-options" id="options-container"></div>
-            </div>
-        </div>
-        <div class="chat-input-area">
-            <input type="text" id="chat-user-input" placeholder="Escribe aquí..." onkeypress="handleKeyPress(event)">
-            <button id="chat-send-btn" onclick="sendMessage()">Enviar</button>
-        </div>
-    </div>
-
-    <script type="module" src="js/chatbot.js"></script>
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
 </body>
 </html>
