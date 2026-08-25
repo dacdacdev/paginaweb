@@ -30,33 +30,3 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-// 5. SOLUCIÓN AGRESIVA: Formulario a WhatsApp
-document.addEventListener('DOMContentLoaded', () => {
-    const contactForm = document.getElementById('contactForm');
-    
-    if (contactForm) {
-        // Quitamos cualquier posible listener previo reseteando el formulario
-        contactForm.onsubmit = function(e) {
-            e.preventDefault();
-            
-            console.log("Formulario interceptado. Iniciando redirección...");
-
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const plan = document.getElementById('plan').value;
-            const message = document.getElementById('message').value;
-
-            // NÚMERO DIRECTO SIN ESPACIOS
-            const telefono = "34611030269"; 
-            const texto = `¡Hola Jose Andrés! 🚀\n\nSoy ${name}.\n📧 Mi correo: ${email}\n💼 Plan: ${plan}\n\nDetalles: "${message}"`;
-            
-            const url = `https://wa.me/${telefono}?text=${encodeURIComponent(texto)}`;
-
-            // Fuerza la redirección en la misma ventana
-            window.location.href = url;
-            
-            return false;
-        };
-    }
-});
