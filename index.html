@@ -440,20 +440,22 @@
         <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12 reveal">
                 <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Hablemos</h2>
-                <p class="text-slate-400">Selecciona el plan que necesitas y envíame un WhatsApp directo.</p>
+                <p class="text-slate-400">Selecciona el plan que necesitas y cuéntame sobre tu proyecto.</p>
             </div>
             
-            <!-- Formulario con selector de planes -->
-            <form id="contactForm" class="space-y-6 bg-dark-card p-8 rounded-2xl border border-slate-700/50 shadow-xl reveal delay-100">
+            <!-- Formulario conectado a Formspree -->
+            <!-- ⚠️ IMPORTANTE: Sustituye TU_CODIGO_AQUI por el código de tu cuenta de Formspree -->
+            <form action="https://formspree.io/f/TU_CODIGO_AQUI" method="POST" id="contactForm" class="space-y-6 bg-dark-card p-8 rounded-2xl border border-slate-700/50 shadow-xl reveal delay-100">
+                
                 <!-- Fila 1: Nombre y Email -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <input type="text" id="name" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors" placeholder="Tu Nombre" required>
-                    <input type="email" id="email" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors" placeholder="Tu Email" required>
+                    <input type="text" name="Nombre" id="name" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors" placeholder="Tu Nombre" required>
+                    <input type="email" name="Email" id="email" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors" placeholder="Tu Email" required>
                 </div>
                 
                 <!-- Fila 2: Selector de Plan -->
                 <div class="relative">
-                    <select id="plan" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white appearance-none focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors cursor-pointer" required>
+                    <select name="Plan_Elegido" id="plan" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white appearance-none focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors cursor-pointer" required>
                         <option value="" disabled selected>¿Qué plan tienes en mente?</option>
                         <option value="Paquete Básico (400€)">Paquete Básico (400€)</option>
                         <option value="Paquete Premium (Desde 995€)">Paquete Premium (Desde 995€)</option>
@@ -466,11 +468,11 @@
                 </div>
 
                 <!-- Fila 3: Mensaje -->
-                <textarea id="message" rows="4" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors" placeholder="Cuéntame los detalles de tu proyecto..." required></textarea>
+                <textarea name="Mensaje" id="message" rows="4" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors" placeholder="Cuéntame los detalles de tu proyecto..." required></textarea>
                 
-                <!-- Botón de Enviar a WhatsApp -->
+                <!-- Botón de Enviar a Correo (Modificado) -->
                 <button type="submit" class="w-full bg-brand-600 hover:bg-brand-500 text-white font-bold py-4 rounded-lg transition-all flex justify-center items-center gap-2">
-                    Enviar Mensaje a WhatsApp <i class="fab fa-whatsapp text-lg"></i>
+                    Enviar Mensaje <i class="fas fa-paper-plane text-lg"></i>
                 </button>
             </form>
             
