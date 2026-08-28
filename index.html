@@ -64,15 +64,15 @@
 
     <!-- Navegación con Banner de Oferta Integrado -->
     <div class="fixed w-full z-50 transition-all duration-300">
-        <!-- Barra de Urgencia -->
+        <!-- Barra de Urgencia (20% Descuento) -->
         <div class="bg-gradient-to-r from-brand-600 via-blue-500 to-brand-600 text-white text-center py-2 px-4 font-bold text-sm sm:text-base shadow-[0_0_20px_rgba(14,165,233,0.4)] relative">
             <span class="animate-pulse inline-block mr-2 text-yellow-300">🔥</span> 
-            OFERTA DE LANZAMIENTO: Condiciones VIP para los 5 primeros proyectos <span class="bg-white text-brand-600 px-2 py-0.5 rounded-full text-xs font-black ml-1">(Quedan 3 plazas)</span>
-            <a href="#contacto" class="underline decoration-2 underline-offset-4 ml-3 hover:text-yellow-300 transition-colors">Reclamar mi plaza</a>
+            OFERTA DE LANZAMIENTO: 20% de descuento para los 5 primeros proyectos <span class="bg-white text-brand-600 px-2 py-0.5 rounded-full text-xs font-black ml-1">(Quedan 3 plazas)</span>
+            <a href="#contacto" class="underline decoration-2 underline-offset-4 ml-3 hover:text-yellow-300 transition-colors">Reclamar oferta</a>
         </div>
         
         <!-- Navbar clásico -->
-        <nav class="bg-dark-bg/90 backdrop-blur-md border-b border-slate-700/50">
+        <nav class="bg-dark-bg/90 backdrop-blur-md border-b border-slate-700/50 pt-1">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex items-center justify-between h-16">
                     <div class="flex-shrink-0 cursor-pointer" onclick="window.scrollTo(0,0)">
@@ -203,42 +203,40 @@
                     <i class="fas fa-rocket text-5xl text-brand-500 mb-6 transform group-hover:-translate-y-2 duration-300 animate-bounce-slow"></i>
                     <h3 class="text-3xl md:text-4xl font-bold text-white mb-4">Aquí se construirá tu próximo imperio</h3>
                     <p class="text-slate-300 mb-8 text-lg leading-relaxed">
-                        Este espacio está reservado para uno de los 5 negocios que decidan dejar atrás a su competencia con la oferta de lanzamiento. ¿Estás listo para ocupar tu lugar?
+                        Este espacio está reservado para uno de los negocios que decidan dejar atrás a su competencia con la oferta de lanzamiento. ¿Estás listo para ocupar tu lugar?
                     </p>
                     <a href="#contacto" class="inline-flex items-center gap-3 px-8 py-4 bg-brand-600 hover:bg-brand-500 text-white font-bold text-lg rounded-full transition-all transform hover:scale-105 shadow-[0_0_20px_rgba(14,165,233,0.3)]">
                         Reclamar Oferta y Empezar <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
             </div>
-            
-            <div class="text-center mt-12 reveal delay-200">
-                <a href="https://github.com/dacdacdev" target="_blank" class="inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors border border-slate-700 px-6 py-2 rounded-full text-sm">
-                    Ver mi código en GitHub <i class="fab fa-github"></i>
-                </a>
-            </div>
         </div>
     </section>
 
-    <!-- Pricing Section (Modificada para la Oferta) -->
+    <!-- Pricing Section (20% OFF en ambos) -->
     <section id="precios" class="py-20 bg-dark-bg border-b border-slate-800">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16 reveal">
-                <div class="inline-block bg-red-500/10 border border-red-500 text-red-400 px-4 py-1 rounded-full text-sm font-bold tracking-widest uppercase mb-4">
-                    Atención: Solo 3 Plazas Disponibles
+                <div class="inline-block bg-brand-500/10 border border-brand-500 text-brand-400 px-4 py-1 rounded-full text-sm font-bold tracking-widest uppercase mb-4">
+                    🔥 20% DTO - Solo 3 Plazas Disponibles
                 </div>
                 <h2 class="text-3xl md:text-5xl font-bold text-white mb-4 uppercase tracking-tight">Tu negocio no es una plantilla barata</h2>
-                <p class="text-slate-400 text-lg max-w-2xl mx-auto">Desarrollos a medida. Pagas por código puro y conversiones. Únete ahora y aprovecha las condiciones de la oferta de lanzamiento.</p>
+                <p class="text-slate-400 text-lg max-w-2xl mx-auto">Desarrollos a medida. Pagas por código puro y conversiones. Únete ahora y aprovecha el descuento en todos los planes.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
                 
-                <!-- PLAN 1 -->
-                <div class="bg-dark-card p-8 rounded-2xl border border-slate-700/50 hover:border-slate-500 transition-all flex flex-col reveal delay-100 shadow-xl opacity-80">
+                <!-- PLAN 1 - 20% DTO -->
+                <div class="bg-dark-card p-8 rounded-2xl border-2 border-brand-500/30 hover:border-brand-500/80 transition-all flex flex-col reveal delay-100 shadow-xl relative">
+                    <div class="absolute -top-4 right-6 bg-red-600 text-white text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider shadow-lg">
+                        -20% DTO
+                    </div>
                     <div class="mb-6">
                         <div class="inline-block px-3 py-1 bg-slate-800 text-slate-300 rounded-full text-xs font-bold tracking-wider mb-4 border border-slate-700">DESARROLLO FRONT-END</div>
                         <h3 class="text-2xl font-bold text-white mb-2">Paquete Básico</h3>
-                        <div class="flex items-baseline gap-1 mt-4">
-                            <span class="text-4xl font-black text-white">400€</span>
+                        <div class="flex items-baseline gap-3 mt-4">
+                            <span class="text-2xl text-slate-500 line-through decoration-red-500 decoration-2">400€</span>
+                            <span class="text-4xl font-black text-brand-400">320€</span>
                         </div>
                         <p class="text-slate-400 mt-4 leading-relaxed">Tu carta de presentación digital. Una web programada desde cero que carga a la velocidad de la luz.</p>
                     </div>
@@ -255,24 +253,23 @@
                             <i class="fas fa-times text-red-500 mt-1"></i> <span class="line-through">Lógica Back-End / Base de Datos</span>
                         </li>
                     </ul>
-                    <a href="#contacto" class="w-full block text-center py-4 border border-slate-500 text-white rounded-xl hover:bg-slate-800 transition-all font-bold uppercase tracking-wider">Solicitar Desarrollo</a>
+                    <a href="#contacto" class="w-full block text-center py-4 border border-brand-500/50 text-white rounded-xl hover:bg-slate-800 transition-all font-bold uppercase tracking-wider">Solicitar Desarrollo</a>
                 </div>
 
-                <!-- PLAN 2 (DESTACADO POR LA OFERTA) -->
+                <!-- PLAN 2 - 20% DTO VIP -->
                 <div class="bg-dark-card p-8 rounded-2xl border-2 border-brand-500 shadow-[0_0_40px_rgba(14,165,233,0.25)] relative flex flex-col reveal delay-200 transform md:-translate-y-4">
-                    <!-- Etiqueta de la oferta -->
                     <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-red-600 to-orange-500 text-white text-sm font-black px-6 py-2 rounded-full uppercase tracking-widest shadow-lg border border-white/20 whitespace-nowrap">
-                        🔥 OFERTA 5 PRIMEROS CLIENTES
+                        🔥 20% DTO - VIP
                     </div>
                     
                     <div class="mb-6 mt-4">
                         <div class="inline-block px-3 py-1 bg-brand-900/50 text-brand-400 rounded-full text-xs font-bold tracking-wider mb-4 border border-brand-500/30">APLICACIONES & FULL STACK</div>
-                        <h3 class="text-2xl font-bold text-white mb-2">Paquete Premium VIP</h3>
+                        <h3 class="text-2xl font-bold text-white mb-2">Paquete Premium</h3>
                         <div class="flex items-baseline gap-3 mt-4">
-                            <span class="text-2xl text-slate-500 line-through decoration-red-500 decoration-2">1.500€</span>
-                            <span class="text-4xl font-black text-brand-400">995€</span>
+                            <span class="text-2xl text-slate-500 line-through decoration-red-500 decoration-2">995€</span>
+                            <span class="text-4xl font-black text-brand-400">796€</span>
                         </div>
-                        <p class="text-slate-300 mt-4 leading-relaxed font-medium">Lógica compleja, paneles privados y bases de datos a un precio irrepetible para completar mi portafolio VIP.</p>
+                        <p class="text-slate-300 mt-4 leading-relaxed font-medium">Lógica compleja, paneles privados y bases de datos a un precio irrepetible de lanzamiento.</p>
                     </div>
                     <ul class="space-y-4 mb-8 flex-1 mt-4">
                         <li class="flex items-start gap-3 text-slate-200">
@@ -299,7 +296,7 @@
         <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12 reveal">
                 <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Asegura tu proyecto</h2>
-                <p class="text-slate-400">Las plazas vuelan. Rellena el formulario y envíame los detalles.</p>
+                <p class="text-slate-400">Las plazas con el 20% de descuento vuelan. Rellena el formulario y envíame los detalles.</p>
             </div>
             
             <form action="https://formspree.io/f/TU_CODIGO_AQUI" method="POST" id="contactForm" class="space-y-6 bg-dark-card p-8 rounded-2xl border border-brand-500/30 shadow-xl shadow-brand-900/10 reveal delay-100 relative overflow-hidden">
@@ -312,8 +309,8 @@
                 <div class="relative">
                     <select name="Plan_Elegido" id="plan" class="w-full bg-slate-900 border border-brand-500/50 rounded-lg px-4 py-3 text-white appearance-none focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors cursor-pointer" required>
                         <option value="" disabled selected>Selecciona tu oferta...</option>
-                        <option value="Paquete Premium OFERTA (995€)">Paquete Premium VIP OFERTA (995€) 🔥</option>
-                        <option value="Paquete Básico (400€)">Paquete Básico (400€)</option>
+                        <option value="Paquete Premium OFERTA (796€)">Paquete Premium OFERTA (796€) 🔥</option>
+                        <option value="Paquete Básico OFERTA (320€)">Paquete Básico OFERTA (320€)</option>
                         <option value="Presupuesto a medida">Presupuesto a medida / Otro</option>
                     </select>
                     <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-brand-500">
@@ -336,6 +333,35 @@
         </div>
     </footer>
     
-    <script src="script.js"></script>
+    <!-- Script infalible directo en el HTML para evitar pantallas blancas -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Año automático en el footer
+            const yearEl = document.getElementById('year');
+            if(yearEl) yearEl.textContent = new Date().getFullYear();
+
+            // Lógica del menú móvil
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if(menuBtn && mobileMenu) {
+                menuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+
+            // Animaciones de scroll (Reveal)
+            const observerOptions = { threshold: 0.1 };
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target); // Solo se anima una vez
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        });
+    </script>
 </body>
 </html>
