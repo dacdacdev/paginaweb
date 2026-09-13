@@ -39,8 +39,10 @@
         }
     </script>
     <style>
+        /* Ocultar el marcador nativo de los desplegables (details) */
         details > summary { list-style: none; }
         details > summary::-webkit-details-marker { display: none; }
+        
         .gradient-text {
             background: linear-gradient(to right, #38bdf8, #818cf8);
             -webkit-background-clip: text;
@@ -81,9 +83,10 @@
                     <div class="hidden md:block">
                         <div class="ml-10 flex items-baseline space-x-8">
                             <a href="#inicio" class="hover:text-brand-500 transition-colors px-3 py-2 rounded-md text-sm font-medium">Inicio</a>
-                            <a href="#servicios" class="hover:text-brand-500 transition-colors px-3 py-2 rounded-md text-sm font-medium">Servicios</a>
+                            <a href="#sobre-mi" class="hover:text-brand-500 transition-colors px-3 py-2 rounded-md text-sm font-medium">Sobre Mí</a>
                             <a href="#portfolio" class="hover:text-brand-500 transition-colors px-3 py-2 rounded-md text-sm font-medium">Portafolio</a>
-                            <a href="#precios" class="hover:text-brand-500 transition-colors px-3 py-2 rounded-md text-sm font-medium">Precios</a>
+                            <a href="#precios" class="hover:text-brand-500 transition-colors px-3 py-2 rounded-md text-sm font-medium">Webs</a>
+                            <a href="#crecimiento" class="hover:text-brand-500 transition-colors px-3 py-2 rounded-md text-sm font-medium text-brand-400">Automatización & IA</a>
                             <a href="#contacto" class="bg-brand-600 hover:bg-brand-500 text-white px-4 py-2 rounded-full text-sm font-medium transition-all">Contrátame</a>
                         </div>
                     </div>
@@ -98,9 +101,10 @@
             <div class="md:hidden hidden bg-dark-card border-b border-slate-700" id="mobile-menu">
                 <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                     <a href="#inicio" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Inicio</a>
-                    <a href="#servicios" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Servicios</a>
+                    <a href="#sobre-mi" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Sobre Mí</a>
                     <a href="#portfolio" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Portafolio</a>
-                    <a href="#precios" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Precios</a>
+                    <a href="#precios" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Webs</a>
+                    <a href="#crecimiento" class="text-brand-400 font-bold block px-3 py-2 rounded-md text-base font-medium">Automatización & IA</a>
                     <a href="#contacto" class="text-brand-500 font-bold block px-3 py-2 rounded-md text-base">Contrátame</a>
                 </div>
             </div>
@@ -164,7 +168,7 @@
                 <div class="reveal delay-100">
                     <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Más allá de las plantillas</h2>
                     <p class="text-slate-400 mb-6 leading-relaxed">
-                        No monto WordPress ni uso creadores de sitios visuales. Soy un desarrollador Back-End enfocado en la arquitectura y lógica pura. Escribo código desde cero para diseñar infraestructuras robustas, seguras y ultrarrápidas.
+                        No monto WordPress ni uso creadores de sitios visuales. Soy un desarrollador Back-End enfocado en la arquitectura y lógica pura. Escribo código desde cero para diseñar infraestructuras robustas, seguras y ultrarrápidas, integrando SEO técnico y optimización para Google Maps.
                     </p>
                     <div class="grid grid-cols-2 gap-4 mt-8">
                         <div class="flex items-center gap-3">
@@ -189,8 +193,50 @@
         </div>
     </section>
 
+<!-- NUEVA SECCIÓN: Cómo funciona (El Proceso) -->
+    <section id="proceso" class="py-24 bg-slate-900/30 border-b border-slate-800 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl md:text-5xl font-bold text-white mb-4 uppercase tracking-tight">Cero dolores de cabeza</h2>
+                <p class="text-slate-400 text-lg max-w-2xl mx-auto">Tú te encargas de tu negocio, yo me encargo del código. Un proceso diseñado para que no pierdas ni un minuto de tu tiempo.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+                <!-- Línea conectora (solo visible en escritorio) -->
+                <div class="hidden md:block absolute top-12 left-1/6 right-1/6 h-0.5 bg-gradient-to-r from-transparent via-brand-500/50 to-transparent z-0"></div>
+                
+                <!-- Paso 1 -->
+                <div class="relative z-10 text-center reveal delay-100 group cursor-pointer">
+                    <div class="w-24 h-24 mx-auto bg-dark-bg border-2 border-brand-500 rounded-full flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(14,165,233,0.3)] transition-all duration-500 group-hover:shadow-[0_0_40px_rgba(14,165,233,0.8)] group-hover:bg-brand-900/40 group-hover:-translate-y-2">
+                        <i class="fas fa-coffee text-3xl text-brand-400 transition-all duration-500 group-hover:rotate-12 group-hover:scale-125"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3 transition-colors duration-300 group-hover:text-brand-400">1. Auditoría y Estrategia</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Nos tomamos un café (físico o virtual). Analizo tu negocio, tu competencia y definimos qué necesitas exactamente para ganarles.</p>
+                </div>
+                
+                <!-- Paso 2 -->
+                <div class="relative z-10 text-center reveal delay-200 group cursor-pointer">
+                    <div class="w-24 h-24 mx-auto bg-dark-bg border-2 border-brand-500 rounded-full flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(14,165,233,0.3)] transition-all duration-500 group-hover:shadow-[0_0_40px_rgba(14,165,233,0.8)] group-hover:bg-brand-900/40 group-hover:-translate-y-2">
+                        <i class="fas fa-laptop-code text-3xl text-brand-400 transition-all duration-500 group-hover:scale-125 group-hover:text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3 transition-colors duration-300 group-hover:text-brand-400">2. Código y Desarrollo</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Tú sigues con tu negocio sin interrupciones, yo me encierro a picar código. Construyo tu web desde cero y a medida.</p>
+                </div>
+                
+                <!-- Paso 3 -->
+                <div class="relative z-10 text-center reveal delay-300 group cursor-pointer">
+                    <div class="w-24 h-24 mx-auto bg-dark-bg border-2 border-brand-500 rounded-full flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(14,165,233,0.3)] transition-all duration-500 group-hover:shadow-[0_0_40px_rgba(14,165,233,0.8)] group-hover:bg-brand-900/40 group-hover:-translate-y-2">
+                        <i class="fas fa-rocket text-3xl text-brand-400 transition-all duration-500 group-hover:-translate-y-3 group-hover:translate-x-3 group-hover:scale-125"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3 transition-colors duration-300 group-hover:text-brand-400">3. Lanzamiento y Dominio</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Subimos la web a internet. Empiezas a cargar al instante, a posicionar en Google Maps y a recibir reservas automáticamente.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Portfolio VIP -->
-    <section id="portfolio" class="py-20 bg-slate-900/50 border-y border-slate-800">
+    <section id="portfolio" class="py-20 bg-dark-bg border-b border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-10 reveal">
                 <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Proyectos Exclusivos</h2>
@@ -213,19 +259,19 @@
         </div>
     </section>
 
-    <!-- Pricing Section (20% OFF en ambos) -->
-    <section id="precios" class="py-20 bg-dark-bg border-b border-slate-800">
+    <!-- Pricing Section (Webs) -->
+    <section id="precios" class="py-20 bg-slate-900/30 border-b border-slate-800">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16 reveal">
                 <div class="inline-block bg-brand-500/10 border border-brand-500 text-brand-400 px-4 py-1 rounded-full text-sm font-bold tracking-widest uppercase mb-4">
                     🔥 20% DTO - Solo 5 Plazas Disponibles
                 </div>
                 <h2 class="text-3xl md:text-5xl font-bold text-white mb-4 uppercase tracking-tight">Tu negocio no es una plantilla barata</h2>
-                <p class="text-slate-400 text-lg max-w-2xl mx-auto">Desarrollos a medida. Pagas por código puro y conversiones. Únete ahora y aprovecha el descuento en todos los planes.</p>
+                <p class="text-slate-400 text-lg max-w-2xl mx-auto">Desarrollos a medida. Pagas por código puro y conversiones. Únete ahora y aprovecha el descuento en todos los planes web.</p>
+                <p class="text-brand-500 font-bold mt-4 text-sm">*Sin cuotas de mantenimiento mensual obligatorio.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-                
                 <!-- PLAN 1 - 20% DTO -->
                 <div class="bg-dark-card p-8 rounded-2xl border-2 border-brand-500/30 hover:border-brand-500/80 transition-all flex flex-col reveal delay-100 shadow-xl relative">
                     <div class="absolute -top-4 right-6 bg-red-600 text-white text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider shadow-lg">
@@ -239,6 +285,7 @@
                             <span class="text-4xl font-black text-brand-400">320€</span>
                         </div>
                         <p class="text-slate-400 mt-4 leading-relaxed">Tu carta de presentación digital. Una web programada desde cero que carga a la velocidad de la luz.</p>
+                        <p class="text-brand-400 font-bold text-sm mt-2">Pago único. Cambios bajo demanda.</p>
                     </div>
                     <ul class="space-y-4 mb-8 flex-1 mt-4">
                         <li class="flex items-start gap-3 text-slate-200">
@@ -250,7 +297,7 @@
                             <div><strong class="block">Diseño Responsive Custom</strong>Adaptación milimétrica a móviles.</div>
                         </li>
                         <li class="flex items-start gap-3 text-slate-500 opacity-75">
-                            <i class="fas fa-times text-red-500 mt-1"></i> <span class="line-through">Lógica Back-End / Base de Datos</span>
+                            <i class="fas fa-times text-red-500 mt-1"></i> <span class="line-through">Lógica de Reservas Anti-Comisiones</span>
                         </li>
                     </ul>
                     <a href="#contacto" class="w-full block text-center py-4 border border-brand-500/50 text-white rounded-xl hover:bg-slate-800 transition-all font-bold uppercase tracking-wider">Solicitar Desarrollo</a>
@@ -269,24 +316,141 @@
                             <span class="text-2xl text-slate-500 line-through decoration-red-500 decoration-2">995€</span>
                             <span class="text-4xl font-black text-brand-400">796€</span>
                         </div>
-                        <p class="text-slate-300 mt-4 leading-relaxed font-medium">Lógica compleja, paneles privados y bases de datos a un precio irrepetible de lanzamiento.</p>
+                        <p class="text-slate-300 mt-4 leading-relaxed font-medium">Lógica compleja, reservas directas y bases de datos a un precio irrepetible de lanzamiento.</p>
+                        <p class="text-brand-400 font-bold text-sm mt-2">Pago único. Cambios bajo demanda.</p>
                     </div>
                     <ul class="space-y-4 mb-8 flex-1 mt-4">
                         <li class="flex items-start gap-3 text-slate-200">
+                            <i class="fas fa-search-location text-yellow-500 mt-1"></i> 
+                            <div><strong class="block">Estructura SEO y Google Maps</strong>Posicionamiento nativo optimizado desde el código.</div>
+                        </li>
+                        <li class="flex items-start gap-3 text-slate-200">
+                            <i class="fas fa-calendar-check text-green-500 mt-1"></i> 
+                            <div><strong class="block">Reservas Cero Comisiones</strong>Sistema propio integrado. Deja de pagar a terceros.</div>
+                        </li>
+                        <li class="flex items-start gap-3 text-slate-200">
                             <i class="fas fa-database text-purple-500 mt-1"></i> 
-                            <div><strong class="block">Arquitectura de Datos (Back-End)</strong>Gestión avanzada de usuarios y roles.</div>
-                        </li>
-                        <li class="flex items-start gap-3 text-slate-200">
-                            <i class="fas fa-cogs text-orange-500 mt-1"></i> 
-                            <div><strong class="block">Lógica de Negocio a Medida</strong>Desarrollo de las funciones que necesites.</div>
-                        </li>
-                        <li class="flex items-start gap-3 text-slate-200">
-                            <i class="fas fa-shield-alt text-brand-500 mt-1"></i> 
-                            <div><strong class="block">Seguridad Premium Prioritaria</strong>Blindaje y servidores de alto rendimiento.</div>
+                            <div><strong class="block">Arquitectura de Datos (Back-End)</strong>Panel privado, seguridad premium y gestión avanzada.</div>
                         </li>
                     </ul>
                     <a href="#contacto" class="w-full block text-center py-4 bg-gradient-to-r from-brand-600 to-brand-500 text-white rounded-xl hover:from-brand-500 hover:to-brand-400 transition-all font-bold uppercase tracking-wider shadow-lg shadow-brand-500/25 animate-pulse">Bloquear mi plaza</a>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Automatización e IA (Upsells) -->
+    <section id="crecimiento" class="py-24 bg-dark-bg border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <div class="inline-block bg-purple-500/10 border border-purple-500 text-purple-400 px-4 py-1 rounded-full text-sm font-bold tracking-widest uppercase mb-4">
+                    🚀 Multiplica tus ventas
+                </div>
+                <h2 class="text-3xl md:text-5xl font-bold text-white mb-4 uppercase tracking-tight">Sistemas de Crecimiento & IA</h2>
+                <p class="text-slate-400 text-lg max-w-2xl mx-auto">Tener la mejor web es solo el principio. Automatiza tus reservas, domina Google Maps y deja que la Inteligencia Artificial trabaje por tu negocio 24/7.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Servicio 1: IA WhatsApp -->
+                <div class="bg-dark-card p-8 rounded-2xl border border-slate-700/50 hover:border-purple-500/50 transition-all group reveal delay-100">
+                    <div class="w-14 h-14 bg-purple-500/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-robot text-2xl text-purple-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Recepcionista IA 24/7</h3>
+                    <p class="text-slate-400 text-sm mb-6 leading-relaxed">Mientras tú atiendes el local, nuestro Bot de Inteligencia Artificial lee tu carta y cierra reservas por WhatsApp a cualquier hora de la madrugada.</p>
+                    <div class="border-t border-slate-700/50 pt-4 mt-auto">
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-slate-500 font-bold">Setup: 300€</span>
+                            <span class="text-brand-400 font-black">+90€/mes</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Servicio 2: SEO & Google Maps -->
+                <div class="bg-dark-card p-8 rounded-2xl border border-slate-700/50 hover:border-yellow-500/50 transition-all group reveal delay-200">
+                    <div class="w-14 h-14 bg-yellow-500/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-map-marked-alt text-2xl text-yellow-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Dominio SEO & Maps</h3>
+                    <p class="text-slate-400 text-sm mb-6 leading-relaxed">Posiciona tu negocio el primero en tu ciudad. Sistema automatizado para captar reseñas de 5 estrellas de tus clientes contentos antes de que salgan por la puerta.</p>
+                    <div class="border-t border-slate-700/50 pt-4 mt-auto">
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-slate-500 font-bold">Suscripción</span>
+                            <span class="text-yellow-400 font-black">150€/mes</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Servicio 3: Redes Automáticas -->
+                <div class="bg-dark-card p-8 rounded-2xl border border-slate-700/50 hover:border-pink-500/50 transition-all group reveal delay-300">
+                    <div class="w-14 h-14 bg-pink-500/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fab fa-instagram text-2xl text-pink-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Captación en Redes (DMs)</h3>
+                    <p class="text-slate-400 text-sm mb-6 leading-relaxed">Convierte los "Me gusta" de Instagram en facturación. Si un usuario comenta en tus fotos, el sistema le envía automáticamente el enlace para reservar por privado.</p>
+                    <div class="border-t border-slate-700/50 pt-4 mt-auto">
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-slate-500 font-bold">Configuración</span>
+                            <span class="text-pink-400 font-black">Desde 100€/mes</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NUEVA SECCIÓN: FAQ (Preguntas Frecuentes) -->
+    <section id="faq" class="py-20 bg-slate-900/30 border-b border-slate-800">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 reveal">
+                <h2 class="text-3xl md:text-5xl font-bold text-white mb-4 uppercase tracking-tight">Preguntas Frecuentes</h2>
+                <p class="text-slate-400 text-lg">Resuelvo tus dudas antes de que envíes tu mensaje.</p>
+            </div>
+            
+            <div class="space-y-4 reveal delay-100">
+                <!-- Pregunta 1 -->
+                <details class="group bg-dark-card border border-slate-700 hover:border-brand-500/50 rounded-xl transition-colors">
+                    <summary class="flex justify-between items-center font-bold cursor-pointer list-none p-6 text-white text-lg">
+                        <span>¿Cuánto tardas en entregar la web?</span>
+                        <span class="transition group-open:rotate-180"><i class="fas fa-chevron-down text-brand-500"></i></span>
+                    </summary>
+                    <div class="text-slate-400 px-6 pb-6 leading-relaxed">
+                        Entre 1 y 3 semanas, dependiendo del paquete y la complejidad del proyecto. No hago churros ni copio plantillas, programo a medida. Prefiero tardar 3 días más y entregarte una máquina de ventas perfecta.
+                    </div>
+                </details>
+
+                <!-- Pregunta 2 -->
+                <details class="group bg-dark-card border border-slate-700 hover:border-brand-500/50 rounded-xl transition-colors">
+                    <summary class="flex justify-between items-center font-bold cursor-pointer list-none p-6 text-white text-lg">
+                        <span>¿Tengo que pagar una cuota de mantenimiento mensual obligatoria?</span>
+                        <span class="transition group-open:rotate-180"><i class="fas fa-chevron-down text-brand-500"></i></span>
+                    </summary>
+                    <div class="text-slate-400 px-6 pb-6 leading-relaxed">
+                        No. A diferencia de otras agencias, el pago por el desarrollo de la web es único. Si en el futuro necesitas añadir un plato nuevo a la carta o cambiar imágenes, ofrezco un sistema de "Micro-servicios" o "Bolsa de horas" donde pagas solo por lo que me pides.
+                    </div>
+                </details>
+
+                <!-- Pregunta 3 -->
+                <details class="group bg-dark-card border border-slate-700 hover:border-brand-500/50 rounded-xl transition-colors">
+                    <summary class="flex justify-between items-center font-bold cursor-pointer list-none p-6 text-white text-lg">
+                        <span>¿Por qué no usas WordPress como todo el mundo?</span>
+                        <span class="transition group-open:rotate-180"><i class="fas fa-chevron-down text-brand-500"></i></span>
+                    </summary>
+                    <div class="text-slate-400 px-6 pb-6 leading-relaxed">
+                        Porque WordPress suele estar cargado de código basura y plugins innecesarios que hacen que tu web sea pesada y lenta. Google penaliza las webs lentas bajándolas de posición. Yo construyo la infraestructura desde cero usando lenguajes nativos para que tu web vuele.
+                    </div>
+                </details>
+
+                <!-- Pregunta 4 -->
+                <details class="group bg-dark-card border border-slate-700 hover:border-brand-500/50 rounded-xl transition-colors">
+                    <summary class="flex justify-between items-center font-bold cursor-pointer list-none p-6 text-white text-lg">
+                        <span>¿La página web será mía?</span>
+                        <span class="transition group-open:rotate-180"><i class="fas fa-chevron-down text-brand-500"></i></span>
+                    </summary>
+                    <div class="text-slate-400 px-6 pb-6 leading-relaxed">
+                        Al 100%. El código que escribo para ti, el dominio y todos los clientes que generes son única y exclusivamente de tu propiedad. No hay letras pequeñas.
+                    </div>
+                </details>
             </div>
         </div>
     </section>
@@ -307,11 +471,21 @@
                 </div>
                 
                 <div class="relative">
-                    <select name="Plan_Elegido" id="plan" class="w-full bg-slate-900 border border-brand-500/50 rounded-lg px-4 py-3 text-white appearance-none focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors cursor-pointer" required>
-                        <option value="" disabled selected>Selecciona tu oferta...</option>
-                        <option value="Paquete Premium OFERTA (796€)">Paquete Premium OFERTA (796€) 🔥</option>
-                        <option value="Paquete Básico OFERTA (320€)">Paquete Básico OFERTA (320€)</option>
-                        <option value="Presupuesto a medida">Presupuesto a medida / Otro</option>
+                    <select name="Servicio_Elegido" id="plan" class="w-full bg-slate-900 border border-brand-500/50 rounded-lg px-4 py-3 text-white appearance-none focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors cursor-pointer" required>
+                        <option value="" disabled selected>Selecciona tu oferta o servicio...</option>
+                        <optgroup label="Desarrollo Web (OFERTA 20%)" class="text-brand-400">
+                            <option value="Paquete Premium OFERTA (796€)">Paquete Premium VIP (796€) 🔥</option>
+                            <option value="Paquete Básico OFERTA (320€)">Paquete Básico (320€)</option>
+                        </optgroup>
+                        <optgroup label="Automatización y Crecimiento" class="text-purple-400">
+                            <option value="Recepcionista IA">Recepcionista IA WhatsApp (300€ + 90€/m)</option>
+                            <option value="Dominio SEO y Maps">Dominio SEO & Google Maps (150€/m)</option>
+                            <option value="Captación Redes DMs">Captación Automática DMs Redes</option>
+                        </optgroup>
+                        <optgroup label="Servicios Bajo Demanda" class="text-yellow-400">
+                            <option value="Bolsa de Horas">Modificaciones / Bolsa de horas</option>
+                        </optgroup>
+                        <option value="Presupuesto a medida / Integrales">Plan a medida / Combo Web+Crecimiento</option>
                     </select>
                     <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-brand-500">
                         <i class="fas fa-chevron-down text-sm"></i>
@@ -321,7 +495,7 @@
                 <textarea name="Mensaje" id="message" rows="4" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors" placeholder="Cuéntame los detalles de tu negocio..." required></textarea>
                 
                 <button type="submit" class="w-full bg-brand-600 hover:bg-brand-500 text-white font-bold py-4 rounded-lg transition-all flex justify-center items-center gap-2">
-                    Enviar y Reservar Plaza <i class="fas fa-paper-plane text-lg"></i>
+                    Enviar Consulta <i class="fas fa-paper-plane text-lg"></i>
                 </button>
             </form>
         </div>
@@ -333,7 +507,7 @@
         </div>
     </footer>
     
-    <!-- Script infalible directo en el HTML para evitar pantallas blancas -->
+    <!-- Script para evitar pantallas blancas -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // Año automático en el footer
