@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Bloqueamos el futuro panel de control para que Google no lo indexe
+Disallow: /admin.html
+Disallow: /panel/
+Disallow: /api/
+
+Sitemap: https://dacdacdev.verlcel.app/sitemap.xml
