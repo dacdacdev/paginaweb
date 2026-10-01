@@ -10,6 +10,48 @@ window.addEventListener('load', () => {
         }, 500); // Espera a que termine la transición de opacidad
     }
 });
+
+// 2. Validación y UX del Formulario de Contacto (Formspree)
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+        const btn = this.querySelector('button[type="submit"]');
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const message = document.getElementById('message').value.trim();
+        const plan = document.getElementById('plan').value;
+
+        // Validación estricta anti-errores
+        if (!name || !email || !message || !plan) {
+            e.preventDefault(); // Detiene el envío
+            alert('Faltan datos tácticos. Completa todos los campos antes de enviar.');
+            return;
+        }
+
+        // Efecto visual premium mientras Formspree procesa
+        btn.innerHTML = '<i class="fas fa-circle-notch fa-spin text-lg"></i> Encriptando y Enviando...';
+        btn.classList.add('opacity-75', 'cursor-not-allowed', 'pointer-events-none');
+        
+        // El formulario seguirá su curso natural hacia Formspree
+    });
+}
+
+
+// 3. Monitor de Errores Globales (Admin Panel)
+window.addEventListener('error', function(event) {
+    // 
+    const errorLog = {
+        mensaje: event.message,
+        archivo: event.filename,
+        linea: event.lineno,
+        fecha: new Date().toISOString(),
+        url: window.location.href
+    };
+    
+    console.warn("🔥 [DacDacDev Error Monitor] Anomalía detectada:", errorLog);
+});
+
+
 // 2. Footer: Año actual
 const yearEl = document.getElementById('year');
 if(yearEl) yearEl.textContent = new Date().getFullYear();
