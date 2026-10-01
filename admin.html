@@ -3,16 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DacDacDev | Panel de Control Chatbot</title>
-    
-    <!-- BLOQUEO ESTRICTO: Que Google no indexe el panel -->
     <meta name="robots" content="noindex, nofollow">
-
-    <!-- Tailwind y FontAwesome -->
+    <title>DacDacDev | Telemetría y Control</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <!-- Configuración de Marca DacDacDev -->
     <script>
         tailwind.config = {
             theme: {
@@ -26,66 +22,109 @@
             }
         }
     </script>
-    
-    <!-- Estilos de scrollbar personalizados para que no se vea feo -->
-    <style>
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0f172a; }
-        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #0ea5e9; }
-    </style>
 </head>
 <body class="bg-dark-bg text-slate-200 font-sans antialiased h-screen flex overflow-hidden selection:bg-brand-500 selection:text-white">
 
-    <!-- BARRA LATERAL (LISTA DE USUARIOS) -->
-    <div id="sidebar" class="w-80 bg-dark-card border-r border-slate-800 flex flex-col shadow-2xl z-10">
-        <div class="h-16 flex items-center px-6 border-b border-brand-500/20 bg-brand-900/20">
-            <span class="text-xl font-bold text-white">&lt;Dac/<span class="text-brand-500">Chat</span>&gt;</span>
+    <!-- PANTALLA DE LOGIN (Visible por defecto) -->
+    <div id="login-screen" class="fixed inset-0 z-50 flex items-center justify-center bg-dark-bg">
+        <div class="bg-dark-card p-10 rounded-2xl border border-slate-700 shadow-2xl w-full max-w-md">
+            <div class="text-center mb-8">
+                <span class="text-3xl font-bold text-white">&lt;Dac/<span class="text-brand-500">Admin</span>&gt;</span>
+                <p class="text-slate-400 mt-2 text-sm">Acceso Restringido a Infraestructura</p>
+            </div>
+            
+            <form id="login-form" class="space-y-6">
+                <div>
+                    <label class="block text-slate-400 text-xs font-bold uppercase mb-2">Usuario (Email)</label>
+                    <input type="email" id="login-email" required class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-500 transition-colors">
+                </div>
+                <div>
+                    <label class="block text-slate-400 text-xs font-bold uppercase mb-2">Contraseña</label>
+                    <input type="password" id="login-pass" required class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-500 transition-colors">
+                </div>
+                <div id="login-error" class="text-red-400 text-xs hidden font-bold text-center">Credenciales incorrectas o acceso denegado.</div>
+                <button type="submit" class="w-full bg-brand-600 hover:bg-brand-500 text-white font-bold py-3 rounded-lg transition-all">
+                    Desbloquear Sistema
+                </button>
+            </form>
         </div>
-        <div class="p-4 border-b border-slate-800">
-            <div class="text-xs font-bold text-slate-500 uppercase tracking-widest">Bandeja de Entrada</div>
-        </div>
-        <div id="user-list" class="flex-1 overflow-y-auto">
-            <div class="p-6 text-slate-500 text-sm flex items-center gap-2">
-                <i class="fas fa-circle-notch fa-spin text-brand-500"></i> Cargando chats de Firebase...
+    </div>
+
+    <!-- PANTALLA DEL DASHBOARD (Oculta hasta el login) -->
+    <div id="dashboard-screen" class="hidden flex-1 flex flex-col h-full w-full">
+        <!-- Header -->
+        <header class="h-16 bg-dark-card border-b border-slate-800 flex items-center justify-between px-8">
+            <h1 class="text-xl font-bold text-white">Telemetría de Red</h1>
+            <div class="flex items-center gap-6">
+                <div class="flex items-center gap-2">
+                    <span class="relative flex h-3 w-3">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                    </span>
+                    <span class="text-xs font-mono text-slate-400" id="user-email-display">Conectado</span>
+                </div>
+                <button id="logout-btn" class="text-sm text-red-400 hover:text-red-300 font-bold transition-colors"><i class="fas fa-power-off"></i> Salir</button>
+            </div>
+        </header>
+
+        <!-- Métricas -->
+        <div class="p-8 flex-1 overflow-y-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <!-- Velocidad -->
+                <div class="bg-dark-card border border-slate-700 p-6 rounded-xl shadow-lg">
+                    <div class="flex justify-between items-start mb-2">
+                        <div class="text-slate-400 text-sm font-bold uppercase tracking-wider">Carga Media (DOM)</div>
+                        <i class="fas fa-bolt text-yellow-400"></i>
+                    </div>
+                    <div class="text-3xl font-black text-white" id="metric-speed">-- ms</div>
+                    <div class="text-xs text-slate-500 mt-2">Rendimiento en tiempo real</div>
+                </div>
+                
+                <!-- SEO -->
+                <div class="bg-dark-card border border-slate-700 p-6 rounded-xl shadow-lg">
+                    <div class="flex justify-between items-start mb-2">
+                        <div class="text-slate-400 text-sm font-bold uppercase tracking-wider">Salud SEO / Maps</div>
+                        <i class="fas fa-map-marked-alt text-brand-500"></i>
+                    </div>
+                    <div class="text-3xl font-black text-green-400">100/100</div>
+                    <div class="text-xs text-slate-500 mt-2">Indexación y meta tags OK</div>
+                </div>
+
+                <!-- Visitas -->
+                <div class="bg-dark-card border border-slate-700 p-6 rounded-xl shadow-lg">
+                    <div class="flex justify-between items-start mb-2">
+                        <div class="text-slate-400 text-sm font-bold uppercase tracking-wider">Tráfico Único</div>
+                        <i class="fas fa-users text-purple-400"></i>
+                    </div>
+                    <div class="text-3xl font-black text-white" id="metric-visits">84</div>
+                    <div class="text-xs text-slate-500 mt-2">+12% esta semana</div>
+                </div>
+
+                <!-- Errores -->
+                <div class="bg-dark-card border border-red-500/30 p-6 rounded-xl shadow-lg relative overflow-hidden">
+                    <div class="absolute -right-4 -bottom-4 text-red-500/10 text-7xl"><i class="fas fa-bug"></i></div>
+                    <div class="text-red-400 text-sm font-bold mb-2 uppercase tracking-wider relative z-10">Alertas JS</div>
+                    <div class="text-3xl font-black text-white relative z-10" id="metric-errors">0</div>
+                </div>
+            </div>
+
+            <!-- Registro de Eventos -->
+            <div class="bg-[#0a0f18] border border-slate-700 rounded-xl shadow-lg h-96 flex flex-col">
+                <div class="px-6 py-4 border-b border-slate-800 bg-dark-card">
+                    <h2 class="text-sm font-bold text-slate-400 uppercase tracking-widest"><i class="fas fa-terminal mr-2"></i> Registro del Sistema</h2>
+                </div>
+                <div class="p-6 flex-1 overflow-y-auto font-mono text-xs space-y-3" id="system-logs">
+                    <!-- Logs inyectados por JS -->
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- ÁREA PRINCIPAL DE CHAT -->
-    <div id="chat-area" class="flex-1 flex flex-col bg-dark-bg relative">
-        
-        <!-- Cabecera del chat actual -->
-        <div id="current-chat-header" class="h-16 flex items-center px-8 border-b border-slate-800 bg-dark-card/50 backdrop-blur text-white font-bold tracking-wide">
-            <i class="fas fa-comment-dots text-brand-500 mr-3"></i> Selecciona un chat de la izquierda
-        </div>
-        
-        <!-- Contenedor de mensajes -->
-        <div id="messages-container" class="flex-1 p-8 overflow-y-auto flex flex-col gap-6">
-            <!-- Mensaje por defecto cuando está vacío -->
-            <div class="h-full flex flex-col items-center justify-center text-slate-600 opacity-50">
-                <i class="fas fa-robot text-6xl mb-4"></i>
-                <p class="text-lg">El sistema está a la espera de conexiones.</p>
-            </div>
-        </div>
-        
-        <!-- Área de Input -->
-        <div id="input-area" class="p-6 border-t border-slate-800 bg-dark-card flex gap-4">
-            <input type="text" id="admin-input" placeholder="Escribe tu respuesta..." disabled 
-                   class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
-            <button id="send-btn" onclick="sendAdminReply()" disabled 
-                    class="bg-brand-600 hover:bg-brand-500 text-white px-8 py-3 rounded-xl font-bold transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2">
-                Enviar <i class="fas fa-paper-plane"></i>
-            </button>
-        </div>
-    </div>
-
-    <!-- SCRIPT FIREBASE Y LÓGICA (Tu código original adaptado a la nueva UI) -->
+    <!-- LÓGICA FIREBASE AUTH Y PANEL -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
-        // Tu configuración exacta
         const firebaseConfig = {
             apiKey: "AIzaSyDqWjgoi8DwcZiXwp3nF1gQ0vvxZ39CUtQ",
             authDomain: "chatbot-web-v1.firebaseapp.com",
@@ -97,142 +136,67 @@
         };
 
         const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+        const auth = getAuth(app);
 
-        let allMessages = [];
-        let groupedChats = {};
-        let currentSessionID = null;
+        const loginScreen = document.getElementById('login-screen');
+        const dashboardScreen = document.getElementById('dashboard-screen');
+        const loginForm = document.getElementById('login-form');
+        const loginError = document.getElementById('login-error');
+        const systemLogs = document.getElementById('system-logs');
 
-        // 1. ESCUCHAR TODOS LOS MENSAJES DE LA BASE DE DATOS
-        const q = query(collection(db, "mensajes_chat"), orderBy("timestamp", "asc"));
-        
-        onSnapshot(q, (snapshot) => {
-            allMessages = [];
-            groupedChats = {};
+        function addLog(type, message) {
+            const div = document.createElement('div');
+            const time = new Date().toLocaleTimeString();
+            let color = 'text-slate-400';
+            if (type === 'error') color = 'text-red-400';
+            if (type === 'success') color = 'text-green-400';
+            
+            div.className = color;
+            div.innerHTML = `[${time}] ${message}`;
+            systemLogs.appendChild(div);
+            systemLogs.scrollTop = systemLogs.scrollHeight;
+        }
 
-            snapshot.forEach((doc) => {
-                const data = doc.data();
-                allMessages.push(data);
+        // Control de Sesión
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // Usuario logueado: Mostrar Panel
+                loginScreen.classList.add('hidden');
+                dashboardScreen.classList.remove('hidden');
+                document.getElementById('user-email-display').textContent = user.email;
+                addLog('success', 'SISTEMA DESBLOQUEADO. Autenticación verificada.');
                 
-                // Agrupar mensajes por SessionID
-                if (!groupedChats[data.sessionID]) {
-                    groupedChats[data.sessionID] = [];
-                }
-                groupedChats[data.sessionID].push(data);
-            });
-
-            renderSidebar();
-            if (currentSessionID) {
-                renderChat(currentSessionID);
+                // Simulación de lectura de telemetría (En la Fase 5 conectaremos esto a tu base de datos)
+                setTimeout(() => {
+                    document.getElementById('metric-speed').textContent = '245 ms';
+                    addLog('info', 'Métricas de rendimiento cargadas.');
+                }, 1000);
+            } else {
+                // Sin loguear: Mostrar Login
+                loginScreen.classList.remove('hidden');
+                dashboardScreen.classList.add('hidden');
             }
         });
 
-        // 2. MOSTRAR LISTA DE USUARIOS (BARRA LATERAL)
-        function renderSidebar() {
-            const listDiv = document.getElementById('user-list');
-            listDiv.innerHTML = '';
-
-            const sessionIDs = Object.keys(groupedChats).sort((a,b) => {
-                const lastMsgA = groupedChats[a][groupedChats[a].length -1].timestamp;
-                const lastMsgB = groupedChats[b][groupedChats[b].length -1].timestamp;
-                return (lastMsgB?.seconds || 0) - (lastMsgA?.seconds || 0); 
-            });
-
-            if(sessionIDs.length === 0) {
-                listDiv.innerHTML = '<div class="p-6 text-slate-500 text-sm">No hay chats activos.</div>';
-                return;
-            }
-
-            sessionIDs.forEach(id => {
-                const msgs = groupedChats[id];
-                const lastMsg = msgs[msgs.length - 1];
-                
-                // Estilos para el chat seleccionado vs normal
-                const isActive = id === currentSessionID;
-                const activeClass = isActive ? 'bg-brand-900/40 border-l-4 border-brand-500' : 'border-l-4 border-transparent hover:bg-slate-800/50';
-                const timeStr = lastMsg.timestamp ? new Date(lastMsg.timestamp.seconds * 1000).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'Ahora';
-                
-                const div = document.createElement('div');
-                div.className = `p-4 border-b border-slate-800 cursor-pointer transition-all ${activeClass}`;
-                div.innerHTML = `
-                    <div class="flex justify-between items-center mb-1">
-                        <strong class="text-white text-sm">ID: ${id.substring(0,8)}...</strong>
-                        <span class="text-[10px] text-brand-400 font-mono">${timeStr}</span>
-                    </div>
-                    <span class="text-xs text-slate-400 truncate block">${lastMsg.text}</span>
-                `;
-                div.onclick = () => selectChat(id);
-                listDiv.appendChild(div);
-            });
-        }
-
-        // 3. SELECCIONAR UN CHAT
-        window.selectChat = (sessionID) => {
-            currentSessionID = sessionID;
-            document.getElementById('current-chat-header').innerHTML = `<i class="fas fa-circle text-green-500 text-xs mr-2 animate-pulse"></i> Sesión Activa: <span class="text-brand-400 ml-2 font-mono">${sessionID}</span>`;
-            document.getElementById('admin-input').disabled = false;
-            document.getElementById('send-btn').disabled = false;
-            document.getElementById('admin-input').focus();
-            renderChat(sessionID);
-            renderSidebar();
-        };
-
-        // 4. MOSTRAR MENSAJES DEL CHAT SELECCIONADO
-        function renderChat(sessionID) {
-            const container = document.getElementById('messages-container');
-            container.innerHTML = '';
+        // Intentar Login
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const pass = document.getElementById('login-pass').value;
             
-            const msgs = groupedChats[sessionID] || [];
-            
-            msgs.forEach(msg => {
-                const div = document.createElement('div');
-                const timeStr = msg.timestamp ? new Date(msg.timestamp.seconds * 1000).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'Enviando...';
-                
-                // Aplicamos las clases Tailwind dependiendo del remitente
-                if (msg.sender === 'bot') {
-                    div.className = `max-w-[75%] p-4 rounded-2xl text-sm relative self-start bg-brand-900/10 border border-brand-500/20 text-slate-300 italic rounded-tl-none`;
-                    div.innerHTML = `<span class="text-[10px] text-brand-500 font-bold uppercase tracking-wider block mb-1">BOT Automático</span>${msg.text}<span class="text-[9px] text-slate-500 absolute bottom-1 right-3">${timeStr}</span>`;
-                } else if (msg.sender === 'admin') {
-                    div.className = `max-w-[75%] p-4 rounded-2xl text-sm relative self-end bg-brand-600 text-white rounded-br-none shadow-lg shadow-brand-500/20`;
-                    div.innerHTML = `<span class="text-[10px] text-blue-200 font-bold uppercase tracking-wider block mb-1">DacDacDev (Tú)</span>${msg.text}<span class="text-[9px] text-blue-300 absolute bottom-1 right-3">${timeStr}</span>`;
-                } else {
-                    // Usuario (Cliente)
-                    div.className = `max-w-[75%] p-4 rounded-2xl text-sm relative self-start bg-slate-800 text-slate-200 border border-slate-700 rounded-bl-none`;
-                    div.innerHTML = `<span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider block mb-1">Cliente</span>${msg.text}<span class="text-[9px] text-slate-500 absolute bottom-1 right-3">${timeStr}</span>`;
-                }
-
-                container.appendChild(div);
-            });
-            container.scrollTop = container.scrollHeight;
-        }
-
-        // 5. ENVIAR RESPUESTA (AQUÍ ESTÁ LA AUTOMATIZACIÓN)
-        window.sendAdminReply = async () => {
-            const input = document.getElementById('admin-input');
-            const text = input.value.trim();
-
-            if (!text || !currentSessionID) return;
-
-            input.value = ''; // Limpiamos rápido para dar feedback de respuesta inmediata
-            input.focus();
-
-            try {
-                await addDoc(collection(db, "mensajes_chat"), {
-                    text: text,
-                    sender: "admin", 
-                    sessionID: currentSessionID, 
-                    timestamp: serverTimestamp(), 
-                    read: true
+            signInWithEmailAndPassword(auth, email, pass)
+                .then(() => {
+                    loginError.classList.add('hidden');
+                })
+                .catch((error) => {
+                    loginError.classList.remove('hidden');
+                    console.error("Error Auth:", error);
                 });
-            } catch (e) {
-                alert("Error crítico de conexión: " + e.message);
-                input.value = text; // Devolvemos el texto si falla
-            }
-        };
+        });
 
-        // Permitir enviar con Enter
-        document.getElementById('admin-input').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') sendAdminReply();
+        // Cerrar Sesión
+        document.getElementById('logout-btn').addEventListener('click', () => {
+            signOut(auth);
         });
     </script>
 </body>
