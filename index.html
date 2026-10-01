@@ -20,13 +20,11 @@
     <!-- Iconos de FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <!-- IMPORTACIÓN DE TAILWIND CSS (Esto es lo que faltaba para que se vea el diseño) -->
     <script src="https://cdn.tailwindcss.com"></script>
     
     <link rel="preload" href="css/style.css" as="style">
     <link rel="stylesheet" href="css/style.css">
     
-    <!-- Configuración personalizada de Tailwind -->
     <script>
         tailwind.config = {
             theme: {
@@ -80,6 +78,12 @@
     </style>
 </head>
 <body class="bg-dark-bg text-slate-200 antialiased selection:bg-brand-500 selection:text-white">
+
+    <!-- Pantalla de Carga -->
+    <div id="loader" class="fixed inset-0 z-[9999] bg-dark-bg flex flex-col items-center justify-center transition-opacity duration-500">
+        <div class="w-16 h-16 border-4 border-brand-500/20 border-t-brand-500 rounded-full animate-spin mb-4"></div>
+        <p class="text-brand-400 font-mono tracking-widest text-sm animate-pulse">&lt;Dac/Dac&gt; Iniciando infraestructura...</p>
+    </div>
 
     <!-- Navegación con Banner de Oferta Integrado -->
     <div class="fixed w-full z-50 transition-all duration-300">

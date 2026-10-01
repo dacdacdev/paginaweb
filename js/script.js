@@ -1,8 +1,20 @@
-// 1. Footer: Año actual
+// js/script.js
+
+// 1. Manejo de la pantalla de carga (Loader)
+window.addEventListener('load', () => {
+    const loader = document.getElementById('loader');
+    if (loader) {
+        loader.style.opacity = '0';
+        setTimeout(() => {
+            loader.style.display = 'none';
+        }, 500); // Espera a que termine la transición de opacidad
+    }
+});
+// 2. Footer: Año actual
 const yearEl = document.getElementById('year');
 if(yearEl) yearEl.textContent = new Date().getFullYear();
 
-// 2. Menú Móvil
+// 3. Menú Móvil
 const menuBtn = document.getElementById('mobile-menu-btn'); 
 const mobileMenu = document.getElementById('mobile-menu');
 if(menuBtn && mobileMenu) {
@@ -11,7 +23,7 @@ if(menuBtn && mobileMenu) {
     });
 }
 
-// 3. Navbar Sombra
+// 4. Navbar Sombra
 window.addEventListener('scroll', function() {
     const nav = document.querySelector('nav');
     if(nav) {
@@ -20,7 +32,7 @@ window.addEventListener('scroll', function() {
     }
 });
 
-// 4. Animaciones Scroll Reveal
+// 5. Animaciones Scroll Reveal
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
