@@ -2,79 +2,99 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Panel de Control - Chatbot</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DacDacDev | Panel de Control Chatbot</title>
+    
+    <!-- BLOQUEO ESTRICTO: Que Google no indexe el panel -->
+    <meta name="robots" content="noindex, nofollow">
+
+    <!-- Tailwind y FontAwesome -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Configuración de Marca DacDacDev -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        brand: { 500: '#0ea5e9', 600: '#0284c7', 900: '#0c4a6e' },
+                        dark: { bg: '#0f172a', card: '#1e293b', text: '#94a3b8' }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Estilos de scrollbar personalizados para que no se vea feo -->
     <style>
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; height: 100vh; background: #f3f4f6; }
-        
-        /* BARRA LATERAL (LISTA DE USUARIOS) */
-        #sidebar {
-            width: 300px; background: white; border-right: 1px solid #ddd;
-            display: flex; flex-direction: column;
-        }
-        .sidebar-header { padding: 20px; background: #4F46E5; color: white; font-weight: bold; }
-        #user-list { flex: 1; overflow-y: auto; }
-        .user-item {
-            padding: 15px; border-bottom: 1px solid #eee; cursor: pointer; transition: 0.2s;
-        }
-        .user-item:hover, .user-item.active { background: #e0e7ff; }
-        .user-item strong { display: block; margin-bottom: 5px; }
-        .user-item span { font-size: 0.8em; color: #666; }
-
-        /* ÁREA PRINCIPAL DE CHAT */
-        #chat-area { flex: 1; display: flex; flex-direction: column; background: #fff; }
-        #current-chat-header {
-            padding: 15px; border-bottom: 1px solid #ddd; background: #f9fafb; font-weight: bold; color: #333;
-        }
-        #messages-container { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; background: #f3f4f6; }
-        
-        /* BURBUJAS */
-        .msg { max-width: 70%; padding: 10px 15px; border-radius: 10px; font-size: 0.9em; position: relative; }
-        .msg-user { align-self: flex-start; background: white; border: 1px solid #ddd; color: #333; }
-        .msg-bot { align-self: flex-end; background: #e5e7eb; color: #333; font-style: italic; } /* Respuestas automáticas */
-        .msg-admin { align-self: flex-end; background: #4F46E5; color: white; } /* TUS RESPUESTAS */
-
-        .sender-tag { font-size: 0.7em; opacity: 0.7; margin-bottom: 3px; display: block; }
-
-        /* INPUT AREA */
-        #input-area { padding: 20px; border-top: 1px solid #ddd; display: flex; gap: 10px; background: white; }
-        input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
-        button { padding: 10px 20px; background: #4F46E5; color: white; border: none; border-radius: 5px; cursor: pointer; }
-        button:disabled { background: #ccc; }
-
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #0ea5e9; }
     </style>
 </head>
-<body>
+<body class="bg-dark-bg text-slate-200 font-sans antialiased h-screen flex overflow-hidden selection:bg-brand-500 selection:text-white">
 
-    <div id="sidebar">
-        <div class="sidebar-header">Bandeja de Entrada</div>
-        <div id="user-list">
-            <div style="padding:20px; color:#888">Cargando chats...</div>
+    <!-- BARRA LATERAL (LISTA DE USUARIOS) -->
+    <div id="sidebar" class="w-80 bg-dark-card border-r border-slate-800 flex flex-col shadow-2xl z-10">
+        <div class="h-16 flex items-center px-6 border-b border-brand-500/20 bg-brand-900/20">
+            <span class="text-xl font-bold text-white">&lt;Dac/<span class="text-brand-500">Chat</span>&gt;</span>
+        </div>
+        <div class="p-4 border-b border-slate-800">
+            <div class="text-xs font-bold text-slate-500 uppercase tracking-widest">Bandeja de Entrada</div>
+        </div>
+        <div id="user-list" class="flex-1 overflow-y-auto">
+            <div class="p-6 text-slate-500 text-sm flex items-center gap-2">
+                <i class="fas fa-circle-notch fa-spin text-brand-500"></i> Cargando chats de Firebase...
+            </div>
         </div>
     </div>
 
-    <div id="chat-area">
-        <div id="current-chat-header">Selecciona un chat de la izquierda</div>
-        <div id="messages-container"></div>
+    <!-- ÁREA PRINCIPAL DE CHAT -->
+    <div id="chat-area" class="flex-1 flex flex-col bg-dark-bg relative">
         
-        <div id="input-area">
-            <input type="text" id="admin-input" placeholder="Escribe tu respuesta..." disabled>
-            <button id="send-btn" onclick="sendAdminReply()" disabled>Enviar</button>
+        <!-- Cabecera del chat actual -->
+        <div id="current-chat-header" class="h-16 flex items-center px-8 border-b border-slate-800 bg-dark-card/50 backdrop-blur text-white font-bold tracking-wide">
+            <i class="fas fa-comment-dots text-brand-500 mr-3"></i> Selecciona un chat de la izquierda
+        </div>
+        
+        <!-- Contenedor de mensajes -->
+        <div id="messages-container" class="flex-1 p-8 overflow-y-auto flex flex-col gap-6">
+            <!-- Mensaje por defecto cuando está vacío -->
+            <div class="h-full flex flex-col items-center justify-center text-slate-600 opacity-50">
+                <i class="fas fa-robot text-6xl mb-4"></i>
+                <p class="text-lg">El sistema está a la espera de conexiones.</p>
+            </div>
+        </div>
+        
+        <!-- Área de Input -->
+        <div id="input-area" class="p-6 border-t border-slate-800 bg-dark-card flex gap-4">
+            <input type="text" id="admin-input" placeholder="Escribe tu respuesta..." disabled 
+                   class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+            <button id="send-btn" onclick="sendAdminReply()" disabled 
+                    class="bg-brand-600 hover:bg-brand-500 text-white px-8 py-3 rounded-xl font-bold transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2">
+                Enviar <i class="fas fa-paper-plane"></i>
+            </button>
         </div>
     </div>
 
+    <!-- SCRIPT FIREBASE Y LÓGICA (Tu código original adaptado a la nueva UI) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
         import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
-const firebaseConfig = {
-    apiKey: "AIzaSyDqWjgoi8DwcZiXwp3nF1gQ0vvxZ39CUtQ",
-    authDomain: "chatbot-web-v1.firebaseapp.com",
-    projectId: "chatbot-web-v1",
-    storageBucket: "chatbot-web-v1.firebasestorage.app",
-    messagingSenderId: "7994049270",
-    appId: "1:7994049270:web:f5e6a2652065bf4680a2d7",
-    measurementId: "G-H4VMDPG9SP"
-};
+        // Tu configuración exacta
+        const firebaseConfig = {
+            apiKey: "AIzaSyDqWjgoi8DwcZiXwp3nF1gQ0vvxZ39CUtQ",
+            authDomain: "chatbot-web-v1.firebaseapp.com",
+            projectId: "chatbot-web-v1",
+            storageBucket: "chatbot-web-v1.firebasestorage.app",
+            messagingSenderId: "7994049270",
+            appId: "1:7994049270:web:f5e6a2652065bf4680a2d7",
+            measurementId: "G-H4VMDPG9SP"
+        };
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
@@ -88,7 +108,7 @@ const firebaseConfig = {
         
         onSnapshot(q, (snapshot) => {
             allMessages = [];
-            groupedChats = {}; // Reiniciamos agrupación
+            groupedChats = {};
 
             snapshot.forEach((doc) => {
                 const data = doc.data();
@@ -103,7 +123,7 @@ const firebaseConfig = {
 
             renderSidebar();
             if (currentSessionID) {
-                renderChat(currentSessionID); // Refrescar chat si está abierto
+                renderChat(currentSessionID);
             }
         });
 
@@ -112,22 +132,34 @@ const firebaseConfig = {
             const listDiv = document.getElementById('user-list');
             listDiv.innerHTML = '';
 
-            // Obtener IDs únicos y ordenarlos por mensaje más reciente (invertido)
             const sessionIDs = Object.keys(groupedChats).sort((a,b) => {
                 const lastMsgA = groupedChats[a][groupedChats[a].length -1].timestamp;
                 const lastMsgB = groupedChats[b][groupedChats[b].length -1].timestamp;
                 return (lastMsgB?.seconds || 0) - (lastMsgA?.seconds || 0); 
             });
 
+            if(sessionIDs.length === 0) {
+                listDiv.innerHTML = '<div class="p-6 text-slate-500 text-sm">No hay chats activos.</div>';
+                return;
+            }
+
             sessionIDs.forEach(id => {
                 const msgs = groupedChats[id];
                 const lastMsg = msgs[msgs.length - 1];
                 
+                // Estilos para el chat seleccionado vs normal
+                const isActive = id === currentSessionID;
+                const activeClass = isActive ? 'bg-brand-900/40 border-l-4 border-brand-500' : 'border-l-4 border-transparent hover:bg-slate-800/50';
+                const timeStr = lastMsg.timestamp ? new Date(lastMsg.timestamp.seconds * 1000).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'Ahora';
+                
                 const div = document.createElement('div');
-                div.className = `user-item ${id === currentSessionID ? 'active' : ''}`;
+                div.className = `p-4 border-b border-slate-800 cursor-pointer transition-all ${activeClass}`;
                 div.innerHTML = `
-                    <strong>Usuario: ${id.substring(0,6)}...</strong>
-                    <span>${lastMsg.text.substring(0, 30)}...</span>
+                    <div class="flex justify-between items-center mb-1">
+                        <strong class="text-white text-sm">ID: ${id.substring(0,8)}...</strong>
+                        <span class="text-[10px] text-brand-400 font-mono">${timeStr}</span>
+                    </div>
+                    <span class="text-xs text-slate-400 truncate block">${lastMsg.text}</span>
                 `;
                 div.onclick = () => selectChat(id);
                 listDiv.appendChild(div);
@@ -137,11 +169,12 @@ const firebaseConfig = {
         // 3. SELECCIONAR UN CHAT
         window.selectChat = (sessionID) => {
             currentSessionID = sessionID;
-            document.getElementById('current-chat-header').innerText = `Chat con sesión: ${sessionID}`;
+            document.getElementById('current-chat-header').innerHTML = `<i class="fas fa-circle text-green-500 text-xs mr-2 animate-pulse"></i> Sesión Activa: <span class="text-brand-400 ml-2 font-mono">${sessionID}</span>`;
             document.getElementById('admin-input').disabled = false;
             document.getElementById('send-btn').disabled = false;
+            document.getElementById('admin-input').focus();
             renderChat(sessionID);
-            renderSidebar(); // Para actualizar el marcado "active"
+            renderSidebar();
         };
 
         // 4. MOSTRAR MENSAJES DEL CHAT SELECCIONADO
@@ -153,16 +186,21 @@ const firebaseConfig = {
             
             msgs.forEach(msg => {
                 const div = document.createElement('div');
-                // Estilo según quién envía
-                let typeClass = 'msg-user';
-                if (msg.sender === 'bot') typeClass = 'msg-bot';
-                if (msg.sender === 'admin') typeClass = 'msg-admin';
+                const timeStr = msg.timestamp ? new Date(msg.timestamp.seconds * 1000).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'Enviando...';
+                
+                // Aplicamos las clases Tailwind dependiendo del remitente
+                if (msg.sender === 'bot') {
+                    div.className = `max-w-[75%] p-4 rounded-2xl text-sm relative self-start bg-brand-900/10 border border-brand-500/20 text-slate-300 italic rounded-tl-none`;
+                    div.innerHTML = `<span class="text-[10px] text-brand-500 font-bold uppercase tracking-wider block mb-1">BOT Automático</span>${msg.text}<span class="text-[9px] text-slate-500 absolute bottom-1 right-3">${timeStr}</span>`;
+                } else if (msg.sender === 'admin') {
+                    div.className = `max-w-[75%] p-4 rounded-2xl text-sm relative self-end bg-brand-600 text-white rounded-br-none shadow-lg shadow-brand-500/20`;
+                    div.innerHTML = `<span class="text-[10px] text-blue-200 font-bold uppercase tracking-wider block mb-1">DacDacDev (Tú)</span>${msg.text}<span class="text-[9px] text-blue-300 absolute bottom-1 right-3">${timeStr}</span>`;
+                } else {
+                    // Usuario (Cliente)
+                    div.className = `max-w-[75%] p-4 rounded-2xl text-sm relative self-start bg-slate-800 text-slate-200 border border-slate-700 rounded-bl-none`;
+                    div.innerHTML = `<span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider block mb-1">Cliente</span>${msg.text}<span class="text-[9px] text-slate-500 absolute bottom-1 right-3">${timeStr}</span>`;
+                }
 
-                div.className = `msg ${typeClass}`;
-                div.innerHTML = `
-                    <span class="sender-tag">${msg.sender.toUpperCase()}</span>
-                    ${msg.text}
-                `;
                 container.appendChild(div);
             });
             container.scrollTop = container.scrollHeight;
@@ -175,19 +213,20 @@ const firebaseConfig = {
 
             if (!text || !currentSessionID) return;
 
-            // AQUÍ OCURRE LA MAGIA AUTOMÁTICA
-            // El código rellena los campos tediosos por ti
+            input.value = ''; // Limpiamos rápido para dar feedback de respuesta inmediata
+            input.focus();
+
             try {
                 await addDoc(collection(db, "mensajes_chat"), {
                     text: text,
-                    sender: "admin",       // <-- Automático
-                    sessionID: currentSessionID, // <-- Automático (el que tienes seleccionado)
-                    timestamp: serverTimestamp(), // <-- Automático
+                    sender: "admin", 
+                    sessionID: currentSessionID, 
+                    timestamp: serverTimestamp(), 
                     read: true
                 });
-                input.value = ''; // Limpiar input
             } catch (e) {
-                alert("Error al enviar: " + e.message);
+                alert("Error crítico de conexión: " + e.message);
+                input.value = text; // Devolvemos el texto si falla
             }
         };
 
@@ -195,7 +234,6 @@ const firebaseConfig = {
         document.getElementById('admin-input').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') sendAdminReply();
         });
-
     </script>
 </body>
 </html>
