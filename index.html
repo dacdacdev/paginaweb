@@ -13,13 +13,10 @@
     <meta property="og:url" content="https://www.tudominio.com/">
     <meta property="og:type" content="website">
 
-    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
     <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
     
-    <!-- Iconos de FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
     <script src="https://cdn.tailwindcss.com"></script>
     
     <link rel="preload" href="css/style.css" as="style">
@@ -29,26 +26,12 @@
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
-                        brand: {
-                            50: '#f0f9ff',
-                            100: '#e0f2fe',
-                            500: '#0ea5e9',
-                            600: '#0284c7',
-                            900: '#0c4a6e',
-                        },
-                        dark: {
-                            bg: '#0f172a',
-                            card: '#1e293b',
-                            text: '#94a3b8',
-                        }
+                        brand: { 50: '#f0f9ff', 100: '#e0f2fe', 500: '#0ea5e9', 600: '#0284c7', 900: '#0c4a6e' },
+                        dark: { bg: '#0f172a', card: '#1e293b', text: '#94a3b8' }
                     },
-                    animation: {
-                        'bounce-slow': 'bounce 3s infinite',
-                    }
+                    animation: { 'bounce-slow': 'bounce 3s infinite' }
                 }
             }
         }
@@ -63,15 +46,8 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease-out;
-        }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
         .delay-100 { transition-delay: 100ms; }
         .delay-200 { transition-delay: 200ms; }
         .delay-300 { transition-delay: 300ms; }
@@ -79,22 +55,20 @@
 </head>
 <body class="bg-dark-bg text-slate-200 antialiased selection:bg-brand-500 selection:text-white">
 
-    <!-- Pantalla de Carga -->
+    <!-- Loader Pantalla Carga -->
     <div id="loader" class="fixed inset-0 z-[9999] bg-dark-bg flex flex-col items-center justify-center transition-opacity duration-500">
         <div class="w-16 h-16 border-4 border-brand-500/20 border-t-brand-500 rounded-full animate-spin mb-4"></div>
         <p class="text-brand-400 font-mono tracking-widest text-sm animate-pulse">&lt;Dac/Dac&gt; Iniciando infraestructura...</p>
     </div>
 
-    <!-- Navegación con Banner de Oferta Integrado -->
+    <!-- Navegación -->
     <div class="fixed w-full z-50 transition-all duration-300">
-        <!-- Barra de Urgencia (20% Descuento) -->
         <div class="bg-gradient-to-r from-brand-600 via-blue-500 to-brand-600 text-white text-center py-2 px-4 font-bold text-sm sm:text-base shadow-[0_0_20px_rgba(14,165,233,0.4)] relative">
             <span class="animate-pulse inline-block mr-2 text-yellow-300">🔥</span> 
             OFERTA DE LANZAMIENTO: 20% de descuento para los 5 primeros proyectos <span class="bg-white text-brand-600 px-2 py-0.5 rounded-full text-xs font-black ml-1">(Quedan 5 plazas)</span>
             <a href="#contacto" class="underline decoration-2 underline-offset-4 ml-3 hover:text-yellow-300 transition-colors">Reclamar oferta</a>
         </div>
         
-        <!-- Navbar clásico -->
         <nav class="bg-dark-bg/90 backdrop-blur-md border-b border-slate-700/50 pt-1">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex items-center justify-between h-16">
@@ -118,7 +92,6 @@
                     </div>
                 </div>
             </div>
-            <!-- Menú móvil oculto por defecto -->
             <div class="md:hidden hidden bg-dark-card border-b border-slate-700" id="mobile-menu">
                 <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                     <a href="#inicio" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Inicio</a>
@@ -214,7 +187,7 @@
         </div>
     </section>
 
-<!-- NUEVA SECCIÓN: Cómo funciona (El Proceso) -->
+    <!-- Cómo funciona (El Proceso) -->
     <section id="proceso" class="py-24 bg-slate-900/30 border-b border-slate-800 relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="text-center mb-16 reveal">
@@ -223,10 +196,8 @@
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
-                <!-- Línea conectora (solo visible en escritorio) -->
                 <div class="hidden md:block absolute top-12 left-1/6 right-1/6 h-0.5 bg-gradient-to-r from-transparent via-brand-500/50 to-transparent z-0"></div>
                 
-                <!-- Paso 1 -->
                 <div class="relative z-10 text-center reveal delay-100 group cursor-pointer">
                     <div class="w-24 h-24 mx-auto bg-dark-bg border-2 border-brand-500 rounded-full flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(14,165,233,0.3)] transition-all duration-500 group-hover:shadow-[0_0_40px_rgba(14,165,233,0.8)] group-hover:bg-brand-900/40 group-hover:-translate-y-2">
                         <i class="fas fa-coffee text-3xl text-brand-400 transition-all duration-500 group-hover:rotate-12 group-hover:scale-125"></i>
@@ -235,7 +206,6 @@
                     <p class="text-slate-400 text-sm leading-relaxed">Nos tomamos un café o charlamos tranquilamente. Analizo tu negocio, tu competencia y definimos qué necesitas exactamente para ganarles.</p>
                 </div>
                 
-                <!-- Paso 2 -->
                 <div class="relative z-10 text-center reveal delay-200 group cursor-pointer">
                     <div class="w-24 h-24 mx-auto bg-dark-bg border-2 border-brand-500 rounded-full flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(14,165,233,0.3)] transition-all duration-500 group-hover:shadow-[0_0_40px_rgba(14,165,233,0.8)] group-hover:bg-brand-900/40 group-hover:-translate-y-2">
                         <i class="fas fa-laptop-code text-3xl text-brand-400 transition-all duration-500 group-hover:scale-125 group-hover:text-white"></i>
@@ -244,7 +214,6 @@
                     <p class="text-slate-400 text-sm leading-relaxed">Tú sigues con tu negocio sin interrupciones, yo me encierro a picar código. Construyo tu web desde cero y a medida.</p>
                 </div>
                 
-                <!-- Paso 3 -->
                 <div class="relative z-10 text-center reveal delay-300 group cursor-pointer">
                     <div class="w-24 h-24 mx-auto bg-dark-bg border-2 border-brand-500 rounded-full flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(14,165,233,0.3)] transition-all duration-500 group-hover:shadow-[0_0_40px_rgba(14,165,233,0.8)] group-hover:bg-brand-900/40 group-hover:-translate-y-2">
                         <i class="fas fa-rocket text-3xl text-brand-400 transition-all duration-500 group-hover:-translate-y-3 group-hover:translate-x-3 group-hover:scale-125"></i>
@@ -280,7 +249,7 @@
         </div>
     </section>
 
-    <!-- Pricing Section (Webs) -->
+    <!-- Pricing Section -->
     <section id="precios" class="py-20 bg-slate-900/30 border-b border-slate-800">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16 reveal">
@@ -293,7 +262,6 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-                <!-- PLAN 1 - 20% DTO -->
                 <div class="bg-dark-card p-8 rounded-2xl border-2 border-brand-500/30 hover:border-brand-500/80 transition-all flex flex-col reveal delay-100 shadow-xl relative">
                     <div class="absolute -top-4 right-6 bg-red-600 text-white text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider shadow-lg">
                         -20% DTO
@@ -324,12 +292,10 @@
                     <a href="#contacto" class="w-full block text-center py-4 border border-brand-500/50 text-white rounded-xl hover:bg-slate-800 transition-all font-bold uppercase tracking-wider">Solicitar Desarrollo</a>
                 </div>
 
-                <!-- PLAN 2 - 20% DTO VIP -->
                 <div class="bg-dark-card p-8 rounded-2xl border-2 border-brand-500 shadow-[0_0_40px_rgba(14,165,233,0.25)] relative flex flex-col reveal delay-200 transform md:-translate-y-4">
                     <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-red-600 to-orange-500 text-white text-sm font-black px-6 py-2 rounded-full uppercase tracking-widest shadow-lg border border-white/20 whitespace-nowrap">
                         🔥 20% DTO - VIP
                     </div>
-                    
                     <div class="mb-6 mt-4">
                         <div class="inline-block px-3 py-1 bg-brand-900/50 text-brand-400 rounded-full text-xs font-bold tracking-wider mb-4 border border-brand-500/30">APLICACIONES & FULL STACK</div>
                         <h3 class="text-2xl font-bold text-white mb-2">Paquete Premium</h3>
@@ -360,7 +326,7 @@
         </div>
     </section>
 
-    <!-- Automatización e IA (Upsells) -->
+    <!-- Automatización e IA -->
     <section id="crecimiento" class="py-24 bg-dark-bg border-b border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16 reveal">
@@ -372,7 +338,6 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Servicio 1: IA WhatsApp -->
                 <div class="bg-dark-card p-8 rounded-2xl border border-slate-700/50 hover:border-purple-500/50 transition-all group reveal delay-100">
                     <div class="w-14 h-14 bg-purple-500/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                         <i class="fas fa-robot text-2xl text-purple-500"></i>
@@ -387,7 +352,6 @@
                     </div>
                 </div>
 
-                <!-- Servicio 2: SEO & Google Maps -->
                 <div class="bg-dark-card p-8 rounded-2xl border border-slate-700/50 hover:border-yellow-500/50 transition-all group reveal delay-200">
                     <div class="w-14 h-14 bg-yellow-500/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                         <i class="fas fa-map-marked-alt text-2xl text-yellow-500"></i>
@@ -402,7 +366,6 @@
                     </div>
                 </div>
 
-                <!-- Servicio 3: Redes Automáticas -->
                 <div class="bg-dark-card p-8 rounded-2xl border border-slate-700/50 hover:border-pink-500/50 transition-all group reveal delay-300">
                     <div class="w-14 h-14 bg-pink-500/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                         <i class="fab fa-instagram text-2xl text-pink-500"></i>
@@ -420,7 +383,7 @@
         </div>
     </section>
 
-    <!-- NUEVA SECCIÓN: FAQ (Preguntas Frecuentes) -->
+    <!-- FAQ -->
     <section id="faq" class="py-20 bg-slate-900/30 border-b border-slate-800">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12 reveal">
@@ -429,7 +392,6 @@
             </div>
             
             <div class="space-y-4 reveal delay-100">
-                <!-- Pregunta 1 -->
                 <details class="group bg-dark-card border border-slate-700 hover:border-brand-500/50 rounded-xl transition-colors">
                     <summary class="flex justify-between items-center font-bold cursor-pointer list-none p-6 text-white text-lg">
                         <span>¿Cuánto tardas en entregar la web?</span>
@@ -440,7 +402,6 @@
                     </div>
                 </details>
 
-                <!-- Pregunta 2 -->
                 <details class="group bg-dark-card border border-slate-700 hover:border-brand-500/50 rounded-xl transition-colors">
                     <summary class="flex justify-between items-center font-bold cursor-pointer list-none p-6 text-white text-lg">
                         <span>¿Tengo que pagar una cuota de mantenimiento mensual obligatoria?</span>
@@ -451,7 +412,6 @@
                     </div>
                 </details>
 
-                <!-- Pregunta 3 -->
                 <details class="group bg-dark-card border border-slate-700 hover:border-brand-500/50 rounded-xl transition-colors">
                     <summary class="flex justify-between items-center font-bold cursor-pointer list-none p-6 text-white text-lg">
                         <span>¿Por qué no usas WordPress como todo el mundo?</span>
@@ -462,7 +422,6 @@
                     </div>
                 </details>
 
-                <!-- Pregunta 4 -->
                 <details class="group bg-dark-card border border-slate-700 hover:border-brand-500/50 rounded-xl transition-colors">
                     <summary class="flex justify-between items-center font-bold cursor-pointer list-none p-6 text-white text-lg">
                         <span>¿La página web será mía?</span>
@@ -476,7 +435,7 @@
         </div>
     </section>
 
-    <!-- Contacto (Formspree) -->
+    <!-- Contacto (Firebase DB Directo) -->
     <section id="contacto" class="py-20 bg-dark-bg">
         <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12 reveal">
@@ -484,15 +443,15 @@
                 <p class="text-slate-400">Las plazas con el 20% de descuento vuelan. Rellena el formulario y envíame los detalles.</p>
             </div>
             
-            <form action="https://formspree.io/f/xaewroro" method="POST" id="contactForm" class="space-y-6 bg-dark-card p-8 rounded-2xl border border-brand-500/30 shadow-xl shadow-brand-900/10 reveal delay-100 relative overflow-hidden">
+            <form id="contactForm" class="space-y-6 bg-dark-card p-8 rounded-2xl border border-brand-500/30 shadow-xl shadow-brand-900/10 reveal delay-100 relative overflow-hidden">
                 <div class="absolute top-0 right-0 bg-brand-600 text-white text-xs font-black px-4 py-1 rounded-bl-xl uppercase">Fast Track</div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
-                    <input type="text" name="Nombre" id="name" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors" placeholder="Tu Nombre" required>
-                    <input type="email" name="Email" id="email" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors" placeholder="Tu Email" required>
+                    <input type="text" id="name" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors" placeholder="Tu Nombre" required>
+                    <input type="email" id="email" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors" placeholder="Tu Email" required>
                 </div>
                 
                 <div class="relative">
-                    <select name="Servicio_Elegido" id="plan" class="w-full bg-slate-900 border border-brand-500/50 rounded-lg px-4 py-3 text-white appearance-none focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors cursor-pointer" required>
+                    <select id="plan" class="w-full bg-slate-900 border border-brand-500/50 rounded-lg px-4 py-3 text-white appearance-none focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors cursor-pointer" required>
                         <option value="" disabled selected>Selecciona tu oferta o servicio...</option>
                         <optgroup label="Desarrollo Web (OFERTA 20%)" class="text-brand-400">
                             <option value="Paquete Premium OFERTA (796€)">Paquete Premium VIP (796€) 🔥</option>
@@ -513,9 +472,9 @@
                     </div>
                 </div>
 
-                <textarea name="Mensaje" id="message" rows="4" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors" placeholder="Cuéntame los detalles de tu negocio..." required></textarea>
+                <textarea id="message" rows="4" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors" placeholder="Cuéntame los detalles de tu negocio..." required></textarea>
                 
-                <button type="submit" class="w-full bg-brand-600 hover:bg-brand-500 text-white font-bold py-4 rounded-lg transition-all flex justify-center items-center gap-2">
+                <button type="submit" class="w-full bg-brand-600 hover:bg-brand-500 text-white font-bold py-4 rounded-lg transition-all flex justify-center items-center gap-2 disabled:opacity-50">
                     Enviar Consulta <i class="fas fa-paper-plane text-lg"></i>
                 </button>
             </form>
@@ -528,28 +487,18 @@
         </div>
     </footer>
     
-    <!-- Script para los scripts extra que tenías -->
-    <script src="js/script.js"></script>
-    <script src="js/chatbot.js"></script>
-    <script defer src="analytics-tracker.js"></script>
-    
-    <!-- Script para interacciones básicas -->
+    <!-- Animaciones Base -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Año automático en el footer
             const yearEl = document.getElementById('year');
             if(yearEl) yearEl.textContent = new Date().getFullYear();
 
-            // Lógica del menú móvil
             const menuBtn = document.getElementById('mobile-menu-btn');
             const mobileMenu = document.getElementById('mobile-menu');
             if(menuBtn && mobileMenu) {
-                menuBtn.addEventListener('click', () => {
-                    mobileMenu.classList.toggle('hidden');
-                });
+                menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
             }
 
-            // Animaciones de scroll (Reveal)
             const observerOptions = { threshold: 0.1 };
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -562,6 +511,84 @@
 
             document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         });
+    </script>
+
+    <!-- LÓGICA DE TELEMETRÍA Y BASE DE DATOS (FIREBASE) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDqWjgoi8DwcZiXwp3nF1gQ0vvxZ39CUtQ",
+            authDomain: "chatbot-web-v1.firebaseapp.com",
+            projectId: "chatbot-web-v1",
+            storageBucket: "chatbot-web-v1.firebasestorage.app",
+            messagingSenderId: "7994049270",
+            appId: "1:7994049270:web:f5e6a2652065bf4680a2d7"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // 1. Quitar Loader y Registrar Visita Real
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            if (loader) {
+                loader.style.opacity = '0';
+                setTimeout(() => loader.style.display = 'none', 500);
+            }
+            
+            const loadTime = Date.now() - performance.timing.navigationStart;
+            addDoc(collection(db, "telemetria"), {
+                tipo: "visita",
+                velocidad_ms: loadTime,
+                fecha: serverTimestamp(),
+                userAgent: navigator.userAgent
+            }).catch(e => console.log("Telemetría bloqueada por cliente (Ignorar)"));
+        });
+
+        // 2. Cazador de Errores Reales
+        window.addEventListener('error', (event) => {
+            addDoc(collection(db, "telemetria"), {
+                tipo: "error",
+                mensaje: event.message,
+                archivo: event.filename,
+                linea: event.lineno,
+                fecha: serverTimestamp()
+            }).catch(e => {});
+        });
+
+        // 3. Formulario Directo a Base de Datos
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+            contactForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const btn = contactForm.querySelector('button[type="submit"]');
+                const btnOriginalText = btn.innerHTML;
+                
+                btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Encriptando y Enviando...';
+                btn.disabled = true;
+
+                try {
+                    await addDoc(collection(db, "leads"), {
+                        nombre: document.getElementById('name').value,
+                        email: document.getElementById('email').value,
+                        servicio: document.getElementById('plan').value,
+                        mensaje: document.getElementById('message').value,
+                        fecha: serverTimestamp(),
+                        estado: "nuevo"
+                    });
+                    
+                    btn.innerHTML = '<i class="fas fa-check"></i> Recibido. Te contactaré pronto.';
+                    btn.classList.replace('bg-brand-600', 'bg-green-600');
+                    contactForm.reset();
+                } catch (error) {
+                    alert("Error en el servidor. Inténtalo de nuevo.");
+                    btn.innerHTML = btnOriginalText;
+                    btn.disabled = false;
+                }
+            });
+        }
     </script>
 </body>
 </html>
