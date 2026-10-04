@@ -52,7 +52,6 @@
         .delay-200 { transition-delay: 200ms; }
         .delay-300 { transition-delay: 300ms; }
 
-        /* Scrollbar personalizada para el menú desplegable premium */
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: #0f172a; border-radius: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
@@ -466,7 +465,7 @@
                         <span class="transition group-open:rotate-180"><i class="fas fa-chevron-down text-brand-500"></i></span>
                     </summary>
                     <div class="text-slate-400 px-6 pb-6 leading-relaxed">
-                        No. A diferencia de otras agencias, el pago por el desarrollo de la web es único. Si en el futuro necesitas añadir un plato nuevo a la carta o cambiar imágenes, ofrezco un sistema de "Micro-servicios" o "Bolsa de horas" donde pagas solo por lo que me pides.
+                        Por mi parte, <strong>no hay ninguna cuota de mantenimiento</strong>. El pago por el desarrollo de la infraestructura es único. El único coste fijo mensual que tendrás que asumir es el alojamiento (hosting) de la web en los servidores de Vercel, que tiene un coste de <strong>20€ al mes</strong>. Si en el futuro necesitas cambios técnicos, ofrezco un sistema de "Bolsa de horas".
                     </div>
                 </details>
 
@@ -490,6 +489,19 @@
                     </div>
                 </details>
             </div>
+
+            <!-- Contacto Directo Extra -->
+            <div class="mt-16 text-center reveal delay-200 border-t border-slate-800 pt-12">
+                <p class="text-slate-400 mb-6 font-medium">¿Te queda alguna duda técnica en el tintero?</p>
+                <div class="flex flex-col sm:flex-row justify-center items-center gap-6">
+                    <a href="mailto:dacdacdev@gmail.com" class="px-6 py-3 bg-dark-card border border-slate-700 hover:border-brand-500 text-white rounded-lg transition-all flex items-center gap-3 shadow-lg">
+                        <i class="fas fa-envelope text-brand-500"></i> dacdacdev@gmail.com
+                    </a>
+                    <a href="https://wa.me/34611030269" target="_blank" class="px-6 py-3 bg-dark-card border border-slate-700 hover:border-green-500 text-white rounded-lg transition-all flex items-center gap-3 shadow-lg">
+                        <i class="fab fa-whatsapp text-green-500 text-lg"></i> 611 030 269
+                    </a>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -507,7 +519,6 @@
                     <input type="email" id="email" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors" placeholder="Tu Email" required>
                 </div>
                 
-                <!-- DROPDOWN CUSTOMIZADO (Sustituye al select nativo feo) -->
                 <div class="relative" id="custom-select-container">
                     <input type="hidden" id="plan" required>
                     
@@ -518,18 +529,15 @@
 
                     <div id="custom-select-menu" class="absolute z-50 w-full mt-2 bg-[#111827] border border-slate-700 rounded-lg shadow-2xl opacity-0 invisible transition-all duration-200 translate-y-[-10px] overflow-hidden">
                         <div class="max-h-60 overflow-y-auto custom-scrollbar">
-                            <!-- Opción Desarrollo Web -->
                             <div class="px-4 py-2 text-[10px] font-bold text-brand-400 uppercase tracking-widest bg-[#0a0f18]/80 backdrop-blur sticky top-0 border-b border-slate-800">Desarrollo Web</div>
                             <div class="custom-option px-4 py-3 text-sm text-slate-300 hover:bg-brand-600 hover:text-white cursor-pointer transition-colors" data-value="Paquete Premium (995€)">Paquete Premium VIP (995€) 🔥</div>
                             <div class="custom-option px-4 py-3 text-sm text-slate-300 hover:bg-brand-600 hover:text-white cursor-pointer transition-colors" data-value="Paquete Básico (400€)">Paquete Básico (400€)</div>
                             
-                            <!-- Opción Crecimiento -->
                             <div class="px-4 py-2 text-[10px] font-bold text-purple-400 uppercase tracking-widest bg-[#0a0f18]/80 backdrop-blur sticky top-0 border-b border-t border-slate-800">Automatización y Crecimiento</div>
                             <div class="custom-option px-4 py-3 text-sm text-slate-300 hover:bg-purple-600 hover:text-white cursor-pointer transition-colors" data-value="Recepcionista IA">Recepcionista IA WhatsApp</div>
                             <div class="custom-option px-4 py-3 text-sm text-slate-300 hover:bg-purple-600 hover:text-white cursor-pointer transition-colors" data-value="Dominio SEO y Maps">Dominio SEO & Google Maps</div>
                             <div class="custom-option px-4 py-3 text-sm text-slate-300 hover:bg-purple-600 hover:text-white cursor-pointer transition-colors" data-value="Captación Redes DMs">Captación Automática DMs</div>
 
-                            <!-- Opción Extra -->
                             <div class="px-4 py-2 text-[10px] font-bold text-yellow-400 uppercase tracking-widest bg-[#0a0f18]/80 backdrop-blur sticky top-0 border-b border-t border-slate-800">Servicios Bajo Demanda</div>
                             <div class="custom-option px-4 py-3 text-sm text-slate-300 hover:bg-yellow-600 hover:text-white cursor-pointer transition-colors" data-value="Bolsa de Horas">Modificaciones / Bolsa de horas</div>
                             <div class="custom-option px-4 py-3 text-sm text-slate-300 hover:bg-slate-700 hover:text-white cursor-pointer transition-colors border-t border-slate-800" data-value="Presupuesto a medida / Integrales">Plan a medida / Combo Web+Crecimiento</div>
