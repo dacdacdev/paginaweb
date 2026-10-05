@@ -4,126 +4,275 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
-    <title>DacDacDev | Telemetría y Control</title>
+    <title>DacDacDev | Admin Command Center</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['Fira Code', 'monospace'] },
                     colors: {
-                        brand: { 500: '#0ea5e9', 600: '#0284c7', 900: '#0c4a6e' },
-                        dark: { bg: '#0f172a', card: '#1e293b', text: '#94a3b8' }
+                        brand: { 50: '#f0f9ff', 100: '#e0f2fe', 500: '#0ea5e9', 600: '#0284c7', 900: '#0c4a6e' },
+                        dark: { bg: '#0a0f18', card: '#111827', border: '#1e293b', text: '#94a3b8' }
                     }
                 }
             }
         }
     </script>
+
+    <style>
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #0a0f18; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #0ea5e9; }
+
+        .nav-item {
+            display: flex; align-items: center; gap: 12px; padding: 12px 16px; 
+            border-radius: 8px; color: #94a3b8; font-weight: 500; font-size: 14px;
+            transition: all 0.2s; cursor: pointer; border: 1px solid transparent;
+        }
+        .nav-item:hover { background: rgba(14, 165, 233, 0.1); color: #fff; }
+        .nav-item.active { 
+            background: rgba(14, 165, 233, 0.15); color: #0ea5e9; 
+            border-color: rgba(14, 165, 233, 0.3);
+        }
+    </style>
 </head>
-<body class="bg-dark-bg text-slate-200 font-sans antialiased h-screen flex overflow-hidden selection:bg-brand-500 selection:text-white">
+<body class="bg-dark-bg text-slate-200 font-sans antialiased h-screen overflow-hidden selection:bg-brand-500 selection:text-white flex">
 
     <!-- PANTALLA DE LOGIN -->
-    <div id="login-screen" class="fixed inset-0 z-50 flex items-center justify-center bg-dark-bg">
-        <div class="bg-dark-card p-10 rounded-2xl border border-slate-700 shadow-2xl w-full max-w-md">
+    <div id="login-screen" class="fixed inset-0 z-50 flex items-center justify-center bg-dark-bg bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-dark-card to-dark-bg">
+        <div class="bg-dark-card p-10 rounded-2xl border border-dark-border shadow-[0_0_40px_rgba(14,165,233,0.15)] w-full max-w-md relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-600 to-brand-400"></div>
+            
             <div class="text-center mb-8">
-                <span class="text-3xl font-bold text-white">&lt;Dac/<span class="text-brand-500">Admin</span>&gt;</span>
-                <p class="text-slate-400 mt-2 text-sm">Acceso Restringido a Infraestructura</p>
+                <span class="text-3xl font-bold text-white tracking-tight">&lt;Dac/<span class="text-brand-500">Admin</span>&gt;</span>
+                <p class="text-slate-400 mt-2 text-sm font-medium">Autenticación Requerida</p>
             </div>
             
-            <form id="login-form" class="space-y-6">
+            <form id="login-form" class="space-y-5">
                 <div>
-                    <label class="block text-slate-400 text-xs font-bold uppercase mb-2">Usuario (Email)</label>
-                    <input type="email" id="login-email" required class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-500 transition-colors">
+                    <label class="block text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">Usuario (Email)</label>
+                    <input type="email" id="login-email" required class="w-full bg-[#0a0f18] border border-dark-border rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-500 transition-colors">
                 </div>
                 <div>
-                    <label class="block text-slate-400 text-xs font-bold uppercase mb-2">Contraseña</label>
-                    <input type="password" id="login-pass" required class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-500 transition-colors">
+                    <label class="block text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">Contraseña</label>
+                    <input type="password" id="login-pass" required class="w-full bg-[#0a0f18] border border-dark-border rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-500 transition-colors">
                 </div>
-                <div id="login-error" class="text-red-400 text-xs hidden font-bold text-center">Credenciales incorrectas o acceso denegado.</div>
-                <button type="submit" class="w-full bg-brand-600 hover:bg-brand-500 text-white font-bold py-3 rounded-lg transition-all">
+                <div id="login-error" class="text-red-400 text-xs hidden font-bold text-center bg-red-400/10 py-2 rounded">Credenciales incorrectas o acceso denegado.</div>
+                
+                <button type="submit" class="w-full bg-brand-600 hover:bg-brand-500 text-white font-bold py-3 rounded-lg transition-all shadow-[0_0_20px_rgba(14,165,233,0.3)] mt-4">
                     Desbloquear Sistema
                 </button>
             </form>
         </div>
     </div>
 
-    <!-- PANTALLA DEL DASHBOARD (Oculta hasta validación) -->
-    <div id="dashboard-screen" class="hidden flex-1 flex flex-col h-full w-full">
-        <header class="h-16 bg-dark-card border-b border-slate-800 flex items-center justify-between px-8">
-            <h1 class="text-xl font-bold text-white">Telemetría de Red</h1>
-            <div class="flex items-center gap-6">
-                <div class="flex items-center gap-2">
-                    <span class="relative flex h-3 w-3">
-                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                      <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
-                    </span>
-                    <span class="text-xs font-mono text-slate-400" id="user-email-display">Conectado</span>
-                </div>
-                <button id="logout-btn" class="text-sm text-red-400 hover:text-red-300 font-bold transition-colors"><i class="fas fa-power-off"></i> Salir</button>
+    <!-- PANTALLA PRINCIPAL (DASHBOARD) -->
+    <div id="dashboard-screen" class="hidden w-full h-full flex">
+        
+        <!-- BARRA LATERAL (SIDEBAR) -->
+        <aside class="w-64 h-full bg-dark-card border-r border-dark-border flex flex-col flex-shrink-0 z-20 shadow-xl">
+            <!-- Logo -->
+            <div class="h-20 flex items-center px-6 border-b border-dark-border">
+                <span class="text-xl font-bold text-white tracking-tight">&lt;Dac/<span class="text-brand-500">Admin</span>&gt;</span>
             </div>
-        </header>
 
-        <div class="p-8 flex-1 overflow-y-auto">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                <!-- Velocidad Media -->
-                <div class="bg-dark-card border border-slate-700 p-6 rounded-xl shadow-lg">
-                    <div class="flex justify-between items-start mb-2">
-                        <div class="text-slate-400 text-sm font-bold uppercase tracking-wider">Carga Media (DOM)</div>
-                        <i class="fas fa-bolt text-yellow-400"></i>
-                    </div>
-                    <div class="text-3xl font-black text-white" id="metric-speed">-- ms</div>
-                    <div class="text-xs text-slate-500 mt-2">Rendimiento en tiempo real</div>
-                </div>
+            <!-- Navegación -->
+            <div class="flex-1 px-4 py-6 space-y-2">
+                <div class="text-xs font-bold text-slate-600 uppercase tracking-widest mb-4 px-2">Control General</div>
                 
-                <!-- SEO -->
-                <div class="bg-dark-card border border-slate-700 p-6 rounded-xl shadow-lg">
-                    <div class="flex justify-between items-start mb-2">
-                        <div class="text-slate-400 text-sm font-bold uppercase tracking-wider">Salud SEO / Maps</div>
-                        <i class="fas fa-map-marked-alt text-brand-500"></i>
-                    </div>
-                    <div class="text-3xl font-black text-green-400">100/100</div>
-                    <div class="text-xs text-slate-500 mt-2">Estructura HTML5 intacta</div>
+                <div class="nav-item active" data-target="seccion-resumen">
+                    <i class="fas fa-home w-5 text-center"></i> Dashboard
                 </div>
-
-                <!-- Visitas -->
-                <div class="bg-dark-card border border-slate-700 p-6 rounded-xl shadow-lg">
-                    <div class="flex justify-between items-start mb-2">
-                        <div class="text-slate-400 text-sm font-bold uppercase tracking-wider">Tráfico / Eventos</div>
-                        <i class="fas fa-users text-purple-400"></i>
-                    </div>
-                    <div class="text-3xl font-black text-white" id="metric-visits">0</div>
-                    <div class="text-xs text-slate-500 mt-2">Lectura directa de Firebase</div>
+                <div class="nav-item" data-target="seccion-crm">
+                    <i class="fas fa-users w-5 text-center"></i> Clientes (CRM)
                 </div>
-
-                <!-- Errores JS -->
-                <div class="bg-dark-card border border-red-500/30 p-6 rounded-xl shadow-lg relative overflow-hidden">
-                    <div class="absolute -right-4 -bottom-4 text-red-500/10 text-7xl"><i class="fas fa-bug"></i></div>
-                    <div class="text-red-400 text-sm font-bold mb-2 uppercase tracking-wider relative z-10">Alertas JS</div>
-                    <div class="text-3xl font-black text-white relative z-10" id="metric-errors">0</div>
+                <div class="nav-item" data-target="seccion-telemetria">
+                    <i class="fas fa-satellite-dish w-5 text-center"></i> Telemetría
                 </div>
             </div>
 
-            <!-- Registro Consola -->
-            <div class="bg-[#0a0f18] border border-slate-700 rounded-xl shadow-lg h-96 flex flex-col">
-                <div class="px-6 py-4 border-b border-slate-800 bg-dark-card">
-                    <h2 class="text-sm font-bold text-slate-400 uppercase tracking-widest"><i class="fas fa-terminal mr-2"></i> Log del Sistema en Vivo</h2>
+            <!-- Usuario y Logout -->
+            <div class="p-4 border-t border-dark-border">
+                <div class="flex items-center gap-3 px-2 mb-4">
+                    <div class="w-8 h-8 rounded bg-brand-900/50 border border-brand-500/30 flex items-center justify-center text-brand-400 font-bold">D</div>
+                    <div class="overflow-hidden">
+                        <div class="text-white text-sm font-bold truncate">DacDacDev</div>
+                        <div class="text-xs text-slate-500 truncate" id="user-email-display">Conectado</div>
+                    </div>
                 </div>
-                <div class="p-6 flex-1 overflow-y-auto font-mono text-xs space-y-3" id="system-logs">
-                    <!-- Logs inyectados por JS -->
+                <button id="logout-btn" class="w-full bg-dark-bg hover:bg-red-500/10 border border-dark-border hover:border-red-500/30 text-slate-400 hover:text-red-400 text-sm font-bold py-2 rounded transition-colors flex items-center justify-center gap-2">
+                    <i class="fas fa-power-off"></i> Cerrar Sesión
+                </button>
+            </div>
+        </aside>
+
+        <!-- ÁREA DE CONTENIDO -->
+        <main class="flex-1 h-full overflow-y-auto bg-dark-bg relative">
+            
+            <!-- SECCIÓN 1: DASHBOARD (RESUMEN) -->
+            <div id="seccion-resumen" class="view-section p-8 md:p-10 max-w-7xl mx-auto block animate-[fadeIn_0.3s_ease-out]">
+                <div class="flex justify-between items-center mb-8">
+                    <div>
+                        <h2 class="text-3xl font-black text-white tracking-tight mb-1">Resumen del Sistema</h2>
+                        <p class="text-slate-400 text-sm">Métricas en tiempo real leyendo directamente de Firebase.</p>
+                    </div>
+                    <div class="flex items-center gap-2 px-3 py-1.5 bg-green-500/10 border border-green-500/20 rounded-full">
+                        <span class="relative flex h-2 w-2">
+                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                          <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                        </span>
+                        <span class="text-green-400 text-xs font-bold uppercase tracking-wider">Conexión DB Activa</span>
+                    </div>
+                </div>
+
+                <!-- Tarjetas de Métricas -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+                    <!-- Visitas -->
+                    <div class="bg-dark-card border border-dark-border p-6 rounded-xl shadow-lg relative overflow-hidden group">
+                        <div class="absolute -right-4 -top-4 w-24 h-24 bg-brand-500/5 rounded-full blur-xl group-hover:bg-brand-500/10 transition-colors"></div>
+                        <div class="flex justify-between items-start mb-4 relative z-10">
+                            <div class="text-slate-400 text-xs font-bold uppercase tracking-widest">Tráfico Total</div>
+                            <div class="w-8 h-8 rounded bg-brand-500/10 flex items-center justify-center text-brand-400"><i class="fas fa-eye"></i></div>
+                        </div>
+                        <div class="text-4xl font-black text-white relative z-10" id="dash-visitas">0</div>
+                    </div>
+
+                    <!-- Velocidad -->
+                    <div class="bg-dark-card border border-dark-border p-6 rounded-xl shadow-lg relative overflow-hidden group">
+                        <div class="absolute -right-4 -top-4 w-24 h-24 bg-green-500/5 rounded-full blur-xl group-hover:bg-green-500/10 transition-colors"></div>
+                        <div class="flex justify-between items-start mb-4 relative z-10">
+                            <div class="text-slate-400 text-xs font-bold uppercase tracking-widest">Carga (DOM)</div>
+                            <div class="w-8 h-8 rounded bg-green-500/10 flex items-center justify-center text-green-400"><i class="fas fa-bolt"></i></div>
+                        </div>
+                        <div class="text-4xl font-black text-white relative z-10" id="dash-velocidad">0 ms</div>
+                    </div>
+
+                    <!-- Clientes / Leads -->
+                    <div class="bg-dark-card border border-dark-border p-6 rounded-xl shadow-lg relative overflow-hidden group">
+                        <div class="absolute -right-4 -top-4 w-24 h-24 bg-purple-500/5 rounded-full blur-xl group-hover:bg-purple-500/10 transition-colors"></div>
+                        <div class="flex justify-between items-start mb-4 relative z-10">
+                            <div class="text-slate-400 text-xs font-bold uppercase tracking-widest">Leads Captados</div>
+                            <div class="w-8 h-8 rounded bg-purple-500/10 flex items-center justify-center text-purple-400"><i class="fas fa-user-plus"></i></div>
+                        </div>
+                        <div class="text-4xl font-black text-white relative z-10" id="dash-leads">0</div>
+                    </div>
+
+                    <!-- Errores JS -->
+                    <div class="bg-dark-card border border-red-500/20 p-6 rounded-xl shadow-lg relative overflow-hidden group">
+                        <div class="absolute -right-4 -top-4 w-24 h-24 bg-red-500/5 rounded-full blur-xl group-hover:bg-red-500/10 transition-colors"></div>
+                        <div class="flex justify-between items-start mb-4 relative z-10">
+                            <div class="text-red-400 text-xs font-bold uppercase tracking-widest">Alertas JS</div>
+                            <div class="w-8 h-8 rounded bg-red-500/10 flex items-center justify-center text-red-500"><i class="fas fa-bug"></i></div>
+                        </div>
+                        <div class="text-4xl font-black text-red-400 relative z-10" id="dash-errores">0</div>
+                    </div>
+                </div>
+
+                <!-- Últimos Clientes (Snippet) -->
+                <div class="bg-dark-card border border-dark-border rounded-xl shadow-lg overflow-hidden">
+                    <div class="px-6 py-4 border-b border-dark-border flex justify-between items-center bg-[#151e2e]">
+                        <h3 class="font-bold text-white">Últimos Leads Recibidos</h3>
+                        <button class="text-xs text-brand-400 font-bold hover:text-brand-300" onclick="document.querySelector('[data-target=\'seccion-crm\']').click()">Ver todos <i class="fas fa-arrow-right ml-1"></i></button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead class="text-xs uppercase text-slate-500 bg-[#0f172a] border-b border-dark-border">
+                                <tr>
+                                    <th class="px-6 py-3 font-bold">Cliente</th>
+                                    <th class="px-6 py-3 font-bold">Servicio</th>
+                                    <th class="px-6 py-3 font-bold text-right">Fecha</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dash-leads-table" class="divide-y divide-dark-border bg-dark-card">
+                                <tr><td colspan="3" class="px-6 py-8 text-center text-slate-500"><i class="fas fa-spinner fa-spin mr-2"></i> Cargando base de datos...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
+
+            <!-- SECCIÓN 2: CRM (CLIENTES) -->
+            <div id="seccion-crm" class="view-section hidden p-8 md:p-10 max-w-7xl mx-auto animate-[fadeIn_0.3s_ease-out]">
+                <div class="mb-8">
+                    <h2 class="text-3xl font-black text-white tracking-tight mb-1">Base de Datos de Clientes</h2>
+                    <p class="text-slate-400 text-sm">Gestión de formularios enviados desde la web pública.</p>
+                </div>
+
+                <div class="bg-dark-card border border-dark-border rounded-xl shadow-lg overflow-hidden flex flex-col h-[calc(100vh-200px)]">
+                    <div class="px-6 py-4 border-b border-dark-border bg-[#151e2e] flex items-center gap-4">
+                        <div class="relative flex-1 max-w-md">
+                            <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-500"></i>
+                            <input type="text" placeholder="Buscar cliente o email..." class="w-full bg-[#0a0f18] border border-dark-border rounded-lg pl-10 pr-4 py-2 text-sm text-white focus:outline-none focus:border-brand-500 transition-colors">
+                        </div>
+                        <button class="px-4 py-2 bg-dark-bg border border-dark-border rounded-lg text-sm text-slate-300 hover:text-white transition-colors"><i class="fas fa-download mr-2"></i>Exportar CSV</button>
+                    </div>
+                    
+                    <div class="flex-1 overflow-y-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead class="text-xs uppercase text-slate-500 bg-[#0f172a] border-b border-dark-border sticky top-0 z-10 shadow-sm">
+                                <tr>
+                                    <th class="px-6 py-4 font-bold">Contacto</th>
+                                    <th class="px-6 py-4 font-bold">Interés (Servicio)</th>
+                                    <th class="px-6 py-4 font-bold">Mensaje</th>
+                                    <th class="px-6 py-4 font-bold text-right">Recepción</th>
+                                </tr>
+                            </thead>
+                            <tbody id="crm-leads-table" class="divide-y divide-dark-border bg-dark-card">
+                                <!-- Filas de clientes generadas por JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECCIÓN 3: TELEMETRÍA (ERRORES Y RENDIMIENTO) -->
+            <div id="seccion-telemetria" class="view-section hidden p-8 md:p-10 max-w-7xl mx-auto animate-[fadeIn_0.3s_ease-out]">
+                <div class="mb-8">
+                    <h2 class="text-3xl font-black text-white tracking-tight mb-1">Centro de Telemetría</h2>
+                    <p class="text-slate-400 text-sm">Monitorización de rendimiento y caza de errores en navegadores cliente.</p>
+                </div>
+
+                <div class="bg-dark-card border border-dark-border rounded-xl shadow-lg overflow-hidden flex flex-col h-[calc(100vh-200px)]">
+                    <div class="px-6 py-4 border-b border-dark-border bg-[#151e2e] flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-terminal text-slate-500"></i>
+                            <span class="font-bold text-white text-sm">Consola de Errores JavaScript</span>
+                        </div>
+                        <span class="px-2 py-1 bg-dark-bg border border-dark-border rounded text-xs font-mono text-slate-400">Live Feed</span>
+                    </div>
+                    
+                    <div class="flex-1 bg-[#05080f] overflow-y-auto p-0 font-mono text-xs custom-scrollbar">
+                        <table class="w-full text-left">
+                            <thead class="text-[#666] bg-[#0a0f18] border-b border-dark-border sticky top-0">
+                                <tr>
+                                    <th class="px-6 py-3 font-normal w-32">Timestamp</th>
+                                    <th class="px-6 py-3 font-normal w-48">Archivo</th>
+                                    <th class="px-6 py-3 font-normal">Stack Trace / Mensaje de Error</th>
+                                </tr>
+                            </thead>
+                            <tbody id="telemetria-errors-table" class="divide-y divide-[#111827]">
+                                <!-- Filas de errores generadas por JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </main>
     </div>
 
-    <!-- FIREBASE: AUTH Y LECTURA EN TIEMPO REAL -->
+    <!-- LÓGICA DE FIREBASE Y UI -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
         import { getFirestore, collection, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
+        // ================= CONFIGURACIÓN FIREBASE =================
         const firebaseConfig = {
             apiKey: "AIzaSyDqWjgoi8DwcZiXwp3nF1gQ0vvxZ39CUtQ",
             authDomain: "chatbot-web-v1.firebaseapp.com",
@@ -137,40 +286,70 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        const loginScreen = document.getElementById('login-screen');
-        const dashboardScreen = document.getElementById('dashboard-screen');
-        const systemLogs = document.getElementById('system-logs');
+        // ================= LÓGICA DE NAVEGACIÓN (TABS) =================
+        const navItems = document.querySelectorAll('.nav-item');
+        const viewSections = document.querySelectorAll('.view-section');
 
-        function addLog(type, message) {
-            const div = document.createElement('div');
-            const time = new Date().toLocaleTimeString();
-            let color = 'text-slate-400';
-            if (type === 'error') color = 'text-red-400';
-            if (type === 'success') color = 'text-green-400';
-            if (type === 'lead') color = 'text-brand-400 font-bold';
-            
-            div.className = color;
-            div.innerHTML = `[${time}] ${message}`;
-            systemLogs.insertBefore(div, systemLogs.firstChild);
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const targetId = item.getAttribute('data-target');
+                
+                // Actualizar Botones
+                navItems.forEach(n => n.classList.remove('active'));
+                item.classList.add('active');
+
+                // Actualizar Vistas
+                viewSections.forEach(section => {
+                    if(section.id === targetId) {
+                        section.classList.remove('hidden');
+                        section.classList.add('block');
+                    } else {
+                        section.classList.remove('block');
+                        section.classList.add('hidden');
+                    }
+                });
+            });
+        });
+
+        // ================= FORMATEADORES =================
+        function formatDateTime(firebaseTimestamp) {
+            if(!firebaseTimestamp) return { date: 'Recién', time: 'ahora' };
+            const d = new Date(firebaseTimestamp.seconds * 1000);
+            const date = d.toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' });
+            const time = d.toLocaleTimeString('es-ES', { hour: '2-digit', minute:'2-digit' });
+            return { date, time };
         }
 
+        function timeAgo(date) {
+            if(!date) return 'Ahora';
+            const seconds = Math.floor((new Date() - date) / 1000);
+            if (seconds < 60) return 'Hace ' + seconds + ' seg';
+            if (seconds < 3600) return 'Hace ' + Math.floor(seconds / 60) + ' min';
+            if (seconds < 86400) return 'Hace ' + Math.floor(seconds / 3600) + ' h';
+            return 'Hace ' + Math.floor(seconds / 86400) + ' días';
+        }
+
+        // ================= CONEXIÓN DE DATOS REALES =================
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                loginScreen.classList.add('hidden');
-                dashboardScreen.classList.remove('hidden');
+                // UI Login -> Dashboard
+                document.getElementById('login-screen').classList.add('hidden');
+                document.getElementById('dashboard-screen').classList.remove('hidden');
                 document.getElementById('user-email-display').textContent = user.email;
-                addLog('success', 'SISTEMA DESBLOQUEADO. Conectando a Base de Datos...');
 
-                // 1. Escuchar Telemetría (Visitas y Errores)
+                // 1. ESCUCHAR TELEMETRÍA (Visitas y Errores)
                 const qTel = query(collection(db, "telemetria"), orderBy("fecha", "desc"));
                 onSnapshot(qTel, (snapshot) => {
                     let visitasTotales = 0;
                     let erroresTotales = 0;
                     let totalSpeed = 0;
                     let speedCount = 0;
+                    let errorsHTML = '';
 
                     snapshot.forEach(doc => {
                         const data = doc.data();
+                        const fDateTime = formatDateTime(data.fecha);
+                        
                         if (data.tipo === "visita") {
                             visitasTotales++;
                             if (data.velocidad_ms) {
@@ -179,48 +358,141 @@
                             }
                         } else if (data.tipo === "error") {
                             erroresTotales++;
+                            // Fila para Telemetría Tab
+                            const fileName = data.archivo ? data.archivo.split('/').pop() : 'cliente_navegador';
+                            errorsHTML += `
+                                <tr class="hover:bg-[#111827] transition-colors">
+                                    <td class="px-6 py-4 text-slate-500 whitespace-nowrap">
+                                        <div class="text-white">${fDateTime.time}</div>
+                                        <div class="text-[10px]">${fDateTime.date}</div>
+                                    </td>
+                                    <td class="px-6 py-4 text-slate-400 break-all"><i class="fas fa-file-code mr-2 opacity-50"></i>${fileName}</td>
+                                    <td class="px-6 py-4">
+                                        <div class="text-red-400 font-bold mb-1">Excepción Capturada:</div>
+                                        <div class="text-slate-300 break-words whitespace-pre-wrap">${data.mensaje}</div>
+                                        <div class="text-slate-500 mt-2 text-[10px] bg-dark-bg inline-block px-2 py-1 rounded border border-dark-border">Línea detectada: ${data.linea || 'Desconocida'}</div>
+                                    </td>
+                                </tr>
+                            `;
                         }
                     });
 
-                    document.getElementById('metric-visits').textContent = visitasTotales;
-                    document.getElementById('metric-errors').textContent = erroresTotales;
+                    // Actualizar Tarjetas del Resumen
+                    document.getElementById('dash-visitas').textContent = visitasTotales.toLocaleString();
+                    document.getElementById('dash-errores').textContent = erroresTotales;
                     
                     if (speedCount > 0) {
                         const avgSpeed = Math.round(totalSpeed / speedCount);
-                        document.getElementById('metric-speed').textContent = avgSpeed + ' ms';
+                        document.getElementById('dash-velocidad').textContent = avgSpeed + ' ms';
+                        if(avgSpeed > 2000) document.getElementById('dash-velocidad').classList.replace('text-white', 'text-yellow-400');
                     }
-                    
-                    // Solo anunciamos errores nuevos si los hay
-                    snapshot.docChanges().forEach((change) => {
-                        if (change.type === "added" && change.doc.data().tipo === "error") {
-                            addLog('error', `ERROR DETECTADO: ${change.doc.data().mensaje}`);
-                        }
-                    });
+
+                    // Renderizar Tabla Errores
+                    const telemetriaTable = document.getElementById('telemetria-errors-table');
+                    if(errorsHTML !== '') {
+                        telemetriaTable.innerHTML = errorsHTML;
+                    } else {
+                        telemetriaTable.innerHTML = `<tr><td colspan="3" class="px-6 py-12 text-center text-slate-500 font-sans"><div class="text-green-500 text-3xl mb-3"><i class="fas fa-check-circle"></i></div>Código estable. No se han detectado errores JavaScript en los clientes.</td></tr>`;
+                    }
                 });
 
-                // 2. Escuchar Leads Entrantes
-                const qLeads = query(collection(db, "leads"), orderBy("fecha", "asc"));
+                // 2. ESCUCHAR LEADS (Formularios)
+                const qLeads = query(collection(db, "leads"), orderBy("fecha", "desc"));
                 onSnapshot(qLeads, (snapshot) => {
-                    snapshot.docChanges().forEach((change) => {
-                        if (change.type === "added") {
-                            const data = change.doc.data();
-                            addLog('lead', `NUEVO CLIENTE CERRADO: ${data.nombre} - ${data.email} | Servicio: ${data.servicio}`);
+                    let dashHTML = '';
+                    let crmHTML = '';
+                    let totalLeads = 0;
+                    
+                    if (snapshot.empty) {
+                        const emptyMsg = '<tr><td colspan="4" class="px-6 py-12 text-center text-slate-500">Aún no hay clientes captados.</td></tr>';
+                        document.getElementById('dash-leads-table').innerHTML = emptyMsg;
+                        document.getElementById('crm-leads-table').innerHTML = emptyMsg;
+                        document.getElementById('dash-leads').textContent = "0";
+                        return;
+                    }
+
+                    snapshot.forEach((doc) => {
+                        totalLeads++;
+                        const data = doc.data();
+                        const fDateTime = formatDateTime(data.fecha);
+                        const dateObj = data.fecha ? new Date(data.fecha.seconds * 1000) : null;
+                        const initial = data.nombre ? data.nombre.charAt(0).toUpperCase() : '?';
+
+                        // Fila para el Resumen (Dashboard) - Versión corta
+                        if(totalLeads <= 5) {
+                            dashHTML += `
+                                <tr class="hover:bg-[#1e293b]/50 transition-colors">
+                                    <td class="px-6 py-4">
+                                        <div class="font-bold text-white">${data.nombre}</div>
+                                        <div class="text-xs text-slate-500">${data.email}</div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <span class="inline-block px-2 py-1 bg-brand-900/30 border border-brand-500/20 text-brand-400 text-xs rounded truncate max-w-[200px]" title="${data.servicio}">${data.servicio}</span>
+                                    </td>
+                                    <td class="px-6 py-4 text-right text-sm text-slate-400 whitespace-nowrap">
+                                        ${timeAgo(dateObj)}
+                                    </td>
+                                </tr>
+                            `;
                         }
+
+                        // Fila para el CRM - Versión completa
+                        crmHTML += `
+                            <tr class="hover:bg-[#1e293b]/50 transition-colors group">
+                                <td class="px-6 py-4 align-top">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-300 font-bold flex-shrink-0 group-hover:bg-brand-600 group-hover:text-white transition-colors">${initial}</div>
+                                        <div>
+                                            <div class="font-bold text-white text-base">${data.nombre}</div>
+                                            <div class="text-sm text-brand-400 hover:underline cursor-pointer"><i class="fas fa-envelope mr-1 text-slate-500"></i>${data.email}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 align-top">
+                                    <div class="font-medium text-slate-300 mb-1">${data.servicio}</div>
+                                    <span class="px-2 py-0.5 bg-green-500/10 text-green-400 border border-green-500/20 rounded text-[10px] font-bold uppercase tracking-wider">Nuevo Lead</span>
+                                </td>
+                                <td class="px-6 py-4 align-top">
+                                    <div class="text-sm text-slate-400 bg-dark-bg p-3 rounded border border-dark-border max-h-24 overflow-y-auto custom-scrollbar italic">
+                                        "${data.mensaje}"
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 align-top text-right whitespace-nowrap">
+                                    <div class="text-white font-medium">${fDateTime.date}</div>
+                                    <div class="text-slate-500 text-sm">${fDateTime.time}</div>
+                                </td>
+                            </tr>
+                        `;
                     });
+
+                    // Actualizar DOM
+                    document.getElementById('dash-leads').textContent = totalLeads;
+                    document.getElementById('dash-leads-table').innerHTML = dashHTML;
+                    document.getElementById('crm-leads-table').innerHTML = crmHTML;
                 });
 
             } else {
-                loginScreen.classList.remove('hidden');
-                dashboardScreen.classList.add('hidden');
+                // Sin autenticar
+                document.getElementById('login-screen').classList.remove('hidden');
+                document.getElementById('dashboard-screen').classList.add('hidden');
             }
         });
 
+        // ================= SISTEMA DE LOGIN Y LOGOUT =================
         document.getElementById('login-form').addEventListener('submit', (e) => {
             e.preventDefault();
             const email = document.getElementById('login-email').value;
             const pass = document.getElementById('login-pass').value;
-            signInWithEmailAndPassword(auth, email, pass).catch(() => {
+            
+            const btn = e.target.querySelector('button');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Verificando...';
+            btn.disabled = true;
+
+            signInWithEmailAndPassword(auth, email, pass).catch(err => {
                 document.getElementById('login-error').classList.remove('hidden');
+                btn.innerHTML = originalText;
+                btn.disabled = false;
             });
         });
 
