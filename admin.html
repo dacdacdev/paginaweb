@@ -14,10 +14,7 @@
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { 
-                        sans: ['Inter', 'sans-serif'], 
-                        mono: ['Fira Code', 'monospace'] 
-                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['Fira Code', 'monospace'] },
                     colors: {
                         brand: { 50: '#f0f9ff', 100: '#e0f2fe', 500: '#0ea5e9', 600: '#0284c7', 900: '#0c4a6e' },
                         dark: { bg: '#0a0f18', card: '#111827', border: '#1e293b', text: '#94a3b8' }
@@ -34,38 +31,13 @@
         ::-webkit-scrollbar-thumb:hover { background: #0ea5e9; }
 
         .nav-item {
-            display: flex; 
-            align-items: center; 
-            gap: 12px; 
-            padding: 10px 16px; 
-            border-radius: 8px; 
-            color: #94a3b8; 
-            font-weight: 500; 
-            font-size: 13px;
-            transition: all 0.2s; 
-            cursor: pointer; 
-            border: 1px solid transparent;
-            margin-bottom: 2px; 
-            position: relative;
+            display: flex; align-items: center; gap: 12px; padding: 10px 16px; 
+            border-radius: 8px; color: #94a3b8; font-weight: 500; font-size: 13px;
+            transition: all 0.2s; cursor: pointer; border: 1px solid transparent; margin-bottom: 2px; position: relative;
         }
-        .nav-item:hover { 
-            background: rgba(14, 165, 233, 0.1); 
-            color: #fff; 
-        }
-        .nav-item.active { 
-            background: rgba(14, 165, 233, 0.15); 
-            color: #0ea5e9; 
-            border-color: rgba(14, 165, 233, 0.3); 
-        }
-
-        .select-estado { 
-            appearance: none; 
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); 
-            background-repeat: no-repeat; 
-            background-position: right 0.5rem center; 
-            background-size: 1em; 
-            padding-right: 2rem; 
-        }
+        .nav-item:hover { background: rgba(14, 165, 233, 0.1); color: #fff; }
+        .nav-item.active { background: rgba(14, 165, 233, 0.15); color: #0ea5e9; border-color: rgba(14, 165, 233, 0.3); }
+        .select-estado { appearance: none; background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right 0.5rem center; background-size: 1em; padding-right: 2rem; }
         .toggle-checkbox:checked { right: 0; border-color: #10B981; }
         .toggle-checkbox:checked + .toggle-label { background-color: #10B981; }
     </style>
@@ -76,1397 +48,369 @@
     <div id="login-screen" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-dark-bg">
         <div class="bg-dark-card p-8 md:p-10 rounded-2xl border border-dark-border shadow-[0_0_40px_rgba(14,165,233,0.15)] w-full max-w-md relative overflow-hidden">
             <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-600 to-brand-400"></div>
-            <div class="text-center mb-8">
-                <span class="text-3xl font-bold text-white tracking-tight">&lt;Dac/<span class="text-brand-500">Admin</span>&gt;</span>
-            </div>
+            <div class="text-center mb-8"><span class="text-3xl font-bold text-white tracking-tight">&lt;Dac/<span class="text-brand-500">Admin</span>&gt;</span></div>
             <form id="login-form" class="space-y-5">
-                <div>
-                    <label class="block text-slate-400 text-xs font-bold uppercase mb-2">Usuario</label>
-                    <input type="email" id="login-email" required class="w-full bg-[#0a0f18] border border-dark-border rounded-lg px-4 py-3 text-white outline-none focus:border-brand-500">
-                </div>
-                <div>
-                    <label class="block text-slate-400 text-xs font-bold uppercase mb-2">Contraseña</label>
-                    <input type="password" id="login-pass" required class="w-full bg-[#0a0f18] border border-dark-border rounded-lg px-4 py-3 text-white outline-none focus:border-brand-500">
-                </div>
-                <div id="login-error" class="text-red-400 text-xs hidden font-bold text-center bg-red-400/10 py-2 rounded">
-                    Acceso denegado. Revisa tus credenciales.
-                </div>
-                <button type="submit" class="w-full bg-brand-600 hover:bg-brand-500 text-white font-bold py-3 rounded-lg mt-4 transition-colors">
-                    Entrar al Sistema
-                </button>
+                <div><label class="block text-slate-400 text-xs font-bold uppercase mb-2">Usuario</label><input type="email" id="login-email" required class="w-full bg-[#0a0f18] border border-dark-border rounded-lg px-4 py-3 text-white outline-none focus:border-brand-500"></div>
+                <div><label class="block text-slate-400 text-xs font-bold uppercase mb-2">Contraseña</label><input type="password" id="login-pass" required class="w-full bg-[#0a0f18] border border-dark-border rounded-lg px-4 py-3 text-white outline-none focus:border-brand-500"></div>
+                <div id="login-error" class="text-red-400 text-xs hidden font-bold text-center bg-red-400/10 py-2 rounded">Acceso denegado.</div>
+                <button type="submit" class="w-full bg-brand-600 hover:bg-brand-500 text-white font-bold py-3 rounded-lg mt-4 transition-colors">Entrar al Sistema</button>
             </form>
         </div>
     </div>
 
-    <!-- MAIN APP: SISTEMA PRINCIPAL -->
+    <!-- MAIN APP -->
     <div id="dashboard-screen" class="hidden w-full h-full flex relative">
-        
-        <!-- Overlay para móviles -->
         <div id="sidebar-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-30 hidden md:hidden transition-opacity"></div>
 
-        <!-- BARRA LATERAL (SIDEBAR) -->
+        <!-- NOTIFICACIÓN GLOBAL (CAMPANA ROJA) -->
+        <div class="absolute top-4 right-6 hidden md:flex items-center gap-4 z-50 pointer-events-none">
+            <div id="global-notification" class="hidden items-center gap-2 bg-red-500/20 border border-red-500 text-red-400 px-4 py-2 rounded-full text-xs font-bold animate-pulse shadow-[0_0_15px_#ef4444]">
+                <i class="fas fa-exclamation-circle"></i> Tienes clientes esperando respuesta
+            </div>
+        </div>
+
+        <!-- BARRA LATERAL -->
         <aside id="admin-sidebar" class="fixed inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition-transform duration-300 ease-in-out w-64 h-full bg-dark-card border-r border-dark-border flex flex-col flex-shrink-0 z-40">
             <div class="h-16 md:h-20 flex items-center justify-between px-6 border-b border-dark-border">
                 <span class="text-xl font-bold text-white tracking-tight">&lt;Dac/<span class="text-brand-500">Admin</span>&gt;</span>
-                <button id="close-sidebar-btn" class="md:hidden text-slate-400 hover:text-white">
-                    <i class="fas fa-times text-xl"></i>
-                </button>
+                <button id="close-sidebar-btn" class="md:hidden text-slate-400 hover:text-white"><i class="fas fa-times text-xl"></i></button>
             </div>
 
             <div class="flex-1 px-4 py-4 space-y-1 overflow-y-auto custom-scrollbar">
-                
                 <div class="text-[10px] font-black text-slate-600 uppercase tracking-widest mt-2 mb-2 px-2">Análisis Global</div>
+                <div class="nav-item active" data-target="seccion-resumen"><i class="fas fa-chart-pie w-5 text-center"></i> Dashboard</div>
                 
-                <div class="nav-item active" data-target="seccion-resumen">
-                    <i class="fas fa-chart-pie w-5 text-center"></i> Dashboard
-                </div>
-
                 <div class="text-[10px] font-black text-slate-600 uppercase tracking-widest mt-6 mb-2 px-2">Ventas & Operaciones</div>
-                
                 <div class="nav-item" data-target="seccion-crm">
                     <i class="fas fa-users w-5 text-center"></i> Clientes (CRM)
-                    <!-- Punto rojo de notificación de CRM -->
                     <div id="dot-crm" class="hidden absolute right-4 w-2 h-2 rounded-full bg-red-500 animate-pulse shadow-[0_0_8px_#ef4444]"></div>
                 </div>
-                
-                <div class="nav-item" data-target="seccion-agenda">
-                    <i class="fas fa-calendar-check w-5 text-center"></i> Agenda
-                </div>
-                
-                <div class="nav-item" data-target="seccion-proyectos">
-                    <i class="fas fa-laptop-code w-5 text-center"></i> Proyectos
-                </div>
-                
-                <div class="nav-item" data-target="seccion-finanzas">
-                    <i class="fas fa-euro-sign w-5 text-center"></i> Finanzas & MRR
-                </div>
+                <div class="nav-item" data-target="seccion-agenda"><i class="fas fa-calendar-check w-5 text-center"></i> Agenda</div>
+                <div class="nav-item" data-target="seccion-proyectos"><i class="fas fa-laptop-code w-5 text-center"></i> Proyectos</div>
+                <div class="nav-item" data-target="seccion-finanzas"><i class="fas fa-euro-sign w-5 text-center"></i> Finanzas & MRR</div>
 
                 <div class="text-[10px] font-black text-slate-600 uppercase tracking-widest mt-6 mb-2 px-2">Soporte & Contenido</div>
-                
                 <div class="nav-item" data-target="seccion-soporte">
                     <i class="fas fa-ticket-alt w-5 text-center"></i> Tickets Soporte
-                    <!-- Punto rojo de notificación de Soporte -->
                     <div id="dot-soporte" class="hidden absolute right-4 w-2 h-2 rounded-full bg-red-500 animate-pulse shadow-[0_0_8px_#ef4444]"></div>
                 </div>
-                
-                <div class="nav-item" data-target="seccion-inventario">
-                    <i class="fas fa-box-open w-5 text-center"></i> Inventario & CMS
-                </div>
+                <div class="nav-item" data-target="seccion-inventario"><i class="fas fa-box-open w-5 text-center"></i> Inventario & CMS</div>
 
                 <div class="text-[10px] font-black text-slate-600 uppercase tracking-widest mt-6 mb-2 px-2">Sistema</div>
-                
-                <div class="nav-item" data-target="seccion-telemetria">
-                    <i class="fas fa-satellite-dish w-5 text-center"></i> Telemetría JS
-                </div>
-                
-                <div class="nav-item" data-target="seccion-usuarios">
-                    <i class="fas fa-user-shield w-5 text-center"></i> Usuarios
-                </div>
-                
-                <div class="nav-item" data-target="seccion-seguridad">
-                    <i class="fas fa-shield-alt w-5 text-center"></i> Seguridad
-                </div>
-                
-                <div class="nav-item" data-target="seccion-configuracion">
-                    <i class="fas fa-cogs w-5 text-center"></i> Ajustes Generales
-                </div>
+                <div class="nav-item" data-target="seccion-telemetria"><i class="fas fa-satellite-dish w-5 text-center"></i> Telemetría JS</div>
+                <div class="nav-item" data-target="seccion-usuarios"><i class="fas fa-user-shield w-5 text-center"></i> Usuarios</div>
+                <div class="nav-item" data-target="seccion-seguridad"><i class="fas fa-shield-alt w-5 text-center"></i> Seguridad</div>
+                <div class="nav-item" data-target="seccion-configuracion"><i class="fas fa-cogs w-5 text-center"></i> Ajustes Generales</div>
             </div>
             
             <div class="p-4 border-t border-dark-border">
-                <button id="logout-btn" class="w-full bg-dark-bg hover:bg-red-500/10 border border-dark-border hover:border-red-500/30 text-slate-400 hover:text-red-400 text-sm font-bold py-2 rounded transition-colors">
-                    <i class="fas fa-power-off mr-2"></i> Cerrar Sesión
-                </button>
+                <button id="logout-btn" class="w-full bg-dark-bg hover:bg-red-500/10 border border-dark-border hover:border-red-500/30 text-slate-400 hover:text-red-400 text-sm font-bold py-2 rounded transition-colors"><i class="fas fa-power-off mr-2"></i> Cerrar Sesión</button>
             </div>
         </aside>
 
-        <!-- ÁREA DE CONTENIDO PRINCIPAL -->
         <main class="flex-1 h-full overflow-y-auto bg-dark-bg relative flex flex-col">
-            
-            <!-- Cabecera Móvil -->
             <header class="md:hidden flex items-center justify-between px-4 py-3 bg-dark-card border-b border-dark-border sticky top-0 z-20">
-                <button id="open-sidebar-btn" class="text-slate-400 hover:text-white p-2 -ml-2">
-                    <i class="fas fa-bars text-xl"></i>
-                </button>
+                <button id="open-sidebar-btn" class="text-slate-400 hover:text-white p-2 -ml-2"><i class="fas fa-bars text-xl"></i></button>
                 <span class="text-base font-bold text-white tracking-tight" id="mobile-header-title">Dashboard</span>
                 <div class="w-8"></div>
             </header>
 
-            <!-- ==============================================
-                 SECCIÓN 1: DASHBOARD (RESUMEN)
-            =============================================== -->
+            <!-- 1. DASHBOARD -->
             <div id="seccion-resumen" class="view-section p-4 md:p-8 lg:p-10 w-full max-w-7xl mx-auto flex flex-col animate-[fadeIn_0.3s_ease-out]">
-                
-                <div class="mb-8">
-                    <h2 class="text-2xl md:text-3xl font-black text-white tracking-tight mb-1">Resumen del Sistema</h2>
-                    <p class="text-slate-400 text-sm">Métricas y registro de actividad en tiempo real de Firebase.</p>
-                </div>
-                
-                <!-- Tarjetas KPI -->
+                <div class="mb-8"><h2 class="text-2xl md:text-3xl font-black text-white tracking-tight mb-1">Resumen del Sistema</h2></div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8">
                     <div class="bg-dark-card border border-dark-border p-5 rounded-xl shadow-lg relative overflow-hidden group">
-                        <div class="absolute -right-4 -top-4 w-24 h-24 bg-brand-500/5 rounded-full blur-xl transition-all group-hover:bg-brand-500/10"></div>
                         <div class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2 relative z-10">Tráfico Total</div>
                         <div class="text-3xl font-black text-white relative z-10" id="dash-visitas">0</div>
                     </div>
-                    
                     <div class="bg-dark-card border border-dark-border p-5 rounded-xl shadow-lg relative overflow-hidden group">
-                        <div class="absolute -right-4 -top-4 w-24 h-24 bg-yellow-500/5 rounded-full blur-xl transition-all group-hover:bg-yellow-500/10"></div>
                         <div class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2 relative z-10">MRR Mensual</div>
                         <div class="text-3xl font-black text-yellow-400 relative z-10" id="dash-mrr">0€</div>
                     </div>
-                    
                     <div class="bg-dark-card border border-dark-border p-5 rounded-xl shadow-lg relative overflow-hidden group">
-                        <div class="absolute -right-4 -top-4 w-24 h-24 bg-brand-500/5 rounded-full blur-xl transition-all group-hover:bg-brand-500/10"></div>
                         <div class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2 relative z-10">Leads en CRM</div>
                         <div class="text-3xl font-black text-brand-400 relative z-10" id="dash-leads">0</div>
                     </div>
-                    
                     <div class="bg-dark-card border border-red-500/20 p-5 rounded-xl shadow-lg relative overflow-hidden group">
-                        <div class="absolute -right-4 -top-4 w-24 h-24 bg-red-500/5 rounded-full blur-xl transition-all group-hover:bg-red-500/10"></div>
                         <div class="text-red-400 text-xs font-bold uppercase tracking-widest mb-2 relative z-10">Alertas JS</div>
                         <div class="text-3xl font-black text-red-400 relative z-10" id="dash-errores">0</div>
                     </div>
                 </div>
 
-                <!-- Gráfico y Actividad -->
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <div class="bg-dark-card border border-dark-border rounded-xl shadow-lg lg:col-span-2 flex flex-col overflow-hidden">
-                        <div class="px-6 py-4 border-b border-dark-border bg-[#151e2e]">
-                            <h3 class="font-bold text-white text-sm">Tráfico y Tendencias (Últimos 7 Días)</h3>
-                        </div>
-                        <div class="p-4 flex-1 relative min-h-[300px]">
-                            <canvas id="trafficChart"></canvas>
-                        </div>
+                        <div class="px-6 py-4 border-b border-dark-border bg-[#151e2e]"><h3 class="font-bold text-white text-sm">Tráfico y Tendencias (Últimos 7 Días)</h3></div>
+                        <div class="p-4 flex-1 relative min-h-[300px]"><canvas id="trafficChart"></canvas></div>
                     </div>
-                    
                     <div class="bg-dark-card border border-dark-border rounded-xl shadow-lg flex flex-col h-[380px] overflow-hidden">
-                        <div class="px-4 py-4 border-b border-dark-border bg-[#151e2e] flex justify-between items-center">
-                            <h3 class="font-bold text-white text-sm">Actividad Reciente</h3>
-                            <span class="relative flex h-2 w-2">
-                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                                <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                            </span>
-                        </div>
-                        <div class="overflow-y-auto custom-scrollbar flex-1 p-4" id="log-actividad-list">
-                            <!-- Los logs se inyectan aquí -->
-                        </div>
+                        <div class="px-4 py-4 border-b border-dark-border bg-[#151e2e] flex justify-between items-center"><h3 class="font-bold text-white text-sm">Actividad Reciente</h3><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span></span></div>
+                        <div class="overflow-y-auto custom-scrollbar flex-1 p-4" id="log-actividad-list"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- ==============================================
-                 SECCIÓN 2: CRM (CLIENTES)
-            =============================================== -->
+            <!-- 2. CRM -->
             <div id="seccion-crm" class="view-section hidden p-4 md:p-8 lg:p-10 w-full max-w-7xl mx-auto flex-col h-full animate-[fadeIn_0.3s_ease-out]">
-                <div class="mb-8">
-                    <h2 class="text-2xl md:text-3xl font-black text-white tracking-tight mb-1">CRM (Captación)</h2>
-                    <p class="text-slate-400 text-sm">Peticiones de clientes llegadas desde la página web principal.</p>
-                </div>
-
+                <div class="mb-8"><h2 class="text-2xl md:text-3xl font-black text-white tracking-tight mb-1">CRM (Captación)</h2></div>
                 <div class="bg-dark-card border border-dark-border rounded-xl flex flex-col flex-1 min-h-[400px] overflow-hidden">
-                    <div class="px-6 py-4 border-b border-dark-border bg-[#151e2e] flex items-center justify-between">
-                        <div class="relative w-full max-w-md">
-                            <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-500"></i>
-                            <input type="text" id="crm-search-input" placeholder="Buscar clientes..." class="w-full bg-[#0a0f18] border border-dark-border rounded-lg pl-10 pr-4 py-2 text-sm text-white outline-none focus:border-brand-500">
-                        </div>
-                    </div>
-                    
-                    <div class="flex-1 overflow-auto custom-scrollbar">
-                        <table class="w-full text-left text-sm min-w-[900px]">
-                            <thead class="text-xs uppercase text-slate-500 bg-[#0f172a] border-b border-dark-border sticky top-0">
-                                <tr>
-                                    <th class="px-6 py-4">Contacto</th>
-                                    <th class="px-6 py-4">Estado (Kanban)</th>
-                                    <th class="px-6 py-4">Servicio Solicitado</th>
-                                    <th class="px-6 py-4">Mensaje Original</th>
-                                </tr>
-                            </thead>
-                            <tbody id="crm-leads-table" class="divide-y divide-dark-border bg-dark-card">
-                                <!-- Filas CRM inyectadas aquí -->
-                            </tbody>
-                        </table>
-                    </div>
+                    <div class="px-6 py-4 border-b border-dark-border bg-[#151e2e] flex items-center justify-between"><div class="relative w-full max-w-md"><i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-500"></i><input type="text" id="crm-search-input" placeholder="Buscar clientes..." class="w-full bg-[#0a0f18] border border-dark-border rounded-lg pl-10 pr-4 py-2 text-sm text-white outline-none focus:border-brand-500"></div></div>
+                    <div class="flex-1 overflow-auto custom-scrollbar"><table class="w-full text-left text-sm min-w-[900px]"><thead class="text-xs uppercase text-slate-500 bg-[#0f172a] border-b border-dark-border sticky top-0"><tr><th class="px-6 py-4">Contacto</th><th class="px-6 py-4">Estado (Kanban)</th><th class="px-6 py-4">Servicio Solicitado</th><th class="px-6 py-4">Mensaje Original</th></tr></thead><tbody id="crm-leads-table" class="divide-y divide-dark-border bg-dark-card"></tbody></table></div>
                 </div>
             </div>
 
-            <!-- ==============================================
-                 SECCIÓN 3: AGENDA
-            =============================================== -->
+            <!-- 3. AGENDA -->
             <div id="seccion-agenda" class="view-section hidden p-4 md:p-8 lg:p-10 w-full max-w-7xl mx-auto flex-col h-full animate-[fadeIn_0.3s_ease-out]">
-                <div class="mb-8">
-                    <h2 class="text-2xl md:text-3xl font-black text-white tracking-tight mb-1">Agenda & Llamadas</h2>
-                    <p class="text-slate-400 text-sm">Organiza tus llamadas frías y seguimientos.</p>
-                </div>
-                
+                <div class="mb-8"><h2 class="text-2xl font-black text-white mb-1">Agenda & Llamadas</h2></div>
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1">
-                    <div class="bg-dark-card border border-dark-border rounded-xl p-6 h-fit shadow-lg">
-                        <h3 class="font-bold text-white mb-4 border-b border-dark-border pb-2">Nueva Tarea</h3>
-                        <form id="form-agenda" class="space-y-4">
-                            <div>
-                                <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Acción</label>
-                                <input type="text" id="agenda-texto" required placeholder="Ej: Llamar al Bar Paco" class="w-full bg-[#0a0f18] border border-dark-border rounded p-2 text-sm text-white outline-none focus:border-brand-500">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Fecha</label>
-                                <input type="text" id="agenda-fecha" required placeholder="Ej: Jueves 10:00h" class="w-full bg-[#0a0f18] border border-dark-border rounded p-2 text-sm text-white outline-none focus:border-brand-500">
-                            </div>
-                            <button type="submit" class="w-full bg-brand-600 hover:bg-brand-500 text-white font-bold py-2 rounded text-sm transition-colors">
-                                Añadir Tarea
-                            </button>
-                        </form>
-                    </div>
-                    
-                    <div class="bg-dark-card border border-dark-border rounded-xl lg:col-span-2 overflow-hidden flex flex-col shadow-lg">
-                        <div class="px-6 py-4 border-b border-dark-border bg-[#151e2e]">
-                            <h3 class="font-bold text-white text-sm">Tareas Pendientes</h3>
-                        </div>
-                        <ul id="lista-agenda" class="divide-y divide-dark-border overflow-auto p-0 flex-1 custom-scrollbar">
-                            <!-- JS Inject -->
-                        </ul>
-                    </div>
+                    <div class="bg-dark-card border border-dark-border rounded-xl p-6 h-fit shadow-lg"><form id="form-agenda" class="space-y-4"><div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Acción</label><input type="text" id="agenda-texto" required placeholder="Ej: Llamar Bar Paco" class="w-full bg-[#0a0f18] border border-dark-border rounded p-2 text-sm text-white outline-none focus:border-brand-500"></div><div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Fecha</label><input type="text" id="agenda-fecha" required placeholder="Ej: Jueves 10:00h" class="w-full bg-[#0a0f18] border border-dark-border rounded p-2 text-sm text-white outline-none focus:border-brand-500"></div><button type="submit" class="w-full bg-brand-600 text-white font-bold py-2 rounded text-sm">Añadir Tarea</button></form></div>
+                    <div class="bg-dark-card border border-dark-border rounded-xl lg:col-span-2 overflow-hidden flex flex-col shadow-lg"><div class="px-6 py-4 border-b border-dark-border bg-[#151e2e]"><h3 class="font-bold text-white text-sm">Tareas Pendientes</h3></div><ul id="lista-agenda" class="divide-y divide-dark-border overflow-auto p-0 flex-1 custom-scrollbar"></ul></div>
                 </div>
             </div>
 
-            <!-- ==============================================
-                 SECCIÓN 4: PROYECTOS
-            =============================================== -->
+            <!-- 4. PROYECTOS -->
             <div id="seccion-proyectos" class="view-section hidden p-4 md:p-8 lg:p-10 w-full max-w-7xl mx-auto flex-col h-full animate-[fadeIn_0.3s_ease-out]">
-                <div class="mb-8">
-                    <h2 class="text-2xl md:text-3xl font-black text-white tracking-tight mb-1">Proyectos Activos</h2>
-                    <p class="text-slate-400 text-sm">Control de desarrollo de las webs contratadas.</p>
-                </div>
-                
-                <div class="bg-dark-card border border-dark-border rounded-xl flex flex-col flex-1 shadow-lg overflow-hidden">
-                    <form id="form-proyectos" class="p-4 bg-[#151e2e] border-b border-dark-border flex gap-2">
-                        <input type="text" id="proy-nombre" placeholder="Nombre Proyecto" required class="bg-[#0a0f18] border border-dark-border rounded p-2 text-sm text-white outline-none focus:border-brand-500 w-full sm:w-auto">
-                        <input type="text" id="proy-cliente" placeholder="Nombre Cliente" required class="bg-[#0a0f18] border border-dark-border rounded p-2 text-sm text-white outline-none focus:border-brand-500 w-full sm:w-auto">
-                        <button type="submit" class="bg-purple-600 hover:bg-purple-500 text-white font-bold px-4 rounded text-sm transition-colors">
-                            <i class="fas fa-plus"></i>
-                        </button>
-                    </form>
-                    <table class="w-full text-left text-sm">
-                        <tbody id="lista-proyectos" class="divide-y divide-dark-border">
-                            <!-- JS Inject -->
-                        </tbody>
-                    </table>
-                </div>
+                <div class="mb-8"><h2 class="text-2xl font-black text-white mb-1">Proyectos Activos</h2></div>
+                <div class="bg-dark-card border border-dark-border rounded-xl flex flex-col flex-1 shadow-lg overflow-hidden"><form id="form-proyectos" class="p-4 bg-[#151e2e] border-b border-dark-border flex gap-2"><input type="text" id="proy-nombre" placeholder="Nombre Proyecto" required class="bg-[#0a0f18] border border-dark-border rounded p-2 text-sm text-white outline-none focus:border-brand-500"><input type="text" id="proy-cliente" placeholder="Nombre Cliente" required class="bg-[#0a0f18] border border-dark-border rounded p-2 text-sm text-white outline-none focus:border-brand-500"><button type="submit" class="bg-purple-600 text-white font-bold px-4 rounded text-sm"><i class="fas fa-plus"></i></button></form><table class="w-full text-left text-sm"><tbody id="lista-proyectos" class="divide-y divide-dark-border"></tbody></table></div>
             </div>
 
-            <!-- ==============================================
-                 SECCIÓN 5: FINANZAS & MRR
-            =============================================== -->
+            <!-- 5. FINANZAS -->
             <div id="seccion-finanzas" class="view-section hidden p-4 md:p-8 lg:p-10 w-full max-w-7xl mx-auto flex-col h-full animate-[fadeIn_0.3s_ease-out]">
-                <div class="mb-8">
-                    <h2 class="text-2xl md:text-3xl font-black text-white tracking-tight mb-1">Finanzas & MRR</h2>
-                    <p class="text-slate-400 text-sm">Ingresos únicos y pagos recurrentes de mantenimiento.</p>
-                </div>
-                
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                    <div class="bg-dark-card border border-green-500/30 p-6 rounded-xl shadow-lg relative">
-                        <div class="text-green-400 text-xs font-bold uppercase tracking-widest mb-2">Ingresos Únicos (Webs)</div>
-                        <div class="text-4xl font-black text-white" id="finanzas-unico">0€</div>
-                    </div>
-                    <div class="bg-dark-card border border-yellow-500/30 p-6 rounded-xl shadow-lg relative">
-                        <div class="text-yellow-400 text-xs font-bold uppercase tracking-widest mb-2">MRR (Ingresos Recurrentes)</div>
-                        <div class="text-4xl font-black text-white" id="finanzas-mrr">0€</div>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1">
-                    <div class="bg-dark-card border border-dark-border rounded-xl p-6 h-fit shadow-lg">
-                        <h3 class="font-bold text-white mb-4 border-b border-dark-border pb-2">Registrar Cobro</h3>
-                        <form id="form-finanzas" class="space-y-4">
-                            <div>
-                                <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Concepto</label>
-                                <input type="text" id="fin-concepto" required placeholder="Ej: Setup Web Bar" class="w-full bg-[#0a0f18] border border-dark-border rounded p-2 text-sm text-white outline-none focus:border-green-500">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Importe en €</label>
-                                <input type="number" id="fin-importe" required placeholder="Ej: 400" class="w-full bg-[#0a0f18] border border-dark-border rounded p-2 text-sm text-white outline-none focus:border-green-500">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Tipo de Ingreso</label>
-                                <select id="fin-tipo" class="w-full bg-[#0a0f18] border border-dark-border rounded p-2 text-sm text-white outline-none focus:border-green-500">
-                                    <option value="unico">Pago Único (Setup)</option>
-                                    <option value="mrr">MRR (Mantenimiento Mensual)</option>
-                                </select>
-                            </div>
-                            <button type="submit" class="w-full bg-green-600 hover:bg-green-500 text-white font-bold py-2 rounded text-sm transition-colors">
-                                Guardar Ingreso
-                            </button>
-                        </form>
-                    </div>
-                    
-                    <div class="bg-dark-card border border-dark-border rounded-xl lg:col-span-2 overflow-hidden flex flex-col shadow-lg">
-                        <div class="px-6 py-4 border-b border-dark-border bg-[#151e2e]">
-                            <h3 class="font-bold text-white text-sm">Historial de Transacciones</h3>
-                        </div>
-                        <ul id="lista-finanzas" class="divide-y divide-dark-border overflow-auto p-0 flex-1 custom-scrollbar">
-                            <!-- JS Inject -->
-                        </ul>
-                    </div>
-                </div>
+                <div class="mb-8"><h2 class="text-2xl font-black text-white mb-1">Finanzas & MRR</h2></div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6"><div class="bg-dark-card border border-green-500/30 p-6 rounded-xl shadow-lg relative"><div class="text-green-400 text-xs font-bold uppercase tracking-widest mb-2">Ingresos Únicos</div><div class="text-4xl font-black text-white" id="finanzas-unico">0€</div></div><div class="bg-dark-card border border-yellow-500/30 p-6 rounded-xl shadow-lg relative"><div class="text-yellow-400 text-xs font-bold uppercase tracking-widest mb-2">MRR Recurrente</div><div class="text-4xl font-black text-white" id="finanzas-mrr">0€</div></div></div>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1"><div class="bg-dark-card border border-dark-border rounded-xl p-6 h-fit shadow-lg"><form id="form-finanzas" class="space-y-4"><input type="text" id="fin-concepto" required placeholder="Concepto" class="w-full bg-[#0a0f18] border border-dark-border rounded p-2 text-sm text-white outline-none focus:border-green-500"><input type="number" id="fin-importe" required placeholder="Importe (€)" class="w-full bg-[#0a0f18] border border-dark-border rounded p-2 text-sm text-white outline-none focus:border-green-500"><select id="fin-tipo" class="w-full bg-[#0a0f18] border border-dark-border rounded p-2 text-sm text-white outline-none focus:border-green-500"><option value="unico">Pago Único</option><option value="mrr">MRR (Mensual)</option></select><button type="submit" class="w-full bg-green-600 text-white font-bold py-2 rounded text-sm">Guardar Ingreso</button></form></div><div class="bg-dark-card border border-dark-border rounded-xl lg:col-span-2 overflow-hidden flex flex-col shadow-lg"><div class="px-6 py-4 border-b border-dark-border bg-[#151e2e]"><h3 class="font-bold text-white text-sm">Historial</h3></div><ul id="lista-finanzas" class="divide-y divide-dark-border overflow-auto p-0 flex-1 custom-scrollbar"></ul></div></div>
             </div>
 
-            <!-- ==============================================
-                 SECCIÓN 6: INVENTARIO / CMS
-            =============================================== -->
+            <!-- 6. INVENTARIO CMS -->
             <div id="seccion-inventario" class="view-section hidden p-4 md:p-8 lg:p-10 w-full max-w-7xl mx-auto flex-col h-full animate-[fadeIn_0.3s_ease-out]">
-                <div class="mb-8">
-                    <h2 class="text-2xl md:text-3xl font-black text-white tracking-tight mb-1">Inventario & CMS</h2>
-                    <p class="text-slate-400 text-sm">Administrador de contenidos de la base de datos.</p>
-                </div>
-                
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1">
-                    <div class="bg-dark-card border border-dark-border rounded-xl p-6 h-fit shadow-lg">
-                        <h3 class="font-bold text-white mb-4 border-b border-dark-border pb-2">Añadir Contenido</h3>
-                        <form id="form-cms" class="space-y-4">
-                            <div>
-                                <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Título</label>
-                                <input type="text" id="cms-titulo" required class="w-full bg-[#0a0f18] border border-dark-border rounded p-2 text-sm text-white outline-none focus:border-brand-500">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Categoría</label>
-                                <select id="cms-categoria" class="w-full bg-[#0a0f18] border border-dark-border rounded p-2 text-sm text-white outline-none focus:border-brand-500">
-                                    <option value="Servicio">Paquete de Servicio</option>
-                                    <option value="Blog">Artículo Blog</option>
-                                </select>
-                            </div>
-                            <button type="submit" class="w-full bg-brand-600 hover:bg-brand-500 text-white font-bold py-2 rounded text-sm transition-colors">
-                                Guardar en Base de Datos
-                            </button>
-                        </form>
-                    </div>
-                    
-                    <div class="bg-dark-card border border-dark-border rounded-xl lg:col-span-2 overflow-hidden flex flex-col shadow-lg">
-                        <table class="w-full text-left text-sm">
-                            <thead class="text-xs uppercase text-slate-500 bg-[#0f172a] border-b border-dark-border">
-                                <tr>
-                                    <th class="px-6 py-4">Título / Contenido</th>
-                                    <th class="px-6 py-4">Visibilidad</th>
-                                    <th class="px-6 py-4 text-right">Borrar</th>
-                                </tr>
-                            </thead>
-                            <tbody id="lista-cms" class="divide-y divide-dark-border bg-dark-card">
-                                <!-- JS Inject -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                <div class="mb-8"><h2 class="text-2xl font-black text-white mb-1">Inventario & CMS</h2></div>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1"><div class="bg-dark-card border border-dark-border rounded-xl p-6 h-fit shadow-lg"><form id="form-cms" class="space-y-4"><input type="text" id="cms-titulo" required placeholder="Título" class="w-full bg-[#0a0f18] border border-dark-border rounded p-2 text-sm text-white outline-none focus:border-brand-500"><select id="cms-categoria" class="w-full bg-[#0a0f18] border border-dark-border rounded p-2 text-sm text-white outline-none focus:border-brand-500"><option value="Servicio">Servicio</option><option value="Blog">Post Blog</option></select><button type="submit" class="w-full bg-brand-600 text-white font-bold py-2 rounded text-sm">Añadir al CMS</button></form></div><div class="bg-dark-card border border-dark-border rounded-xl lg:col-span-2 overflow-hidden flex flex-col shadow-lg"><table class="w-full text-left text-sm"><thead class="text-xs uppercase text-slate-500 bg-[#0f172a] border-b border-dark-border"><tr><th class="px-6 py-4">Título</th><th class="px-6 py-4">Estado</th><th class="px-6 py-4 text-right">Borrar</th></tr></thead><tbody id="lista-cms" class="divide-y divide-dark-border bg-dark-card"></tbody></table></div></div>
             </div>
 
-            <!-- ==============================================
-                 SECCIÓN 7: TICKETS SOPORTE (CON CHAT)
-            =============================================== -->
+            <!-- 7. TICKETS DE SOPORTE (CON CHAT) -->
             <div id="seccion-soporte" class="view-section hidden p-4 md:p-8 lg:p-10 w-full max-w-7xl mx-auto flex-col h-full animate-[fadeIn_0.3s_ease-out]">
-                <div class="mb-8">
-                    <h2 class="text-2xl md:text-3xl font-black text-white tracking-tight mb-1">Centro de Soporte</h2>
-                    <p class="text-slate-400 text-sm">Bandeja de tickets y chat en vivo con clientes.</p>
-                </div>
-                
+                <div class="mb-8"><h2 class="text-2xl font-black text-white mb-1">Centro de Soporte</h2></div>
                 <div class="bg-dark-card border border-dark-border rounded-xl overflow-hidden flex-1 shadow-lg">
                     <table class="w-full text-left text-sm">
                         <thead class="text-xs uppercase text-slate-500 bg-[#0f172a] border-b border-dark-border">
-                            <tr>
-                                <th class="px-6 py-4">Cliente</th>
-                                <th class="px-6 py-4">Asunto del Ticket</th>
-                                <th class="px-6 py-4">Estado</th>
-                                <th class="px-6 py-4 text-right">Acciones</th>
-                            </tr>
+                            <tr><th class="px-6 py-4">Cliente</th><th class="px-6 py-4">Asunto</th><th class="px-6 py-4">Estado</th><th class="px-6 py-4 text-right">Acciones</th></tr>
                         </thead>
-                        <tbody id="lista-tickets" class="divide-y divide-dark-border">
-                            <!-- JS Inject -->
-                        </tbody>
+                        <tbody id="lista-tickets" class="divide-y divide-dark-border"></tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- ==============================================
-                 SECCIÓN 8: TELEMETRÍA (JS ERRORS)
-            =============================================== -->
+            <!-- 8. TELEMETRIA JS -->
             <div id="seccion-telemetria" class="view-section hidden p-4 md:p-8 lg:p-10 w-full max-w-7xl mx-auto flex-col h-full animate-[fadeIn_0.3s_ease-out]">
-                <div class="mb-8">
-                    <h2 class="text-2xl md:text-3xl font-black text-white tracking-tight mb-1">Telemetría de Red</h2>
-                    <p class="text-slate-400 text-sm">Captura de errores JavaScript de los navegadores de tus visitantes.</p>
-                </div>
-                
-                <div class="flex-1 bg-[#05080f] border border-dark-border rounded-xl overflow-auto custom-scrollbar font-mono text-xs p-4 shadow-inner">
-                    <table class="w-full text-left">
-                        <thead class="text-[#666] border-b border-dark-border">
-                            <tr>
-                                <th class="px-4 py-3">Hora</th>
-                                <th class="px-4 py-3">Archivo Origen</th>
-                                <th class="px-4 py-3">Excepción Loggeada</th>
-                            </tr>
-                        </thead>
-                        <tbody id="telemetria-errors-table" class="divide-y divide-[#111827]">
-                            <!-- JS Inject -->
-                        </tbody>
-                    </table>
-                </div>
+                <div class="mb-8"><h2 class="text-2xl font-black text-white mb-1">Telemetría de Red</h2></div>
+                <div class="flex-1 bg-[#05080f] border border-dark-border rounded-xl overflow-auto custom-scrollbar font-mono text-xs p-4 shadow-inner"><table class="w-full text-left"><thead class="text-[#666] border-b border-dark-border"><tr><th class="px-4 py-3">Hora</th><th class="px-4 py-3">Archivo Origen</th><th class="px-4 py-3">Excepción Loggeada</th></tr></thead><tbody id="telemetria-errors-table" class="divide-y divide-[#111827]"></tbody></table></div>
             </div>
 
-            <!-- ==============================================
-                 SECCIÓN 9: USUARIOS Y ROLES (RBAC)
-            =============================================== -->
+            <!-- 9. USUARIOS Y ROLES -->
             <div id="seccion-usuarios" class="view-section hidden p-4 md:p-8 lg:p-10 w-full max-w-7xl mx-auto flex-col h-full animate-[fadeIn_0.3s_ease-out]">
-                <div class="mb-8">
-                    <h2 class="text-2xl md:text-3xl font-black text-white tracking-tight mb-1">Usuarios y Roles</h2>
-                    <p class="text-slate-400 text-sm">Control de acceso y permisos de administración.</p>
-                </div>
-                
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1">
-                    <div class="bg-dark-card border border-dark-border rounded-xl p-6 h-fit shadow-lg">
-                        <h3 class="font-bold text-white mb-4 border-b border-dark-border pb-2">Añadir Staff</h3>
-                        <form id="form-usuario" class="space-y-4">
-                            <div>
-                                <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Nombre</label>
-                                <input type="text" id="usr-nombre" required class="w-full bg-[#0a0f18] border border-dark-border rounded p-2 text-sm text-white outline-none focus:border-brand-500">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Asignar Rol</label>
-                                <select id="usr-rol" class="w-full bg-[#0a0f18] border border-dark-border rounded p-2 text-sm text-white outline-none focus:border-brand-500">
-                                    <option value="Editor">Editor</option>
-                                    <option value="Comercial">Agente Comercial</option>
-                                    <option value="Admin">Administrador</option>
-                                </select>
-                            </div>
-                            <button type="submit" class="w-full bg-slate-700 hover:bg-slate-600 text-white font-bold py-2 rounded text-sm transition-colors">
-                                Registrar Usuario
-                            </button>
-                        </form>
-                    </div>
-                    
-                    <div class="bg-dark-card border border-dark-border rounded-xl lg:col-span-2 overflow-hidden flex flex-col shadow-lg">
-                        <table class="w-full text-left text-sm">
-                            <thead class="text-xs uppercase text-slate-500 bg-[#0f172a] border-b border-dark-border">
-                                <tr>
-                                    <th class="px-6 py-4">Usuario</th>
-                                    <th class="px-6 py-4">Rol Base de Datos</th>
-                                    <th class="px-6 py-4 text-right">Borrar Cuenta</th>
-                                </tr>
-                            </thead>
-                            <tbody id="lista-usuarios" class="divide-y divide-dark-border bg-dark-card">
-                                <!-- JS Inject -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                <div class="mb-8"><h2 class="text-2xl font-black text-white mb-1">Usuarios y Roles</h2></div>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1"><div class="bg-dark-card border border-dark-border rounded-xl p-6 h-fit shadow-lg"><form id="form-usuario" class="space-y-4"><input type="text" id="usr-nombre" required placeholder="Nombre Empleado" class="w-full bg-[#0a0f18] border border-dark-border rounded p-2 text-sm text-white outline-none focus:border-brand-500"><select id="usr-rol" class="w-full bg-[#0a0f18] border border-dark-border rounded p-2 text-sm text-white outline-none focus:border-brand-500"><option value="Editor">Editor</option><option value="Comercial">Agente Ventas</option><option value="Admin">Admin</option></select><button type="submit" class="w-full bg-slate-700 text-white font-bold py-2 rounded text-sm">Registrar</button></form></div><div class="bg-dark-card border border-dark-border rounded-xl lg:col-span-2 overflow-hidden flex flex-col shadow-lg"><table class="w-full text-left text-sm"><thead class="text-xs uppercase text-slate-500 bg-[#0f172a] border-b border-dark-border"><tr><th class="px-6 py-4">Usuario</th><th class="px-6 py-4">Rol BD</th><th class="px-6 py-4 text-right">Borrar</th></tr></thead><tbody id="lista-usuarios" class="divide-y divide-dark-border bg-dark-card"></tbody></table></div></div>
             </div>
 
-            <!-- ==============================================
-                 SECCIÓN 10: SEGURIDAD Y AUDITORÍA
-            =============================================== -->
+            <!-- 10. SEGURIDAD -->
             <div id="seccion-seguridad" class="view-section hidden p-4 md:p-8 lg:p-10 w-full max-w-7xl mx-auto flex-col h-full animate-[fadeIn_0.3s_ease-out]">
-                <div class="mb-8">
-                    <h2 class="text-2xl md:text-3xl font-black text-white tracking-tight mb-1">Seguridad & Auditoría</h2>
-                    <p class="text-slate-400 text-sm">Logs inalterables de acciones administrativas.</p>
-                </div>
-                
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1">
-                    <div class="bg-dark-card border border-dark-border rounded-xl p-6 h-fit shadow-lg">
-                        <h3 class="font-bold text-white mb-4 border-b border-dark-border pb-2">Seguridad de la Cuenta</h3>
-                        <div class="flex items-center justify-between mb-4">
-                            <div class="text-sm font-bold text-white">Requerir 2FA</div>
-                            <div class="relative inline-block w-10 mr-2 align-middle select-none">
-                                <input type="checkbox" checked id="toggle2fa" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 cursor-pointer border-slate-600 right-0"/>
-                                <label for="toggle2fa" class="toggle-label block overflow-hidden h-5 rounded-full bg-green-500 cursor-pointer"></label>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-dark-card border border-dark-border rounded-xl lg:col-span-2 overflow-hidden flex flex-col shadow-lg">
-                        <div class="px-6 py-4 border-b border-dark-border bg-[#151e2e]">
-                            <h3 class="font-bold text-white text-sm">Audit Logs (Historial de Sistema)</h3>
-                        </div>
-                        <div class="flex-1 overflow-auto custom-scrollbar font-mono text-[10px] sm:text-xs">
-                            <table class="w-full text-left">
-                                <tbody class="divide-y divide-dark-border bg-dark-bg" id="audit-logs-table">
-                                    <!-- JS Inject -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                <div class="mb-8"><h2 class="text-2xl font-black text-white mb-1">Seguridad & Auditoría</h2></div>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1"><div class="bg-dark-card border border-dark-border rounded-xl p-6 h-fit shadow-lg"><div class="flex items-center justify-between mb-4"><div class="text-sm font-bold text-white">Requerir 2FA</div><div class="relative inline-block w-10 mr-2 align-middle"><input type="checkbox" checked id="toggle2fa" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 cursor-pointer border-slate-600 right-0"/><label for="toggle2fa" class="toggle-label block overflow-hidden h-5 rounded-full bg-green-500 cursor-pointer"></label></div></div></div><div class="bg-dark-card border border-dark-border rounded-xl lg:col-span-2 overflow-hidden flex flex-col shadow-lg"><div class="px-6 py-4 border-b border-dark-border bg-[#151e2e]"><h3 class="font-bold text-white text-sm">Audit Logs</h3></div><div class="flex-1 overflow-auto custom-scrollbar font-mono text-[10px] sm:text-xs"><table class="w-full text-left"><tbody class="divide-y divide-dark-border bg-dark-bg" id="audit-logs-table"></tbody></table></div></div></div>
             </div>
 
-            <!-- ==============================================
-                 SECCIÓN 11: CONFIGURACIÓN
-            =============================================== -->
+            <!-- 11. AJUSTES -->
             <div id="seccion-configuracion" class="view-section hidden p-4 md:p-8 lg:p-10 w-full max-w-7xl mx-auto flex-col h-full animate-[fadeIn_0.3s_ease-out]">
-                <div class="mb-8">
-                    <h2 class="text-2xl md:text-3xl font-black text-white tracking-tight mb-1">Ajustes Generales</h2>
-                    <p class="text-slate-400 text-sm">Llaves API y configuraciones globales.</p>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="bg-dark-card border border-dark-border rounded-xl p-6 h-fit shadow-lg">
-                        <h3 class="font-bold text-white mb-4 border-b border-dark-border pb-2">
-                            <i class="fas fa-plug mr-2 text-purple-500"></i>Integraciones de Terceros
-                        </h3>
-                        <form id="form-config" class="space-y-4">
-                            <div>
-                                <label class="block text-xs font-bold text-slate-500 mb-1">Stripe Secret Key</label>
-                                <input type="password" id="cfg-stripe" class="w-full bg-[#0a0f18] border border-dark-border rounded p-2 text-sm text-white font-mono outline-none focus:border-brand-500">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-slate-500 mb-1">OpenAI API Key</label>
-                                <input type="password" id="cfg-openai" class="w-full bg-[#0a0f18] border border-dark-border rounded p-2 text-sm text-white font-mono outline-none focus:border-brand-500">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-slate-500 mb-1">Google Analytics ID</label>
-                                <input type="text" id="cfg-analytics" class="w-full bg-[#0a0f18] border border-dark-border rounded p-2 text-sm text-white font-mono outline-none focus:border-brand-500">
-                            </div>
-                            <button type="submit" id="btn-save-config" class="w-full mt-6 bg-brand-600 hover:bg-brand-500 text-white font-bold py-2 rounded text-sm transition-colors">
-                                Guardar Configuraciones
-                            </button>
-                        </form>
-                    </div>
-                </div>
+                <div class="mb-8"><h2 class="text-2xl font-black text-white mb-1">Ajustes Generales</h2></div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8"><div class="bg-dark-card border border-dark-border rounded-xl p-6 h-fit shadow-lg"><form id="form-config" class="space-y-4"><div><label class="block text-xs font-bold text-slate-500 mb-1">Stripe Secret Key</label><input type="password" id="cfg-stripe" class="w-full bg-[#0a0f18] border border-dark-border rounded p-2 text-sm text-white font-mono outline-none focus:border-brand-500"></div><div><label class="block text-xs font-bold text-slate-500 mb-1">OpenAI API Key</label><input type="password" id="cfg-openai" class="w-full bg-[#0a0f18] border border-dark-border rounded p-2 text-sm text-white font-mono outline-none focus:border-brand-500"></div><div><label class="block text-xs font-bold text-slate-500 mb-1">Google Analytics ID</label><input type="text" id="cfg-analytics" class="w-full bg-[#0a0f18] border border-dark-border rounded p-2 text-sm text-white font-mono outline-none focus:border-brand-500"></div><button type="submit" id="btn-save-config" class="w-full mt-6 bg-brand-600 text-white font-bold py-2 rounded text-sm">Guardar Config</button></form></div></div>
             </div>
 
         </main>
     </div>
 
-    <!-- MODAL DE CHAT (SOPORTE AL CLIENTE) -->
+    <!-- MODAL CHAT DE SOPORTE -->
     <div id="chat-modal" class="fixed inset-0 z-[100] hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-dark-card border border-dark-border rounded-2xl w-full max-w-2xl h-[600px] flex flex-col shadow-2xl overflow-hidden relative">
-            
+        <div class="bg-dark-card border border-dark-border rounded-2xl w-full max-w-2xl h-[600px] flex flex-col shadow-2xl relative">
             <div class="px-6 py-4 border-b border-dark-border bg-[#151e2e] flex justify-between items-center">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full bg-brand-500/20 text-brand-400 flex items-center justify-center font-bold">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-white text-lg leading-none" id="chat-modal-title">Ticket de Cliente</h3>
-                        <span class="text-xs text-green-400">Sala de Soporte</span>
-                    </div>
+                    <div class="w-10 h-10 rounded-full bg-brand-500/20 text-brand-400 flex items-center justify-center font-bold"><i class="fas fa-user"></i></div>
+                    <div><h3 class="font-bold text-white text-lg leading-none" id="chat-modal-title">Ticket</h3><span class="text-xs text-green-400">Sala de Soporte</span></div>
                 </div>
-                <button onclick="cerrarChatModal()" class="text-slate-400 hover:text-red-400 transition-colors">
-                    <i class="fas fa-times text-2xl"></i>
-                </button>
+                <button onclick="cerrarChatModal()" class="text-slate-400 hover:text-red-400"><i class="fas fa-times text-2xl"></i></button>
             </div>
-            
-            <div id="chat-mensajes" class="flex-1 overflow-y-auto p-6 space-y-4 custom-scrollbar bg-dark-bg">
-                <!-- Se inyectan los mensajes de la subcoleccion -->
-            </div>
-            
+            <div id="chat-mensajes" class="flex-1 overflow-y-auto p-6 space-y-4 custom-scrollbar bg-dark-bg"></div>
             <form id="form-chat-admin" class="p-4 border-t border-dark-border bg-[#151e2e] flex gap-3 items-center">
-                <input type="text" id="chat-input-admin" class="flex-1 bg-[#0a0f18] border border-dark-border rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-500 transition-colors" placeholder="Escribe tu respuesta al cliente..." autocomplete="off">
-                <button type="submit" class="bg-brand-600 hover:bg-brand-500 w-12 h-12 rounded-xl text-white flex items-center justify-center shadow-lg transition-colors">
-                    <i class="fas fa-paper-plane"></i>
-                </button>
+                <input type="text" id="chat-input-admin" class="flex-1 bg-[#0a0f18] border border-dark-border rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-brand-500" placeholder="Responder al cliente..." autocomplete="off">
+                <button type="submit" class="bg-brand-600 text-white w-12 h-12 rounded-xl flex items-center justify-center"><i class="fas fa-paper-plane"></i></button>
             </form>
         </div>
     </div>
 
-    <!-- ==============================================
-         LÓGICA JAVASCRIPT Y FIREBASE (100% FUNCIONAL Y PROTEGIDA)
-    =============================================== -->
+    <!-- LÓGICA DE JAVASCRIPT Y FIREBASE -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-        import { 
-            getFirestore, collection, query, orderBy, onSnapshot, 
-            doc, updateDoc, addDoc, deleteDoc, getDoc, setDoc, serverTimestamp, limit 
-        } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+        import { getFirestore, collection, query, orderBy, onSnapshot, doc, updateDoc, addDoc, deleteDoc, getDoc, setDoc, serverTimestamp, limit } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
-        // CONFIGURACIÓN DE TU FIREBASE
-        const firebaseConfig = { 
-            apiKey: "AIzaSyDqWjgoi8DwcZiXwp3nF1gQ0vvxZ39CUtQ", 
-            authDomain: "chatbot-web-v1.firebaseapp.com", 
-            projectId: "chatbot-web-v1", 
-            storageBucket: "chatbot-web-v1.firebasestorage.app", 
-            messagingSenderId: "7994049270", 
-            appId: "1:7994049270:web:f5e6a2652065bf4680a2d7" 
-        };
-        
+        const firebaseConfig = { apiKey: "AIzaSyDqWjgoi8DwcZiXwp3nF1gQ0vvxZ39CUtQ", authDomain: "chatbot-web-v1.firebaseapp.com", projectId: "chatbot-web-v1", storageBucket: "chatbot-web-v1.firebasestorage.app", messagingSenderId: "7994049270", appId: "1:7994049270:web:f5e6a2652065bf4680a2d7" };
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // ==============================================
-        // MANEJO DE LA NAVEGACIÓN EN LA BARRA LATERAL
-        // ==============================================
+        // NAVEGACIÓN
         const navItems = document.querySelectorAll('.nav-item');
         const viewSections = document.querySelectorAll('.view-section');
-        const sidebar = document.getElementById('admin-sidebar');
-        const sidebarOverlay = document.getElementById('sidebar-overlay');
-        const mobileHeaderTitle = document.getElementById('mobile-header-title');
-
-        function closeSidebarMobile() {
-            if (window.innerWidth < 768) {
-                sidebar.classList.add('-translate-x-full');
-                sidebarOverlay.classList.add('hidden');
-            }
-        }
-
-        document.getElementById('open-sidebar-btn').addEventListener('click', () => {
-            sidebar.classList.remove('-translate-x-full');
-            sidebarOverlay.classList.remove('hidden');
-        });
-
-        document.getElementById('close-sidebar-btn').addEventListener('click', closeSidebarMobile);
-        sidebarOverlay.addEventListener('click', closeSidebarMobile);
-
         navItems.forEach(item => {
             item.addEventListener('click', () => {
-                // Actualizar estilos activos
-                navItems.forEach(n => n.classList.remove('active')); 
-                item.classList.add('active');
-                
-                const targetId = item.getAttribute('data-target');
-                if (mobileHeaderTitle) mobileHeaderTitle.textContent = item.textContent.trim();
-                
-                // Mostrar/Ocultar secciones
-                viewSections.forEach(sec => { 
-                    if (sec.id === targetId) {
-                        sec.classList.remove('hidden');
-                        sec.classList.add('flex');
-                    } else {
-                        sec.classList.remove('flex');
-                        sec.classList.add('hidden');
-                    }
-                });
-                
-                closeSidebarMobile();
+                navItems.forEach(n => n.classList.remove('active')); item.classList.add('active');
+                viewSections.forEach(sec => { sec.classList.toggle('hidden', sec.id !== item.getAttribute('data-target')); sec.classList.toggle('flex', sec.id === item.getAttribute('data-target')); });
+                if(window.innerWidth < 768) document.getElementById('admin-sidebar').classList.add('-translate-x-full');
             });
         });
 
-        // ==============================================
-        // INICIALIZACIÓN DEL GRÁFICO (CHART.JS)
-        // ==============================================
+        // GRAFICO
         const ctx = document.getElementById('trafficChart').getContext('2d');
         const last7DaysLabels = [];
         for(let i=6; i>=0; i--) { 
-            const d = new Date(); 
-            d.setDate(d.getDate()-i); 
-            const day = String(d.getDate()).padStart(2, '0');
-            const month = String(d.getMonth()+1).padStart(2, '0');
-            last7DaysLabels.push(`${day}/${month}`); 
+            const d = new Date(); d.setDate(d.getDate()-i); 
+            last7DaysLabels.push(`${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}`); 
+        }
+        let trafficChartInstance = new Chart(ctx, { type: 'line', data: { labels: last7DaysLabels, datasets: [{ label: 'Visitas', data: [0,0,0,0,0,0,0], borderColor: '#0ea5e9', backgroundColor: 'rgba(14, 165, 233, 0.1)', borderWidth: 2, fill: true, tension: 0.4 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, grid: { color: '#1e293b' }, ticks: { color: '#64748b', precision: 0 } }, x: { grid: { display: false }, ticks: { color: '#64748b' } } } } });
+
+        // FUNCIONES GLOBALES
+        async function registrarAuditoria(accion_texto, modulo) { try { await addDoc(collection(db, "auditoria"), { admin: auth.currentUser?.email || 'Sistema', accion: accion_texto, modulo: modulo, fechaC: serverTimestamp() }); } catch(e) {} }
+        window.cambiarEstadoLead = async (id, st) => { await updateDoc(doc(db, "leads", id), { estado: st }); registrarAuditoria(`Lead a [${st}]`, 'CRM'); };
+        window.cambiarEstadoTicket = async (id, st) => { await updateDoc(doc(db, "tickets", id), { estado: st }); registrarAuditoria(`Ticket a [${st}]`, 'Soporte'); };
+        window.borrarTicket = async (id) => { await deleteDoc(doc(db, "tickets", id)); registrarAuditoria(`Ticket Borrado`, 'Soporte'); };
+        window.borrarUser = async (id) => { await deleteDoc(doc(db, "usuarios", id)); };
+        window.cambiarRolUser = async (id, rol) => { await updateDoc(doc(db, "usuarios", id), { rol: rol }); };
+        window.borrarCMS = async (id) => { await deleteDoc(doc(db, "inventario", id)); };
+        window.cambiarEstadoCMS = async (id, st) => { await updateDoc(doc(db, "inventario", id), { estado: st }); };
+        window.borrarAgenda = async (id) => { await deleteDoc(doc(db, "agenda", id)); };
+        window.cambiarEstadoProy = async (id, st) => { await updateDoc(doc(db, "proyectos", id), { estado: st }); };
+        window.borrarFinanza = async (id) => { await deleteDoc(doc(db, "finanzas", id)); };
+
+        // SISTEMA DE NOTIFICACION GLOBAL
+        function checkGlobalNotifications() {
+            const hasLeads = !document.getElementById('dot-crm').classList.contains('hidden');
+            const hasTickets = !document.getElementById('dot-soporte').classList.contains('hidden');
+            const bell = document.getElementById('global-notification');
+            if(hasLeads || hasTickets) { bell.classList.remove('hidden'); bell.classList.add('flex'); } 
+            else { bell.classList.remove('flex'); bell.classList.add('hidden'); }
         }
 
-        let trafficChartInstance = new Chart(ctx, { 
-            type: 'line', 
-            data: { 
-                labels: last7DaysLabels, 
-                datasets: [{ 
-                    label: 'Visitas', 
-                    data: [0,0,0,0,0,0,0], 
-                    borderColor: '#0ea5e9', 
-                    backgroundColor: 'rgba(14, 165, 233, 0.1)', 
-                    borderWidth: 2, 
-                    fill: true, 
-                    tension: 0.4,
-                    pointBackgroundColor: '#0ea5e9', 
-                    pointBorderColor: '#fff' 
-                }] 
-            }, 
-            options: { 
-                responsive: true, 
-                maintainAspectRatio: false, 
-                plugins: { legend: { display: false } }, 
-                scales: { 
-                    y: { beginAtZero: true, grid: { color: '#1e293b' }, ticks: { color: '#64748b', precision: 0 } }, 
-                    x: { grid: { display: false }, ticks: { color: '#64748b' } } 
-                } 
-            } 
-        });
-
-        // ==============================================
-        // FUNCIONES GLOBALES (ACCESIBLES DESDE EL DOM)
-        // ==============================================
-        async function registrarAuditoria(accion_texto, modulo) {
-            try { 
-                await addDoc(collection(db, "auditoria"), { 
-                    admin: auth.currentUser?.email || 'Sistema', 
-                    accion: accion_texto, 
-                    modulo: modulo, 
-                    fechaC: serverTimestamp() 
-                }); 
-            } catch(e) { console.error(e); }
-        }
-        
-        window.cambiarEstadoLead = async (id, st) => { 
-            await updateDoc(doc(db, "leads", id), { estado: st }); 
-            registrarAuditoria(`Cambiado estado Lead a [${st}]`, 'CRM'); 
-        };
-        window.cambiarEstadoTicket = async (id, st) => { 
-            await updateDoc(doc(db, "tickets", id), { estado: st }); 
-            registrarAuditoria(`Cambiado estado Ticket a [${st}]`, 'Soporte');
-        };
-        window.borrarTicket = async (id) => { 
-            await deleteDoc(doc(db, "tickets", id)); 
-            registrarAuditoria(`Ticket Eliminado`, 'Soporte'); 
-        };
-        window.borrarUser = async (id) => { 
-            await deleteDoc(doc(db, "usuarios", id)); 
-            registrarAuditoria(`Usuario Staff Eliminado`, 'Usuarios'); 
-        };
-        window.cambiarRolUser = async (id, rol) => { 
-            await updateDoc(doc(db, "usuarios", id), { rol: rol }); 
-            registrarAuditoria(`Rol de usuario actualizado`, 'Usuarios'); 
-        };
-        window.borrarCMS = async (id) => { 
-            await deleteDoc(doc(db, "inventario", id)); 
-            registrarAuditoria(`Contenido Borrado`, 'CMS'); 
-        };
-        window.cambiarEstadoCMS = async (id, st) => { 
-            await updateDoc(doc(db, "inventario", id), { estado: st }); 
-            registrarAuditoria(`Estado CMS cambiado a [${st}]`, 'CMS'); 
-        };
-        window.borrarAgenda = async (id) => { 
-            await deleteDoc(doc(db, "agenda", id)); 
-            registrarAuditoria('Tarea completada/eliminada', 'Agenda'); 
-        };
-        window.cambiarEstadoProy = async (id, st) => { 
-            await updateDoc(doc(db, "proyectos", id), { estado: st }); 
-            registrarAuditoria(`Fase Proyecto a [${st}]`, 'Proyectos'); 
-        };
-        window.borrarFinanza = async (id) => { 
-            await deleteDoc(doc(db, "finanzas", id)); 
-            registrarAuditoria('Registro de ingreso eliminado', 'Finanzas'); 
-        };
-
-        // ==============================================
-        // LÓGICA DEL CHAT MODAL ADMIN
-        // ==============================================
-        let currentTicketId = null;
-        let unsubscribeChat = null;
-
+        // CHAT MODAL
+        let currentTicketId = null; let unsubscribeChat = null;
         window.abrirChatTicket = (ticketId, clienteNombre) => {
             currentTicketId = ticketId;
             document.getElementById('chat-modal').classList.remove('hidden');
             document.getElementById('chat-modal-title').textContent = clienteNombre;
-            
             if(unsubscribeChat) unsubscribeChat();
-            
-            const chatQuery = query(collection(db, "tickets", ticketId, "mensajes"), orderBy("fecha", "asc"));
-            
-            unsubscribeChat = onSnapshot(chatQuery, (snap) => {
-                try {
-                    let html = '';
-                    snap.forEach(dSnap => {
-                        const d = dSnap.data(); 
-                        const isAdmin = d.rol === 'admin';
-                        let timeStr = '';
-                        
-                        if (d.fecha) {
-                            const dateObj = new Date(d.fecha.seconds * 1000);
-                            timeStr = dateObj.toLocaleTimeString('es-ES', { hour:'2-digit', minute:'2-digit' });
-                        }
-                        
-                        html += `
-                            <div class="flex w-full ${isAdmin ? 'justify-end' : 'justify-start'}">
-                                <div class="${isAdmin ? 'bg-brand-600 text-white rounded-tl-2xl rounded-bl-2xl rounded-tr-2xl' : 'bg-[#1e293b] text-slate-200 rounded-tr-2xl rounded-br-2xl rounded-tl-2xl'} p-4 max-w-[80%] shadow-md">
-                                    <p class="text-sm">${d.texto}</p>
-                                    <div class="text-right mt-1"><span class="text-[10px] opacity-70">${timeStr}</span></div>
-                                </div>
-                            </div>
-                        `;
-                    });
-                    
-                    const chatContainer = document.getElementById('chat-mensajes');
-                    chatContainer.innerHTML = html || '<div class="text-center text-slate-500 text-xs mt-10">Sin mensajes aún. Inicia la conversación.</div>';
-                    chatContainer.scrollTop = chatContainer.scrollHeight;
-                } catch (err) {
-                    console.error("Error cargando mensajes del chat:", err);
-                }
-            });
-        };
-
-        window.cerrarChatModal = () => { 
-            document.getElementById('chat-modal').classList.add('hidden'); 
-            if(unsubscribeChat) {
-                unsubscribeChat(); 
-            }
-            currentTicketId = null; 
-        };
-
-        document.getElementById('form-chat-admin').addEventListener('submit', async (e) => {
-            e.preventDefault(); 
-            const input = document.getElementById('chat-input-admin');
-            if(!input.value.trim() || !currentTicketId) return;
-            
-            try {
-                await addDoc(collection(db, "tickets", currentTicketId, "mensajes"), { 
-                    texto: input.value, 
-                    rol: 'admin', 
-                    fecha: serverTimestamp() 
+            unsubscribeChat = onSnapshot(query(collection(db, "tickets", ticketId, "mensajes"), orderBy("fecha", "asc")), snap => {
+                let html = '';
+                snap.forEach(dSnap => {
+                    const d = dSnap.data(); const isAdmin = d.rol === 'admin';
+                    const t = d.fecha ? new Date(d.fecha.seconds*1000).toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'}) : '';
+                    html += `<div class="flex w-full ${isAdmin ? 'justify-end' : 'justify-start'}"><div class="${isAdmin ? 'bg-brand-600 text-white rounded-tl-2xl rounded-bl-2xl rounded-tr-2xl' : 'bg-[#1e293b] text-slate-200 rounded-tr-2xl rounded-br-2xl rounded-tl-2xl'} p-4 max-w-[80%] shadow-md"><p class="text-sm">${d.texto}</p><div class="text-right mt-1"><span class="text-[10px] opacity-70">${t}</span></div></div></div>`;
                 });
-                input.value = '';
-            } catch (err) {
-                console.error("Error enviando mensaje:", err);
-                alert("Error de conexión. Intenta de nuevo.");
-            }
-        });
+                const container = document.getElementById('chat-mensajes');
+                container.innerHTML = html || '<div class="text-center text-slate-500 text-xs mt-10">Inicia la conversación.</div>';
+                container.scrollTop = container.scrollHeight;
+            });
+        };
+        window.cerrarChatModal = () => { document.getElementById('chat-modal').classList.add('hidden'); if(unsubscribeChat) unsubscribeChat(); currentTicketId = null; };
+        document.getElementById('form-chat-admin').addEventListener('submit', async e => { e.preventDefault(); const input = document.getElementById('chat-input-admin'); if(!input.value.trim() || !currentTicketId) return; await addDoc(collection(db, "tickets", currentTicketId, "mensajes"), { texto: input.value, rol: 'admin', fecha: serverTimestamp() }); input.value = ''; });
 
-        // ==============================================
-        // BUCLE PRINCIPAL DE FIREBASE (AUTH & SNAPSHOTS)
-        // ==============================================
+        // MAIN FIREBASE LOGIC
         onAuthStateChanged(auth, async (user) => {
-            if (!user) { 
-                document.getElementById('login-screen').classList.remove('hidden'); 
-                document.getElementById('dashboard-screen').classList.add('hidden'); 
-                return; 
-            }
-            
-            // Usuario logueado
-            document.getElementById('login-screen').classList.add('hidden'); 
-            document.getElementById('dashboard-screen').classList.remove('hidden');
+            if (!user) { document.getElementById('login-screen').classList.remove('hidden'); document.getElementById('dashboard-screen').classList.add('hidden'); return; }
+            document.getElementById('login-screen').classList.add('hidden'); document.getElementById('dashboard-screen').classList.remove('hidden');
             document.getElementById('user-email-display').textContent = user.email;
+
+            getDoc(doc(db, "configuracion", "global")).then(cfg => { if(cfg.exists()) { document.getElementById('cfg-stripe').value=cfg.data().stripe||''; document.getElementById('cfg-openai').value=cfg.data().openai||''; document.getElementById('cfg-analytics').value=cfg.data().analytics||''; }});
+
+            // TELEMETRÍA (ARREGLADA LA SUMA DE VISITAS TOTALES)
+            onSnapshot(query(collection(db, "telemetria"), orderBy("fecha", "desc")), snap => {
+                let visitasTotales = 0, err = 0, errHTML = '';
+                const vDay = {}; last7DaysLabels.forEach(l => vDay[l] = 0);
+                
+                snap.forEach(dSnap => {
+                    const data = dSnap.data();
+                    if(data.tipo === "visita") {
+                        visitasTotales++; // ESTA LÍNEA CUENTA TODAS LAS VISITAS HISTÓRICAS
+                        if(data.fecha) {
+                            const dDate = new Date(data.fecha.seconds * 1000);
+                            const dStr = `${String(dDate.getDate()).padStart(2, '0')}/${String(dDate.getMonth()+1).padStart(2, '0')}`;
+                            if(vDay[dStr] !== undefined) vDay[dStr]++;
+                        }
+                    } else if(data.tipo === "error") {
+                        err++; const t = data.fecha ? new Date(data.fecha.seconds*1000).toLocaleTimeString('es-ES') : '';
+                        errHTML += `<tr class="hover:bg-[#111827]"><td class="px-4 py-2">${t}</td><td class="px-4 py-2 text-brand-400">${data.archivo?data.archivo.split('/').pop():''}</td><td class="px-4 py-2 text-red-400">${data.mensaje}</td></tr>`;
+                    }
+                });
+                
+                document.getElementById('dash-visitas').textContent = visitasTotales.toLocaleString(); // AHORA PONE LA VARIABLE CORRECTA
+                document.getElementById('dash-errores').textContent = err;
+                document.getElementById('telemetria-errors-table').innerHTML = errHTML || '<tr><td colspan="3" class="p-4 text-center text-green-500">Cero errores.</td></tr>';
+                trafficChartInstance.data.datasets[0].data = last7DaysLabels.map(l => vDay[l]); trafficChartInstance.update();
+            });
+
+            // LEADS (CRM & NOTIFICACIONES)
+            onSnapshot(query(collection(db, "leads"), orderBy("fecha", "desc")), snap => {
+                let html = '', t = 0, hayNuevos = false;
+                snap.forEach(dSnap => {
+                    t++; const d = dSnap.data(); const id = dSnap.id; const st = d.estado || 'nuevo';
+                    if(st === 'nuevo') hayNuevos = true;
+                    html += `<tr class="lead-row hover:bg-[#1e293b]/50"><td class="px-6 py-4"><div class="font-bold text-white text-sm">${d.nombre}</div><div class="text-xs text-brand-400">${d.email}</div></td><td class="px-6 py-4"><select onchange="cambiarEstadoLead('${id}', this.value)" class="bg-[#0a0f18] border rounded p-1 text-xs font-bold uppercase tracking-wider outline-none ${st==='nuevo'?'text-green-400 border-green-500/30':(st==='proceso'?'text-yellow-400 border-yellow-500/30':'text-brand-400 border-brand-500/30')}"><option value="nuevo" class="text-green-400" ${st==='nuevo'?'selected':''}>Nuevo</option><option value="proceso" class="text-yellow-400" ${st==='proceso'?'selected':''}>Proceso</option><option value="cerrado" class="text-brand-400" ${st==='cerrado'?'selected':''}>Ganado</option></select></td><td class="px-6 py-4 text-sm">${d.servicio}</td><td class="px-6 py-4"><div class="text-xs text-slate-400 bg-dark-bg p-2 rounded max-h-16 overflow-auto">"${d.mensaje}"</div></td></tr>`;
+                });
+                document.getElementById('dash-leads').textContent = t;
+                document.getElementById('crm-leads-table').innerHTML = html || '<tr><td colspan="4" class="p-6 text-center text-slate-500">Vacío</td></tr>';
+                document.getElementById('dot-crm').classList.toggle('hidden', !hayNuevos);
+                checkGlobalNotifications();
+            });
+
+            // TICKETS SOPORTE (CHAT & NOTIFICACIONES)
+            onSnapshot(query(collection(db, "tickets"), orderBy("fecha", "desc")), snap => {
+                let html = '', hayNuevos = false;
+                snap.forEach(dSnap => {
+                    const d = dSnap.data(); const id = dSnap.id; const st = d.estado || 'abierto';
+                    if(st === 'abierto') hayNuevos = true;
+                    html += `<tr class="hover:bg-[#1e293b]/50"><td class="px-6 py-4 font-bold text-white text-sm">${d.cliente}</td><td class="px-6 py-4 text-slate-300 text-sm">${d.asunto}</td><td class="px-6 py-4"><select onchange="cambiarEstadoTicket('${id}', this.value)" class="bg-[#0a0f18] border border-dark-border rounded text-xs font-bold uppercase outline-none p-1 ${st==='abierto'?'text-yellow-400':'text-green-400'}"><option value="abierto" ${st==='abierto'?'selected':''}>Abierto</option><option value="cerrado" ${st==='cerrado'?'selected':''}>Resuelto</option></select></td><td class="px-6 py-4 text-right"><button onclick="abrirChatTicket('${id}', '${d.cliente}')" class="bg-brand-600 hover:bg-brand-500 text-white font-bold px-3 py-1.5 rounded text-xs mr-2"><i class="fas fa-comment-dots mr-1"></i> Responder</button><button onclick="borrarTicket('${id}')" class="text-slate-500 hover:text-red-400 p-1"><i class="fas fa-trash"></i></button></td></tr>`;
+                });
+                document.getElementById('lista-tickets').innerHTML = html || '<tr><td colspan="4" class="p-6 text-center text-green-500">Bandeja limpia.</td></tr>';
+                document.getElementById('dot-soporte').classList.toggle('hidden', !hayNuevos);
+                checkGlobalNotifications();
+            });
+
+            // FINANZAS Y MRR
+            onSnapshot(query(collection(db, "finanzas")), snap => { let mrr = 0, uni = 0; snap.forEach(d => { if(d.data().tipo==='mrr') mrr+=Number(d.data().importe); else uni+=Number(d.data().importe); }); document.getElementById('dash-mrr').textContent = mrr + '€'; document.getElementById('finanzas-mrr').textContent = mrr + '€'; document.getElementById('finanzas-unico').textContent = uni + '€'; });
             
-            registrarAuditoria('Inicio de sesión seguro', 'Seguridad');
-
-            // 0. CARGAR CONFIGURACIÓN GLOBAL (1 Sola vez)
-            try {
-                const configDoc = await getDoc(doc(db, "configuracion", "global"));
-                if(configDoc.exists()) {
-                    const cfg = configDoc.data();
-                    document.getElementById('cfg-stripe').value = cfg.stripe || '';
-                    document.getElementById('cfg-openai').value = cfg.openai || '';
-                    document.getElementById('cfg-analytics').value = cfg.analytics || '';
-                }
-            } catch (err) { console.error("Error cargando configuración", err); }
-
-            // 1. LISTEN TELEMETRÍA (Gráfico, Visitas y Errores)
-            onSnapshot(query(collection(db, "telemetria"), orderBy("fecha", "desc")), (snap) => {
-                try {
-                    let visitasTotales = 0;
-                    let erroresTotales = 0;
-                    let erroresHTML = '';
-                    
-                    // Preparar conteo por dias para la gráfica
-                    const visitasPorDia = {}; 
-                    last7DaysLabels.forEach(label => { visitasPorDia[label] = 0; });
-
-                    snap.forEach(dSnap => {
-                        const data = dSnap.data();
-                        
-                        if (data.tipo === "visita") {
-                            visitasTotales++; // Sumamos al conteo histórico TOTAL
-                            
-                            // Sumamos a la grafica solo si pertenece a los ultimos 7 dias
-                            if (data.fecha) {
-                                const dateObj = new Date(data.fecha.seconds * 1000);
-                                const dayStr = String(dateObj.getDate()).padStart(2, '0');
-                                const monthStr = String(dateObj.getMonth() + 1).padStart(2, '0');
-                                const formatStr = `${dayStr}/${monthStr}`;
-                                
-                                if (visitasPorDia[formatStr] !== undefined) {
-                                    visitasPorDia[formatStr]++;
-                                }
-                            }
-                        } else if (data.tipo === "error") {
-                            erroresTotales++;
-                            let timeStr = '';
-                            if (data.fecha) {
-                                timeStr = new Date(data.fecha.seconds*1000).toLocaleTimeString('es-ES');
-                            }
-                            
-                            erroresHTML += `
-                                <tr class="hover:bg-[#111827]">
-                                    <td class="px-4 py-2">${timeStr}</td>
-                                    <td class="px-4 py-2 text-brand-400">${data.archivo ? data.archivo.split('/').pop() : 'Navegador'}</td>
-                                    <td class="px-4 py-2 text-red-400 font-medium">${data.mensaje}</td>
-                                </tr>
-                            `;
-                        }
-                    });
-
-                    // Inyectar en DOM
-                    document.getElementById('dash-visitas').textContent = visitasTotales.toLocaleString(); // Ahora muestra TODO EL TRÁFICO
-                    document.getElementById('dash-errores').textContent = erroresTotales;
-                    document.getElementById('telemetria-errors-table').innerHTML = erroresHTML || '<tr><td colspan="3" class="p-6 text-center text-green-500 font-bold"><i class="fas fa-check-circle mr-2"></i>Cero errores detectados.</td></tr>';
-                    
-                    // Actualizar Gráfico
-                    trafficChartInstance.data.datasets[0].data = last7DaysLabels.map(label => visitasPorDia[label]);
-                    trafficChartInstance.update();
-
-                } catch (err) {
-                    console.error("Error en Snapshot de Telemetría:", err);
-                }
+            // LISTAS DE FINANZAS
+            onSnapshot(query(collection(db, "finanzas"), orderBy("fechaC", "desc")), snap => {
+                let html = ''; snap.forEach(s => { const d=s.data(); html+= `<li class="p-4 hover:bg-[#1e293b]/30 flex justify-between items-center"><div class="flex items-center gap-4"><div class="text-lg w-8 text-center">${d.tipo==='mrr'?'<i class="fas fa-sync text-yellow-400"></i>':'<i class="fas fa-check text-green-400"></i>'}</div><div><p class="text-white font-bold text-sm">${d.concepto}</p></div></div><div><span class="font-black ${d.tipo==='mrr'?'text-yellow-400':'text-green-400'} mr-4">+${d.importe}€</span><button onclick="borrarFinanza('${s.id}')" class="text-slate-500 hover:text-red-400"><i class="fas fa-trash"></i></button></div></li>`; });
+                document.getElementById('lista-finanzas').innerHTML = html || '<div class="p-6 text-center text-slate-500">Sin registros.</div>';
             });
 
-            // 2. LISTEN LEADS (CRM y Notificaciones)
-            onSnapshot(query(collection(db, "leads"), orderBy("fecha", "desc")), (snap) => {
-                try {
-                    let crmHTML = '';
-                    let totalLeads = 0;
-                    let hayNuevos = false;
-                    
-                    snap.forEach(dSnap => {
-                        totalLeads++; 
-                        const d = dSnap.data(); 
-                        const id = dSnap.id; 
-                        const st = d.estado || 'nuevo';
-                        
-                        if (st === 'nuevo') hayNuevos = true; // Si hay uno nuevo, activa la luz roja
-                        
-                        let selectColors = '';
-                        if (st === 'proceso') selectColors = 'text-yellow-400 border-yellow-500/30';
-                        else if (st === 'cerrado') selectColors = 'text-brand-400 border-brand-500/30';
-                        else selectColors = 'text-green-400 border-green-500/30';
-
-                        crmHTML += `
-                            <tr class="lead-row hover:bg-[#1e293b]/50 transition-colors">
-                                <td class="px-6 py-4">
-                                    <div class="font-bold text-white text-sm">${d.nombre}</div>
-                                    <div class="text-xs text-brand-400 cursor-pointer hover:underline"><i class="fas fa-envelope mr-1 opacity-50"></i>${d.email}</div>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <select onchange="cambiarEstadoLead('${id}', this.value)" class="select-estado border rounded text-xs font-bold uppercase tracking-wider outline-none p-2 bg-dark-card transition-colors ${selectColors}">
-                                        <option value="nuevo" class="text-green-400" ${st==='nuevo'?'selected':''}>Nuevo</option>
-                                        <option value="proceso" class="text-yellow-400" ${st==='proceso'?'selected':''}>En Proceso</option>
-                                        <option value="cerrado" class="text-brand-400" ${st==='cerrado'?'selected':''}>Ganado</option>
-                                    </select>
-                                </td>
-                                <td class="px-6 py-4 font-medium text-slate-300 text-sm">${d.servicio}</td>
-                                <td class="px-6 py-4">
-                                    <div class="text-xs text-slate-400 bg-dark-bg p-3 border border-dark-border rounded max-h-20 overflow-y-auto custom-scrollbar italic whitespace-normal">
-                                        "${d.mensaje}"
-                                    </div>
-                                </td>
-                            </tr>
-                        `;
-                    });
-
-                    document.getElementById('dash-leads').textContent = totalLeads;
-                    document.getElementById('crm-leads-table').innerHTML = crmHTML || '<tr><td colspan="4" class="p-8 text-center text-slate-500">No hay contactos guardados en la Base de Datos.</td></tr>';
-                    
-                    // Activa o desactiva el punto rojo parpadeante del CRM en el menú
-                    const dotCRM = document.getElementById('dot-crm');
-                    if (hayNuevos) { dotCRM.classList.remove('hidden'); } else { dotCRM.classList.add('hidden'); }
-
-                } catch (err) {
-                    console.error("Error en Snapshot de Leads:", err);
-                }
+            // AUDITORIA
+            onSnapshot(query(collection(db, "auditoria"), orderBy("fechaC", "desc"), limit(20)), snap => {
+                let hd='', hs=''; snap.forEach(s => { const d=s.data(); const t=d.fechaC?new Date(d.fechaC.seconds*1000).toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'}):''; hd+=`<div class="mb-2 border-l-2 border-brand-500 pl-2"><div class="text-[10px] text-slate-500">${t} - ${d.modulo}</div><div class="text-xs text-white">${d.accion}</div></div>`; hs+=`<tr class="hover:bg-[#111827]"><td class="px-6 py-3">${t}</td><td class="px-6 py-3 text-brand-400">${d.admin}</td><td class="px-6 py-3">${d.accion}</td><td class="px-6 py-3">${d.modulo}</td></tr>`; });
+                document.getElementById('log-actividad-list').innerHTML = hd; document.getElementById('audit-logs-table').innerHTML = hs;
             });
 
-            // 3. LISTEN TICKETS (Soporte y Notificaciones)
-            onSnapshot(query(collection(db, "tickets"), orderBy("fecha", "desc")), (snap) => {
-                try {
-                    let ticketsHTML = '';
-                    let hayNuevos = false;
-
-                    snap.forEach(dSnap => {
-                        const d = dSnap.data(); 
-                        const id = dSnap.id; 
-                        const st = d.estado || 'abierto';
-                        
-                        if (st === 'abierto') hayNuevos = true;
-
-                        ticketsHTML += `
-                            <tr class="hover:bg-[#1e293b]/50 transition-colors">
-                                <td class="px-6 py-4 font-bold text-white text-sm">
-                                    <i class="fas fa-building text-brand-500 mr-2 opacity-50"></i>${d.cliente}
-                                </td>
-                                <td class="px-6 py-4 text-slate-300 text-sm font-medium">
-                                    ${d.asunto}
-                                </td>
-                                <td class="px-6 py-4">
-                                    <select onchange="cambiarEstadoTicket('${id}', this.value)" class="bg-dark-card border border-dark-border rounded text-xs p-2 font-bold uppercase outline-none ${st==='abierto'?'text-yellow-400':'text-green-400'}">
-                                        <option value="abierto" ${st==='abierto'?'selected':''}>Abierto</option>
-                                        <option value="cerrado" ${st==='cerrado'?'selected':''}>Resuelto</option>
-                                    </select>
-                                </td>
-                                <td class="px-6 py-4 text-right">
-                                    <button onclick="abrirChatTicket('${id}', '${d.cliente}')" class="bg-brand-600 hover:bg-brand-500 text-white font-bold px-4 py-2 rounded text-xs mr-2 transition-colors shadow-lg shadow-brand-500/20">
-                                        <i class="fas fa-comment-dots mr-1"></i> Responder
-                                    </button>
-                                    <button onclick="borrarTicket('${id}')" class="text-slate-500 hover:text-red-400 transition-colors p-2">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        `;
-                    });
-
-                    document.getElementById('lista-tickets').innerHTML = ticketsHTML || '<tr><td colspan="4" class="p-8 text-center text-green-500 font-bold"><i class="fas fa-smile mr-2"></i>Bandeja de soporte vacía. Todo funciona bien.</td></tr>';
-                    
-                    const dotSoporte = document.getElementById('dot-soporte');
-                    if (hayNuevos) { dotSoporte.classList.remove('hidden'); } else { dotSoporte.classList.add('hidden'); }
-
-                } catch (err) {
-                    console.error("Error en Snapshot de Tickets:", err);
-                }
-            });
-
-            // 4. LISTEN FINANZAS Y MRR
-            onSnapshot(query(collection(db, "finanzas"), orderBy("fechaC", "desc")), (snap) => {
-                try {
-                    let totalUnico = 0;
-                    let totalMRR = 0;
-                    let finanzasHTML = '';
-
-                    snap.forEach(dSnap => {
-                        const d = dSnap.data(); 
-                        const id = dSnap.id;
-                        const esMRR = (d.tipo === 'mrr');
-                        
-                        if (esMRR) { totalMRR += Number(d.importe); } 
-                        else { totalUnico += Number(d.importe); }
-
-                        const icon = esMRR ? '<i class="fas fa-sync-alt text-yellow-400"></i>' : '<i class="fas fa-euro-sign text-green-400"></i>';
-                        
-                        finanzasHTML += `
-                            <li class="p-4 hover:bg-[#1e293b]/30 flex justify-between items-center group transition-colors">
-                                <div class="flex items-center gap-4">
-                                    <div class="w-10 h-10 rounded-xl bg-[#0a0f18] border border-dark-border flex items-center justify-center text-lg">
-                                        ${icon}
-                                    </div>
-                                    <div>
-                                        <p class="text-white font-bold text-sm">${d.concepto}</p>
-                                        <p class="text-[10px] font-mono text-slate-500 uppercase tracking-widest mt-1">${esMRR ? 'Suscripción Mensual' : 'Pago Único'}</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center gap-4">
-                                    <span class="text-lg font-black ${esMRR ? 'text-yellow-400' : 'text-green-400'}">+${d.importe}€</span>
-                                    <button onclick="borrarFinanza('${id}')" class="text-slate-600 hover:text-red-500 transition-colors p-2">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </div>
-                            </li>
-                        `;
-                    });
-
-                    // Actualizar las tres tarjetas de facturación
-                    document.getElementById('dash-mrr').textContent = totalMRR.toLocaleString() + '€';
-                    document.getElementById('finanzas-mrr').textContent = totalMRR.toLocaleString() + '€';
-                    document.getElementById('finanzas-unico').textContent = totalUnico.toLocaleString() + '€';
-                    
-                    document.getElementById('lista-finanzas').innerHTML = finanzasHTML || '<div class="p-8 text-center text-slate-500">Aún no hay ingresos registrados.</div>';
-
-                } catch (err) {
-                    console.error("Error en Snapshot de Finanzas:", err);
-                }
-            });
-
-            // 5. LISTEN AUDITORÍA (Logs)
-            onSnapshot(query(collection(db, "auditoria"), orderBy("fechaC", "desc"), limit(30)), (snap) => {
-                try {
-                    let htmlDash = '';
-                    let htmlSec = '';
-
-                    snap.forEach(dSnap => {
-                        const d = dSnap.data(); 
-                        let timeStr = '';
-                        if (d.fechaC) {
-                            timeStr = new Date(d.fechaC.seconds*1000).toLocaleTimeString('es-ES', {hour:'2-digit', minute:'2-digit'});
-                        }
-
-                        // Feed en el Dashboard Principal
-                        htmlDash += `
-                            <div class="mb-4 border-l-2 border-brand-500 pl-3">
-                                <div class="text-[10px] text-slate-500 font-mono tracking-wider">${timeStr} | Módulo: ${d.modulo}</div>
-                                <div class="text-xs text-white mt-1 font-medium">${d.accion}</div>
-                            </div>
-                        `;
-
-                        // Tabla Completa en Sección Seguridad
-                        htmlSec += `
-                            <tr class="hover:bg-[#111827] transition-colors">
-                                <td class="px-6 py-3 whitespace-nowrap"><span class="bg-dark-bg border border-dark-border px-2 py-1 rounded text-slate-400">${timeStr}</span></td>
-                                <td class="px-6 py-3 text-brand-400 font-bold">${d.admin}</td>
-                                <td class="px-6 py-3 text-white font-medium">${d.accion}</td>
-                                <td class="px-6 py-3 text-slate-500"><span class="bg-dark-bg px-2 py-1 border border-dark-border rounded-full">${d.modulo}</span></td>
-                            </tr>
-                        `;
-                    });
-
-                    document.getElementById('log-actividad-list').innerHTML = htmlDash || '<p class="text-xs text-slate-500">Sistema sin actividad reciente.</p>';
-                    document.getElementById('audit-logs-table').innerHTML = htmlSec || '<tr><td colspan="4" class="p-6 text-center text-slate-500">Logs limpios.</td></tr>';
-
-                } catch (err) {
-                    console.error("Error en Snapshot de Auditoria:", err);
-                }
-            });
-
-            // 6. LISTEN USUARIOS Y STAFF
-            onSnapshot(query(collection(db, "usuarios"), orderBy("fecha", "desc")), (snap) => {
-                try {
-                    let usuariosHTML = '';
-                    snap.forEach(dSnap => {
-                        const d = dSnap.data(); 
-                        const id = dSnap.id;
-
-                        usuariosHTML += `
-                            <tr class="hover:bg-[#1e293b]/50 transition-colors">
-                                <td class="px-6 py-4">
-                                    <div class="flex items-center gap-3">
-                                        <div class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-400"><i class="fas fa-user"></i></div>
-                                        <div class="font-bold text-white text-sm">${d.nombre}</div>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <select onchange="cambiarRolUser('${id}', this.value)" class="bg-[#0a0f18] border border-brand-500/30 text-brand-400 rounded p-2 text-xs font-bold outline-none cursor-pointer transition-colors hover:border-brand-500">
-                                        <option value="Editor" ${d.rol==='Editor'?'selected':''}>Modo Editor</option>
-                                        <option value="Comercial" ${d.rol==='Comercial'?'selected':''}>Comercial de Ventas</option>
-                                        <option value="Admin" ${d.rol==='Admin'?'selected':''}>Administrador Total</option>
-                                    </select>
-                                </td>
-                                <td class="px-6 py-4 text-right">
-                                    <button onclick="borrarUser('${id}')" class="text-slate-500 hover:text-red-400 transition-colors p-2" title="Eliminar de la BD">
-                                        <i class="fas fa-user-times text-lg"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        `;
-                    });
-
-                    document.getElementById('lista-usuarios').innerHTML = usuariosHTML || '<tr><td colspan="3" class="p-8 text-center text-slate-500">Por ahora, solo tú tienes acceso a esta base de datos.</td></tr>';
-
-                } catch (err) {
-                    console.error("Error en Snapshot de Usuarios:", err);
-                }
-            });
-
-            // 7. LISTEN INVENTARIO CMS
-            onSnapshot(query(collection(db, "inventario"), orderBy("fecha", "desc")), (snap) => {
-                try {
-                    let cmsHTML = '';
-                    snap.forEach(dSnap => {
-                        const d = dSnap.data(); 
-                        const id = dSnap.id; 
-                        const st = d.estado || 'borrador';
-                        
-                        let selectColors = st === 'publicado' ? 'text-green-400 border-green-500/30' : 'text-yellow-400 border-yellow-500/30';
-
-                        cmsHTML += `
-                            <tr class="hover:bg-[#1e293b]/50 transition-colors">
-                                <td class="px-6 py-4">
-                                    <div class="font-bold text-white text-sm">${d.titulo}</div>
-                                    <div class="text-[10px] text-slate-400 font-mono tracking-widest uppercase mt-1 border border-slate-700 inline-block px-1 rounded">${d.categoria}</div>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <select onchange="cambiarEstadoCMS('${id}', this.value)" class="bg-[#0a0f18] border ${selectColors} rounded text-[10px] p-2 uppercase font-bold tracking-wider outline-none cursor-pointer">
-                                        <option value="borrador" class="text-yellow-400" ${st==='borrador'?'selected':''}>Borrador Privado</option>
-                                        <option value="publicado" class="text-green-400" ${st==='publicado'?'selected':''}>Publicado (Visible)</option>
-                                    </select>
-                                </td>
-                                <td class="px-6 py-4 text-right">
-                                    <button onclick="borrarCMS('${id}')" class="text-slate-500 hover:text-red-400 transition-colors p-2">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        `;
-                    });
-
-                    document.getElementById('lista-cms').innerHTML = cmsHTML || '<tr><td colspan="3" class="p-8 text-center text-slate-500">La base de datos de contenido está vacía.</td></tr>';
-
-                } catch (err) {
-                    console.error("Error en Snapshot de CMS:", err);
-                }
-            });
-
-            // 8. LISTEN AGENDA (Llamadas)
-            onSnapshot(query(collection(db, "agenda"), orderBy("fechaC", "desc")), (snap) => {
-                try {
-                    let agendaHTML = '';
-                    snap.forEach(dSnap => {
-                        const d = dSnap.data();
-                        agendaHTML += `
-                            <li class="p-4 hover:bg-[#1e293b]/30 flex justify-between items-center group transition-colors border-b border-dark-border last:border-0">
-                                <div class="flex items-center gap-4">
-                                    <div class="w-3 h-3 rounded-full bg-brand-500 shadow-[0_0_10px_#0ea5e9]"></div>
-                                    <div>
-                                        <p class="text-white font-medium text-sm">${d.texto}</p>
-                                        <p class="text-xs text-brand-400 font-mono mt-1"><i class="fas fa-clock mr-1 opacity-70"></i>${d.fecha}</p>
-                                    </div>
-                                </div>
-                                <button onclick="borrarAgenda('${dSnap.id}')" class="text-slate-600 hover:text-green-400 transition-colors p-3" title="Marcar como Completado">
-                                    <i class="fas fa-check-circle text-2xl"></i>
-                                </button>
-                            </li>
-                        `;
-                    });
-                    document.getElementById('lista-agenda').innerHTML = agendaHTML || '<div class="p-8 text-center text-slate-500">Nada pendiente. Tómate un café.</div>';
-                } catch (err) { console.error(err); }
-            });
-
-            // 9. LISTEN PROYECTOS (Kanban)
-            onSnapshot(query(collection(db, "proyectos"), orderBy("fecha", "desc")), (snap) => {
-                try {
-                    let proyHTML = '';
-                    snap.forEach(dSnap => {
-                        const d = dSnap.data(); 
-                        const id = dSnap.id;
-                        const st = d.estado || 'pendiente';
-                        
-                        let cClass = 'text-red-400 border-red-500/30';
-                        if(st==='desarrollo') cClass = 'text-yellow-400 border-yellow-500/30';
-                        if(st==='revision') cClass = 'text-purple-400 border-purple-500/30';
-                        if(st==='lanzado') cClass = 'text-green-400 border-green-500/30';
-
-                        proyHTML += `
-                            <tr class="hover:bg-[#1e293b]/50 border-b border-dark-border transition-colors">
-                                <td class="px-6 py-4">
-                                    <div class="font-black text-white text-base">${d.nombre}</div>
-                                    <div class="text-xs text-slate-400 mt-1"><i class="fas fa-user mr-1 text-slate-600"></i>${d.cliente}</div>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <select onchange="cambiarEstadoProy('${id}', this.value)" class="select-estado border rounded text-xs font-bold uppercase tracking-wider outline-none cursor-pointer p-2 w-48 bg-[#0a0f18] transition-colors ${cClass}">
-                                        <option value="pendiente" class="text-red-400" ${st==='pendiente'?'selected':''}>1. Pendiente de Info</option>
-                                        <option value="desarrollo" class="text-yellow-400" ${st==='desarrollo'?'selected':''}>2. Programando Código</option>
-                                        <option value="revision" class="text-purple-400" ${st==='revision'?'selected':''}>3. Revisión del Cliente</option>
-                                        <option value="lanzado" class="text-green-400" ${st==='lanzado'?'selected':''}>4. Lanzado a Producción</option>
-                                    </select>
-                                </td>
-                            </tr>
-                        `;
-                    });
-                    document.getElementById('lista-proyectos').innerHTML = proyHTML || '<tr><td colspan="2" class="p-8 text-center text-slate-500">Cero proyectos en cola. Ve a cerrar ventas.</td></tr>';
-                } catch (err) { console.error(err); }
-            });
-
+            // AGENDA, PROYECTOS, USUARIOS Y CMS
+            onSnapshot(query(collection(db, "agenda"), orderBy("fechaC", "desc")), snap => { let html=''; snap.forEach(s => { const d=s.data(); html+=`<li class="p-4 flex justify-between border-b border-dark-border"><div class="text-white text-sm font-medium">${d.texto} <span class="text-xs text-brand-400 ml-2">${d.fecha}</span></div><button onclick="borrarAgenda('${s.id}')" class="text-slate-500 hover:text-green-400"><i class="fas fa-check-circle text-lg"></i></button></li>`; }); document.getElementById('lista-agenda').innerHTML = html; });
+            onSnapshot(query(collection(db, "proyectos"), orderBy("fecha", "desc")), snap => { let html=''; snap.forEach(s => { const d=s.data(); html+=`<tr><td class="p-4 text-white font-bold">${d.nombre}</td><td class="p-4"><select onchange="cambiarEstadoProy('${s.id}', this.value)" class="bg-[#0a0f18] text-xs p-1 rounded border border-slate-700 text-slate-300 outline-none"><option value="pendiente" ${d.estado==='pendiente'?'selected':''}>Pendiente</option><option value="desarrollo" ${d.estado==='desarrollo'?'selected':''}>Desarrollo</option><option value="lanzado" ${d.estado==='lanzado'?'selected':''}>Lanzado</option></select></td></tr>`; }); document.getElementById('lista-proyectos').innerHTML = html; });
+            onSnapshot(query(collection(db, "usuarios"), orderBy("fecha", "desc")), snap => { let html=''; snap.forEach(s => { const d=s.data(); html+=`<tr><td class="p-4 text-white">${d.nombre}</td><td class="p-4 text-brand-400">${d.rol}</td><td class="p-4 text-right"><button onclick="borrarUser('${s.id}')" class="text-red-400"><i class="fas fa-trash"></i></button></td></tr>`; }); document.getElementById('lista-usuarios').innerHTML = html; });
+            onSnapshot(query(collection(db, "inventario"), orderBy("fecha", "desc")), snap => { let html=''; snap.forEach(s => { const d=s.data(); html+=`<tr><td class="p-4 text-white">${d.titulo}</td><td class="p-4"><select onchange="cambiarEstadoCMS('${s.id}', this.value)" class="bg-[#0a0f18] text-xs p-1 text-slate-300 rounded outline-none border border-slate-700"><option value="borrador" ${d.estado==='borrador'?'selected':''}>Borrador</option><option value="publicado" ${d.estado==='publicado'?'selected':''}>Publicado</option></select></td><td class="p-4 text-right"><button onclick="borrarCMS('${s.id}')" class="text-red-400"><i class="fas fa-trash"></i></button></td></tr>`; }); document.getElementById('lista-cms').innerHTML = html; });
         });
 
-        // ==============================================
-        // GESTIÓN DE FORMULARIOS (SUBMITS HACIA FIREBASE)
-        // ==============================================
-
-        // Filtro buscador CRM visual
-        document.getElementById('crm-search-input').addEventListener('input', (e) => {
-            const term = e.target.value.toLowerCase();
-            document.querySelectorAll('#crm-leads-table tr.lead-row').forEach(row => {
-                row.style.display = row.textContent.toLowerCase().includes(term) ? '' : 'none';
-            });
-        });
-
-        // Guardar Nuevo Usuario
-        document.getElementById('form-usuario').addEventListener('submit', async (e) => { 
-            e.preventDefault(); 
-            const btn = e.target.querySelector('button'); 
-            btn.disabled = true; btn.textContent = 'Enviando...';
-            try {
-                await addDoc(collection(db, "usuarios"), { 
-                    nombre: document.getElementById('usr-nombre').value, 
-                    rol: document.getElementById('usr-rol').value, 
-                    fecha: serverTimestamp() 
-                }); 
-                registrarAuditoria('Nuevo miembro del equipo registrado', 'Usuarios'); 
-                e.target.reset(); 
-            } catch (err) { alert("Error guardando usuario"); }
-            btn.disabled = false; btn.textContent = 'Registrar Usuario';
-        });
-
-        // Guardar Contenido CMS
-        document.getElementById('form-cms').addEventListener('submit', async (e) => { 
-            e.preventDefault(); 
-            const btn = e.target.querySelector('button'); 
-            btn.disabled = true; btn.textContent = 'Guardando...';
-            try {
-                await addDoc(collection(db, "inventario"), { 
-                    titulo: document.getElementById('cms-titulo').value, 
-                    categoria: document.getElementById('cms-categoria').value, 
-                    estado: 'borrador', 
-                    fecha: serverTimestamp() 
-                }); 
-                registrarAuditoria('Nuevo elemento creado en el CMS', 'Inventario'); 
-                e.target.reset(); 
-            } catch (err) { alert("Error guardando CMS"); }
-            btn.disabled = false; btn.textContent = 'Guardar en Base de Datos';
-        });
-
-        // Guardar Configuracion Global
-        document.getElementById('form-config').addEventListener('submit', async (e) => { 
-            e.preventDefault(); 
-            const btn = document.getElementById('btn-save-config'); 
-            btn.textContent = 'Sincronizando con Base de Datos...'; 
-            btn.disabled = true;
-            try {
-                await setDoc(doc(db, "configuracion", "global"), { 
-                    stripe: document.getElementById('cfg-stripe').value, 
-                    openai: document.getElementById('cfg-openai').value, 
-                    analytics: document.getElementById('cfg-analytics').value 
-                }, { merge: true }); 
-                registrarAuditoria('Variables de entorno (API Keys) actualizadas', 'Ajustes'); 
-                
-                btn.classList.replace('bg-brand-600', 'bg-green-600');
-                btn.textContent = 'Guardado Correctamente'; 
-                
-                setTimeout(() => { 
-                    btn.classList.replace('bg-green-600', 'bg-brand-600');
-                    btn.textContent = 'Guardar Configuraciones'; 
-                    btn.disabled = false;
-                }, 2500);
-            } catch (err) { alert("Error guardando configuracion"); btn.disabled = false; }
-        });
-
-        // Guardar Tarea Agenda
-        document.getElementById('form-agenda').addEventListener('submit', async (e) => { 
-            e.preventDefault(); 
-            const btn = e.target.querySelector('button'); 
-            btn.disabled = true;
-            try {
-                await addDoc(collection(db, "agenda"), { 
-                    texto: document.getElementById('agenda-texto').value, 
-                    fecha: document.getElementById('agenda-fecha').value, 
-                    fechaC: serverTimestamp() 
-                }); 
-                registrarAuditoria('Añadida nueva tarea al calendario', 'Agenda'); 
-                e.target.reset(); 
-            } catch (err) { alert("Error guardando agenda"); }
-            btn.disabled = false;
-        });
-
-        // Guardar Proyecto Kanban
-        document.getElementById('form-proyectos').addEventListener('submit', async (e) => { 
-            e.preventDefault(); 
-            const btn = e.target.querySelector('button'); 
-            btn.disabled = true;
-            try {
-                await addDoc(collection(db, "proyectos"), { 
-                    nombre: document.getElementById('proy-nombre').value, 
-                    cliente: document.getElementById('proy-cliente').value, 
-                    estado: 'pendiente', 
-                    fecha: serverTimestamp() 
-                }); 
-                registrarAuditoria('Iniciado nuevo proyecto web', 'Proyectos'); 
-                e.target.reset(); 
-            } catch (err) { alert("Error guardando proyecto"); }
-            btn.disabled = false;
-        });
-
-        // Guardar Ingreso Finanzas
-        document.getElementById('form-finanzas').addEventListener('submit', async (e) => { 
-            e.preventDefault(); 
-            const btn = e.target.querySelector('button'); 
-            btn.disabled = true; btn.textContent = 'Registrando...';
-            try {
-                await addDoc(collection(db, "finanzas"), { 
-                    concepto: document.getElementById('fin-concepto').value, 
-                    importe: parseFloat(document.getElementById('fin-importe').value), 
-                    tipo: document.getElementById('fin-tipo').value, 
-                    fechaC: serverTimestamp() 
-                }); 
-                registrarAuditoria('Cobro/Ingreso insertado en base de datos', 'Finanzas'); 
-                e.target.reset(); 
-            } catch (err) { alert("Error guardando finanzas"); }
-            btn.disabled = false; btn.textContent = 'Guardar Ingreso';
-        });
-
-        // Login UI
-        document.getElementById('login-form').addEventListener('submit', (e) => { 
-            e.preventDefault(); 
-            const btn = e.target.querySelector('button');
-            const oText = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin mr-2"></i> Verificando servidor...';
-            btn.disabled = true;
-            signInWithEmailAndPassword(auth, document.getElementById('login-email').value, document.getElementById('login-pass').value)
-                .catch(() => { 
-                    document.getElementById('login-error').classList.remove('hidden'); 
-                    btn.innerHTML = oText;
-                    btn.disabled = false;
-                }); 
-        });
-
-        // Logout UI
-        document.getElementById('logout-btn').addEventListener('click', () => { 
-            registrarAuditoria('Cierre de sesión manual', 'Seguridad'); 
-            setTimeout(() => signOut(auth), 500); 
-        });
+        // FORMS SUBMITS
+        document.getElementById('form-usuario').addEventListener('submit', async (e) => { e.preventDefault(); await addDoc(collection(db, "usuarios"), { nombre: document.getElementById('usr-nombre').value, rol: document.getElementById('usr-rol').value, fecha: serverTimestamp() }); e.target.reset(); });
+        document.getElementById('form-cms').addEventListener('submit', async (e) => { e.preventDefault(); await addDoc(collection(db, "inventario"), { titulo: document.getElementById('cms-titulo').value, categoria: document.getElementById('cms-categoria').value, estado: 'borrador', fecha: serverTimestamp() }); e.target.reset(); });
+        document.getElementById('form-agenda').addEventListener('submit', async (e) => { e.preventDefault(); await addDoc(collection(db, "agenda"), { texto: document.getElementById('agenda-texto').value, fecha: document.getElementById('agenda-fecha').value, fechaC: serverTimestamp() }); e.target.reset(); });
+        document.getElementById('form-proyectos').addEventListener('submit', async (e) => { e.preventDefault(); await addDoc(collection(db, "proyectos"), { nombre: document.getElementById('proy-nombre').value, cliente: document.getElementById('proy-cliente').value, estado: 'pendiente', fecha: serverTimestamp() }); e.target.reset(); });
+        document.getElementById('form-finanzas').addEventListener('submit', async (e) => { e.preventDefault(); await addDoc(collection(db, "finanzas"), { concepto: document.getElementById('fin-concepto').value, importe: parseFloat(document.getElementById('fin-importe').value), tipo: document.getElementById('fin-tipo').value, fechaC: serverTimestamp() }); e.target.reset(); });
+        document.getElementById('form-config').addEventListener('submit', async (e) => { e.preventDefault(); await setDoc(doc(db, "configuracion", "global"), { stripe: document.getElementById('cfg-stripe').value, openai: document.getElementById('cfg-openai').value, analytics: document.getElementById('cfg-analytics').value }, { merge: true }); alert("Ajustes guardados."); });
+        document.getElementById('login-form').addEventListener('submit', (e) => { e.preventDefault(); signInWithEmailAndPassword(auth, document.getElementById('login-email').value, document.getElementById('login-pass').value).catch(() => document.getElementById('login-error').classList.remove('hidden')); });
+        document.getElementById('logout-btn').addEventListener('click', () => signOut(auth));
     </script>
 </body>
 </html>

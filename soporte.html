@@ -5,32 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
     <title>Soporte Técnico | DacDacDev</title>
-    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brand: { 500: '#0ea5e9', 600: '#0284c7' },
-                        dark: { bg: '#0a0f18', card: '#111827', border: '#1e293b' }
-                    }
-                }
-            }
-        }
+        tailwind.config = { theme: { extend: { colors: { brand: { 500: '#0ea5e9', 600: '#0284c7' }, dark: { bg: '#0a0f18', card: '#111827', border: '#1e293b' } } } } }
     </script>
 </head>
 <body class="bg-dark-bg text-slate-200 antialiased min-h-screen flex items-center justify-center p-4 selection:bg-brand-500 selection:text-white">
 
-    <!-- VISTA 1: CREAR TICKET -->
+    <!-- PANTALLA 1: CREAR TICKET -->
     <div id="view-crear" class="w-full max-w-lg bg-dark-card border border-dark-border rounded-2xl shadow-[0_0_40px_rgba(14,165,233,0.1)] p-8 relative overflow-hidden hidden">
         <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-600 to-brand-400"></div>
         <div class="text-center mb-8">
             <div class="inline-block px-3 py-1 mb-4 rounded border border-brand-500/30 bg-brand-500/10 text-brand-400 text-xs font-mono font-bold uppercase tracking-widest">Área de Clientes</div>
             <h1 class="text-3xl font-black text-white tracking-tight mb-2">Soporte Técnico</h1>
-            <p class="text-slate-400 text-sm">Abre un ticket y nuestro equipo te atenderá de inmediato.</p>
+            <p class="text-slate-400 text-sm">Abre un ticket y nuestro equipo te atenderá de inmediato a través del chat de la agencia.</p>
         </div>
 
         <form id="ticket-form" class="space-y-5">
@@ -38,32 +27,32 @@
             <div><label class="block text-xs font-bold text-slate-500 uppercase mb-2">¿Qué necesitas?</label>
                 <select id="tk-asunto" required class="w-full bg-[#0a0f18] border border-dark-border rounded-lg px-4 py-3 text-slate-300 focus:outline-none focus:border-brand-500">
                     <option value="" disabled selected>Selecciona el motivo...</option>
-                    <option value="Modificación">Cambio de Textos/Imágenes</option>
-                    <option value="Error Técnico">Error Técnico o Caída</option>
-                    <option value="Duda">Duda sobre la plataforma</option>
+                    <option value="Modificación">Cambio de Textos o Imágenes</option>
+                    <option value="Error Técnico">Problema Técnico en la web</option>
+                    <option value="Duda General">Duda sobre la plataforma</option>
                 </select>
             </div>
-            <div><label class="block text-xs font-bold text-slate-500 uppercase mb-2">Detalles</label><textarea id="tk-mensaje" rows="4" required class="w-full bg-[#0a0f18] border border-dark-border rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-500 resize-none"></textarea></div>
-            <button type="submit" id="btn-submit" class="w-full bg-brand-600 hover:bg-brand-500 text-white font-bold py-4 rounded-lg transition-all shadow-lg flex justify-center items-center gap-2">Abrir Sala de Chat <i class="fas fa-arrow-right"></i></button>
+            <div><label class="block text-xs font-bold text-slate-500 uppercase mb-2">Detalles del problema</label><textarea id="tk-mensaje" rows="4" required class="w-full bg-[#0a0f18] border border-dark-border rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-500 resize-none"></textarea></div>
+            <button type="submit" id="btn-submit" class="w-full bg-brand-600 hover:bg-brand-500 text-white font-bold py-4 rounded-lg transition-all shadow-lg flex justify-center items-center gap-2">Abrir Sala de Chat Privada <i class="fas fa-arrow-right"></i></button>
         </form>
     </div>
 
-    <!-- VISTA 2: CHAT ACTIVO -->
+    <!-- PANTALLA 2: CHAT ACTIVO CON EL ADMIN -->
     <div id="view-chat" class="w-full max-w-3xl bg-dark-card border border-dark-border rounded-2xl shadow-2xl overflow-hidden flex flex-col h-[80vh] hidden">
         <div class="px-6 py-4 border-b border-dark-border bg-[#151e2e] flex justify-between items-center">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-full bg-brand-500/20 text-brand-400 flex items-center justify-center font-bold"><i class="fas fa-headset"></i></div>
-                <div><h3 class="font-bold text-white text-lg leading-none">Soporte DacDacDev</h3><span class="text-xs text-green-400">En línea</span></div>
+                <div><h3 class="font-bold text-white text-lg leading-none">DacDacDev Support</h3><span class="text-xs text-green-400">En línea</span></div>
             </div>
-            <button onclick="salirTicket()" class="text-xs text-slate-400 hover:text-white border border-slate-700 px-3 py-1 rounded">Cerrar Ticket</button>
+            <button onclick="salirTicket()" class="text-xs text-slate-400 hover:text-white border border-slate-700 px-3 py-1 rounded transition-colors">Cerrar Ticket</button>
         </div>
         
-        <div id="client-chat-mensajes" class="flex-1 overflow-y-auto p-6 space-y-4 custom-scrollbar bg-dark-bg">
+        <div id="client-chat-mensajes" class="flex-1 overflow-y-auto p-6 space-y-4 bg-dark-bg custom-scrollbar" style="scrollbar-width: thin; scrollbar-color: #1e293b #0a0f18;">
             <!-- JS Inject Mensajes -->
         </div>
         
         <form id="form-chat-client" class="p-4 border-t border-dark-border bg-[#151e2e] flex gap-3 items-center">
-            <input type="text" id="chat-input-client" class="flex-1 bg-[#0a0f18] border border-dark-border rounded-xl px-4 py-4 text-sm text-white focus:outline-none focus:border-brand-500 transition-colors" placeholder="Escribe tu mensaje..." autocomplete="off" required>
+            <input type="text" id="chat-input-client" class="flex-1 bg-[#0a0f18] border border-dark-border rounded-xl px-4 py-4 text-sm text-white focus:outline-none focus:border-brand-500 transition-colors" placeholder="Escribe un mensaje al soporte..." autocomplete="off" required>
             <button type="submit" class="bg-brand-600 hover:bg-brand-500 w-14 h-14 rounded-xl text-white flex items-center justify-center transition-colors shadow-lg"><i class="fas fa-paper-plane text-lg"></i></button>
         </form>
     </div>
@@ -72,38 +61,55 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
         import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
+        // CONEXIÓN A TU FIREBASE
         const firebaseConfig = { apiKey: "AIzaSyDqWjgoi8DwcZiXwp3nF1gQ0vvxZ39CUtQ", authDomain: "chatbot-web-v1.firebaseapp.com", projectId: "chatbot-web-v1", storageBucket: "chatbot-web-v1.firebasestorage.app", messagingSenderId: "7994049270", appId: "1:7994049270:web:f5e6a2652065bf4680a2d7" };
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
         let unsubClient = null;
+        
+        // Verifica si el cliente ya tiene una sala de chat abierta en su navegador
         const currentTicketId = localStorage.getItem('dacdac_ticket_id');
-
         if (currentTicketId) {
             iniciarChat(currentTicketId);
         } else {
             document.getElementById('view-crear').classList.remove('hidden');
         }
 
-        // 1. Crear nuevo Ticket
+        // Crear el Ticket en BD y redirigir al Chat
         document.getElementById('ticket-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const btn = document.getElementById('btn-submit'); btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Conectando...'; btn.disabled = true;
+            const btn = document.getElementById('btn-submit'); 
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Estableciendo conexión segura...'; 
+            btn.disabled = true;
 
-            const docRef = await addDoc(collection(db, "tickets"), {
-                cliente: document.getElementById('tk-cliente').value, asunto: document.getElementById('tk-asunto').value, estado: "abierto", fecha: serverTimestamp()
-            });
+            try {
+                // 1. Guardar datos principales del ticket
+                const docRef = await addDoc(collection(db, "tickets"), {
+                    cliente: document.getElementById('tk-cliente').value, 
+                    asunto: document.getElementById('tk-asunto').value, 
+                    estado: "abierto", 
+                    fecha: serverTimestamp()
+                });
 
-            // Enviar el primer mensaje del cliente automáticamente
-            await addDoc(collection(db, "tickets", docRef.id, "mensajes"), {
-                texto: document.getElementById('tk-mensaje').value, rol: 'cliente', fecha: serverTimestamp()
-            });
+                // 2. Insertar el mensaje largo como el primer mensaje del chat
+                await addDoc(collection(db, "tickets", docRef.id, "mensajes"), {
+                    texto: document.getElementById('tk-mensaje').value, 
+                    rol: 'cliente', 
+                    fecha: serverTimestamp()
+                });
 
-            localStorage.setItem('dacdac_ticket_id', docRef.id);
-            iniciarChat(docRef.id);
+                // 3. Guardar el ID en el ordenador del cliente y abrir la sala
+                localStorage.setItem('dacdac_ticket_id', docRef.id);
+                iniciarChat(docRef.id);
+            } catch (err) {
+                alert("Error de conexión con el servidor.");
+                btn.innerHTML = 'Abrir Sala de Chat Privada <i class="fas fa-arrow-right"></i>';
+                btn.disabled = false;
+            }
         });
 
-        // 2. Lógica del Chat
+        // Carga los mensajes de la sala de chat en tiempo real
         function iniciarChat(id) {
             document.getElementById('view-crear').classList.add('hidden');
             document.getElementById('view-chat').classList.remove('hidden');
@@ -114,37 +120,42 @@
                 snap.forEach(dSnap => {
                     const d = dSnap.data();
                     const isClient = d.rol === 'cliente';
-                    const t = d.fecha ? new Date(d.fecha.seconds*1000).toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'}) : '';
+                    let timeStr = '';
+                    if(d.fecha) { timeStr = new Date(d.fecha.seconds*1000).toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'}); }
                     
                     html += `
                         <div class="flex w-full ${isClient ? 'justify-end' : 'justify-start'}">
                             <div class="${isClient ? 'bg-brand-600 text-white rounded-tl-2xl rounded-bl-2xl rounded-tr-2xl' : 'bg-[#1e293b] border border-slate-700 text-slate-200 rounded-tr-2xl rounded-br-2xl rounded-tl-2xl'} p-4 max-w-[80%] shadow-md">
                                 <p class="text-sm">${d.texto}</p>
-                                <div class="text-right mt-1"><span class="text-[10px] opacity-70">${t}</span></div>
+                                <div class="text-right mt-1"><span class="text-[10px] opacity-70">${timeStr}</span></div>
                             </div>
                         </div>
                     `;
                 });
                 const chatContainer = document.getElementById('client-chat-mensajes');
-                chatContainer.innerHTML = html;
+                chatContainer.innerHTML = html || '<div class="text-center text-slate-500 text-xs mt-10">Conectando con el equipo técnico...</div>';
                 chatContainer.scrollTop = chatContainer.scrollHeight;
             });
         }
 
-        // 3. Enviar mensaje desde el Chat
+        // El cliente envía un mensaje nuevo desde el input de abajo
         document.getElementById('form-chat-client').addEventListener('submit', async e => {
             e.preventDefault();
             const input = document.getElementById('chat-input-client');
             const tid = localStorage.getItem('dacdac_ticket_id');
             if(!input.value.trim() || !tid) return;
 
-            await addDoc(collection(db, "tickets", tid, "mensajes"), { texto: input.value, rol: 'cliente', fecha: serverTimestamp() });
+            await addDoc(collection(db, "tickets", tid, "mensajes"), { 
+                texto: input.value, 
+                rol: 'cliente', 
+                fecha: serverTimestamp() 
+            });
             input.value = '';
         });
 
-        // 4. Salir / Cerrar Sesión del Ticket
+        // El cliente destruye su sesión de chat (Botón Cerrar Ticket arriba a la derecha)
         window.salirTicket = () => {
-            if(confirm("¿Estás seguro de que quieres cerrar esta sala de soporte? Perderás el acceso al historial.")) {
+            if(confirm("¿Estás seguro de que quieres cerrar esta sala de soporte? Perderás el acceso al historial de este chat.")) {
                 localStorage.removeItem('dacdac_ticket_id');
                 location.reload();
             }
