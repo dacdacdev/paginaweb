@@ -39,6 +39,8 @@
         .nav-item:hover { background: rgba(14, 165, 233, 0.1); color: #fff; }
         .nav-item.active { background: rgba(14, 165, 233, 0.15); color: #0ea5e9; border-color: rgba(14, 165, 233, 0.3); }
         .select-estado { appearance: none; background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right 0.5rem center; background-size: 1em; padding-right: 2rem; }
+        .toggle-checkbox:checked { right: 0; border-color: #10B981; }
+        .toggle-checkbox:checked + .toggle-label { background-color: #10B981; }
     </style>
 </head>
 <body class="bg-dark-bg text-slate-200 font-sans antialiased h-screen overflow-hidden flex selection:bg-brand-500 selection:text-white">
@@ -75,7 +77,6 @@
                 <div class="text-[10px] font-black text-slate-600 uppercase tracking-widest mt-6 mb-2 px-2">Ventas & Operaciones</div>
                 <div class="nav-item" data-target="seccion-crm">
                     <i class="fas fa-users w-5 text-center"></i> Clientes (CRM)
-                    <!-- Punto rojo de notificación -->
                     <div id="dot-crm" class="hidden absolute right-4 w-2 h-2 rounded-full bg-red-500 animate-pulse shadow-[0_0_8px_#ef4444]"></div>
                 </div>
                 <div class="nav-item" data-target="seccion-agenda"><i class="fas fa-calendar-check w-5 text-center"></i> Agenda</div>
@@ -85,7 +86,6 @@
                 <div class="text-[10px] font-black text-slate-600 uppercase tracking-widest mt-6 mb-2 px-2">Soporte & Contenido</div>
                 <div class="nav-item" data-target="seccion-soporte">
                     <i class="fas fa-ticket-alt w-5 text-center"></i> Tickets Soporte
-                    <!-- Punto rojo de notificación -->
                     <div id="dot-soporte" class="hidden absolute right-4 w-2 h-2 rounded-full bg-red-500 animate-pulse shadow-[0_0_8px_#ef4444]"></div>
                 </div>
                 <div class="nav-item" data-target="seccion-inventario"><i class="fas fa-box-open w-5 text-center"></i> Inventario & CMS</div>
@@ -93,6 +93,7 @@
                 <div class="text-[10px] font-black text-slate-600 uppercase tracking-widest mt-6 mb-2 px-2">Sistema</div>
                 <div class="nav-item" data-target="seccion-telemetria"><i class="fas fa-satellite-dish w-5 text-center"></i> Telemetría</div>
                 <div class="nav-item" data-target="seccion-usuarios"><i class="fas fa-user-shield w-5 text-center"></i> Usuarios</div>
+                <div class="nav-item" data-target="seccion-seguridad"><i class="fas fa-shield-alt w-5 text-center"></i> Seguridad</div>
                 <div class="nav-item" data-target="seccion-configuracion"><i class="fas fa-cogs w-5 text-center"></i> Ajustes</div>
             </div>
             
@@ -132,16 +133,15 @@
             <!-- 5. FINANZAS -->
             <div id="seccion-finanzas" class="view-section hidden p-4 md:p-8 lg:p-10 w-full max-w-7xl mx-auto flex-col h-full"><h2 class="text-2xl font-black text-white mb-6">Finanzas</h2><div class="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1"><div class="bg-dark-card border border-dark-border rounded-xl p-6 h-fit"><form id="form-finanzas" class="space-y-4"><input type="text" id="fin-concepto" required placeholder="Concepto" class="w-full bg-[#0a0f18] border border-dark-border rounded p-2 text-sm text-white"><input type="number" id="fin-importe" required placeholder="Importe (€)" class="w-full bg-[#0a0f18] border border-dark-border rounded p-2 text-sm text-white"><select id="fin-tipo" class="w-full bg-[#0a0f18] border border-dark-border rounded p-2 text-sm text-white"><option value="unico">Pago Único</option><option value="mrr">MRR</option></select><button type="submit" class="w-full bg-green-600 text-white font-bold py-2 rounded text-sm">Registrar</button></form></div><div class="bg-dark-card border border-dark-border rounded-xl lg:col-span-2 overflow-hidden flex flex-col"><ul id="lista-finanzas" class="divide-y divide-dark-border overflow-auto p-0"></ul></div></div></div>
 
-            <!-- 6. INVENTARIO -->
-            <div id="seccion-inventario" class="view-section hidden p-4 md:p-8 lg:p-10 w-full max-w-7xl mx-auto flex-col h-full"><h2 class="text-2xl font-black text-white mb-6">Inventario / CMS</h2><div class="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1"><div class="bg-dark-card border border-dark-border rounded-xl p-6 h-fit"><form id="form-cms" class="space-y-4"><input type="text" id="cms-titulo" required placeholder="Título" class="w-full bg-[#0a0f18] border border-dark-border rounded p-2 text-sm text-white"><select id="cms-categoria" class="w-full bg-[#0a0f18] border border-dark-border rounded p-2 text-sm text-white"><option value="Servicio">Servicio</option><option value="Blog">Blog</option></select><button type="submit" class="w-full bg-brand-600 text-white font-bold py-2 rounded text-sm">Guardar</button></form></div><div class="bg-dark-card border border-dark-border rounded-xl lg:col-span-2 overflow-hidden flex flex-col"><table class="w-full text-left text-sm"><tbody id="lista-cms" class="divide-y divide-dark-border"></tbody></table></div></div></div>
+            <!-- 6. INVENTARIO / CMS -->
+            <div id="seccion-inventario" class="view-section hidden p-4 md:p-8 lg:p-10 w-full max-w-7xl mx-auto flex-col h-full"><h2 class="text-2xl font-black text-white mb-6">Inventario & CMS</h2><div class="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1"><div class="bg-dark-card border border-dark-border rounded-xl p-6 h-fit"><form id="form-cms" class="space-y-4"><input type="text" id="cms-titulo" required placeholder="Título" class="w-full bg-[#0a0f18] border border-dark-border rounded p-2 text-sm text-white"><select id="cms-categoria" class="w-full bg-[#0a0f18] border border-dark-border rounded p-2 text-sm text-white"><option value="Servicio">Servicio</option><option value="Blog">Blog</option></select><button type="submit" class="w-full bg-brand-600 text-white font-bold py-2 rounded text-sm">Guardar</button></form></div><div class="bg-dark-card border border-dark-border rounded-xl lg:col-span-2 overflow-hidden flex flex-col"><table class="w-full text-left text-sm"><tbody id="lista-cms" class="divide-y divide-dark-border"></tbody></table></div></div></div>
 
-            <!-- 7. TICKETS DE SOPORTE (CON CHAT Y BOTÓN RESPONDER) -->
+            <!-- 7. TICKETS DE SOPORTE (CON CHAT) -->
             <div id="seccion-soporte" class="view-section hidden p-4 md:p-8 lg:p-10 w-full max-w-7xl mx-auto flex-col h-full">
                 <div class="mb-8"><h2 class="text-2xl md:text-3xl font-black text-white tracking-tight mb-1">Centro de Soporte</h2></div>
                 <div class="bg-dark-card border border-dark-border rounded-xl overflow-hidden flex-1">
                     <table class="w-full text-left text-sm">
                         <thead class="text-xs uppercase text-slate-500 bg-[#0f172a] border-b border-dark-border">
-                            <!-- Fíjate cómo aquí la columna dice Acciones en vez de Borrar -->
                             <tr><th class="px-6 py-4">Usuario</th><th class="px-6 py-4">Asunto del Ticket</th><th class="px-6 py-4">Estado</th><th class="px-6 py-4 text-right">Acciones</th></tr>
                         </thead>
                         <tbody id="lista-tickets" class="divide-y divide-dark-border"></tbody>
@@ -149,32 +149,76 @@
                 </div>
             </div>
 
-            <!-- Resto de secciones (Usuarios, Seguridad, Telemetria, Config) -->
-            <div id="seccion-usuarios" class="view-section hidden p-4 md:p-8 lg:p-10 w-full flex-col h-full"><h2 class="text-2xl font-black text-white mb-6">Usuarios</h2></div>
-            <div id="seccion-seguridad" class="view-section hidden p-4 md:p-8 lg:p-10 w-full flex-col h-full"><h2 class="text-2xl font-black text-white mb-6">Seguridad</h2></div>
-            <div id="seccion-configuracion" class="view-section hidden p-4 md:p-8 lg:p-10 w-full flex-col h-full"><h2 class="text-2xl font-black text-white mb-6">Ajustes</h2></div>
-            <div id="seccion-telemetria" class="view-section hidden p-4 md:p-8 lg:p-10 w-full flex-col h-full"><h2 class="text-2xl font-black text-white mb-6">Telemetría (Consola JS)</h2><div class="flex-1 bg-[#05080f] border border-dark-border rounded-xl p-4 font-mono text-xs overflow-auto"><table class="w-full text-left"><tbody id="telemetria-errors-table" class="divide-y divide-[#111827]"></tbody></table></div></div>
+            <!-- 8. USUARIOS Y ROLES (RESTAURADO) -->
+            <div id="seccion-usuarios" class="view-section hidden p-4 md:p-8 lg:p-10 w-full max-w-7xl mx-auto flex-col h-full">
+                <div class="mb-8"><h2 class="text-2xl md:text-3xl font-black text-white tracking-tight mb-1">Usuarios y Roles</h2></div>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1">
+                    <div class="bg-dark-card border border-dark-border rounded-xl p-6 h-fit">
+                        <h3 class="font-bold text-white mb-4 border-b border-dark-border pb-2">Añadir Staff</h3>
+                        <form id="form-usuario" class="space-y-4">
+                            <input type="text" id="usr-nombre" required placeholder="Nombre" class="w-full bg-[#0a0f18] border border-dark-border rounded p-2 text-sm text-white">
+                            <select id="usr-rol" class="w-full bg-[#0a0f18] border border-dark-border rounded p-2 text-sm text-white"><option value="Editor">Editor</option><option value="Comercial">Comercial</option><option value="Admin">Admin</option></select>
+                            <button type="submit" class="w-full bg-slate-700 text-white font-bold py-2 rounded text-sm">Guardar Usuario</button>
+                        </form>
+                    </div>
+                    <div class="bg-dark-card border border-dark-border rounded-xl lg:col-span-2 overflow-hidden flex flex-col">
+                        <table class="w-full text-left text-sm"><thead class="text-xs uppercase text-slate-500 bg-[#0f172a] border-b border-dark-border"><tr><th class="px-6 py-4">Usuario</th><th class="px-6 py-4">Rol</th><th class="px-6 py-4 text-right">Borrar</th></tr></thead><tbody id="lista-usuarios" class="divide-y divide-dark-border"></tbody></table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 9. SEGURIDAD (RESTAURADO) -->
+            <div id="seccion-seguridad" class="view-section hidden p-4 md:p-8 lg:p-10 w-full max-w-7xl mx-auto flex-col h-full">
+                <div class="mb-8"><h2 class="text-2xl md:text-3xl font-black text-white tracking-tight mb-1">Seguridad & Auditoría</h2></div>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1">
+                    <div class="bg-dark-card border border-dark-border rounded-xl p-6 h-fit">
+                        <h3 class="font-bold text-white mb-4 border-b border-dark-border pb-2">Protección 2FA</h3>
+                        <div class="flex items-center justify-between"><div class="text-sm font-bold text-white">Activar 2FA</div><div class="relative inline-block w-10 mr-2 align-middle select-none"><input type="checkbox" checked id="toggle2fa" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 cursor-pointer border-slate-600 right-0"/><label for="toggle2fa" class="toggle-label block overflow-hidden h-5 rounded-full bg-green-500 cursor-pointer"></label></div></div>
+                    </div>
+                    <div class="bg-dark-card border border-dark-border rounded-xl lg:col-span-2 overflow-hidden flex flex-col">
+                        <div class="px-6 py-4 border-b border-dark-border bg-[#151e2e]"><h3 class="font-bold text-white text-sm">Audit Logs (Historial Completo)</h3></div>
+                        <div class="flex-1 overflow-auto custom-scrollbar font-mono text-[10px] sm:text-xs"><table class="w-full text-left"><tbody class="divide-y divide-dark-border" id="audit-logs-table"></tbody></table></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 10. AJUSTES/CONFIG (RESTAURADO) -->
+            <div id="seccion-configuracion" class="view-section hidden p-4 md:p-8 lg:p-10 w-full max-w-7xl mx-auto flex-col h-full">
+                <div class="mb-8"><h2 class="text-2xl md:text-3xl font-black text-white tracking-tight mb-1">Ajustes Generales</h2></div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-dark-card border border-dark-border rounded-xl p-6 h-fit">
+                        <h3 class="font-bold text-white mb-4 border-b border-dark-border pb-2"><i class="fas fa-plug mr-2 text-purple-500"></i>Integraciones de Terceros</h3>
+                        <form id="form-config" class="space-y-4">
+                            <div><label class="block text-xs font-bold text-slate-500 mb-1">Stripe Secret Key</label><input type="password" id="cfg-stripe" class="w-full bg-[#0a0f18] border border-dark-border rounded p-2 text-sm text-white font-mono outline-none focus:border-brand-500"></div>
+                            <div><label class="block text-xs font-bold text-slate-500 mb-1">OpenAI API Key</label><input type="password" id="cfg-openai" class="w-full bg-[#0a0f18] border border-dark-border rounded p-2 text-sm text-white font-mono outline-none focus:border-brand-500"></div>
+                            <div><label class="block text-xs font-bold text-slate-500 mb-1">Analytics ID</label><input type="text" id="cfg-analytics" class="w-full bg-[#0a0f18] border border-dark-border rounded p-2 text-sm text-white font-mono outline-none focus:border-brand-500"></div>
+                            <button type="submit" id="btn-save-config" class="w-full mt-6 bg-brand-600 text-white font-bold py-2 rounded text-sm">Guardar en Base de Datos</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 11. TELEMETRÍA (RESTAURADO) -->
+            <div id="seccion-telemetria" class="view-section hidden p-4 md:p-8 lg:p-10 w-full max-w-7xl mx-auto flex-col h-full">
+                <h2 class="text-2xl font-black text-white mb-6">Telemetría JS</h2>
+                <div class="flex-1 bg-[#05080f] border border-dark-border rounded-xl overflow-auto custom-scrollbar font-mono text-xs p-4">
+                    <table class="w-full text-left"><tbody id="telemetria-errors-table" class="divide-y divide-[#111827]"></tbody></table>
+                </div>
+            </div>
         </main>
     </div>
 
-    <!-- MODAL DE CHAT PARA RESPONDER AL CLIENTE -->
+    <!-- MODAL DE CHAT -->
     <div id="chat-modal" class="fixed inset-0 z-[100] hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-dark-card border border-dark-border rounded-2xl w-full max-w-2xl h-[600px] flex flex-col shadow-2xl overflow-hidden">
             <div class="px-6 py-4 border-b border-dark-border bg-[#151e2e] flex justify-between items-center">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full bg-brand-500/20 text-brand-400 flex items-center justify-center font-bold"><i class="fas fa-user"></i></div>
-                    <div><h3 class="font-bold text-white text-lg leading-none" id="chat-modal-title">Ticket</h3><span class="text-xs text-green-400">En línea</span></div>
-                </div>
+                <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-brand-500/20 text-brand-400 flex items-center justify-center font-bold"><i class="fas fa-user"></i></div><div><h3 class="font-bold text-white text-lg leading-none" id="chat-modal-title">Ticket</h3><span class="text-xs text-green-400">En línea</span></div></div>
                 <button onclick="cerrarChatModal()" class="text-slate-400 hover:text-red-400 transition-colors"><i class="fas fa-times text-2xl"></i></button>
             </div>
-            
-            <div id="chat-mensajes" class="flex-1 overflow-y-auto p-6 space-y-4 custom-scrollbar bg-dark-bg">
-                <!-- Mensajes del Chat Inyectados aquí -->
-            </div>
-            
+            <div id="chat-mensajes" class="flex-1 overflow-y-auto p-6 space-y-4 custom-scrollbar bg-dark-bg"></div>
             <form id="form-chat-admin" class="p-4 border-t border-dark-border bg-[#151e2e] flex gap-3 items-center">
-                <input type="text" id="chat-input-admin" class="flex-1 bg-[#0a0f18] border border-dark-border rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-500 transition-colors" placeholder="Escribe tu respuesta..." autocomplete="off">
-                <button type="submit" class="bg-brand-600 hover:bg-brand-500 w-12 h-12 rounded-xl text-white flex items-center justify-center transition-colors shadow-lg"><i class="fas fa-paper-plane"></i></button>
+                <input type="text" id="chat-input-admin" class="flex-1 bg-[#0a0f18] border border-dark-border rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-500" placeholder="Escribe tu respuesta..." autocomplete="off">
+                <button type="submit" class="bg-brand-600 hover:bg-brand-500 w-12 h-12 rounded-xl text-white flex items-center justify-center shadow-lg"><i class="fas fa-paper-plane"></i></button>
             </form>
         </div>
     </div>
@@ -183,7 +227,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-        import { getFirestore, collection, query, orderBy, onSnapshot, doc, updateDoc, addDoc, deleteDoc, serverTimestamp, limit } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+        import { getFirestore, collection, query, orderBy, onSnapshot, doc, updateDoc, addDoc, deleteDoc, getDoc, setDoc, serverTimestamp, limit } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
         const firebaseConfig = { apiKey: "AIzaSyDqWjgoi8DwcZiXwp3nF1gQ0vvxZ39CUtQ", authDomain: "chatbot-web-v1.firebaseapp.com", projectId: "chatbot-web-v1", storageBucket: "chatbot-web-v1.firebasestorage.app", messagingSenderId: "7994049270", appId: "1:7994049270:web:f5e6a2652065bf4680a2d7" };
         const app = initializeApp(firebaseConfig);
@@ -203,72 +247,77 @@
         // INIT GRAFICO
         const ctx = document.getElementById('trafficChart').getContext('2d');
         const last7DaysLabels = [];
-        for(let i=6; i>=0; i--) { const d = new Date(); d.setDate(d.getDate()-i); last7DaysLabels.push(d.toLocaleDateString('es-ES', {day:'2-digit', month:'2-digit'})); }
+        for(let i=6; i>=0; i--) { 
+            const d = new Date(); d.setDate(d.getDate()-i); 
+            const day = String(d.getDate()).padStart(2, '0');
+            const month = String(d.getMonth()+1).padStart(2, '0');
+            last7DaysLabels.push(`${day}/${month}`); 
+        }
         let trafficChartInstance = new Chart(ctx, { type: 'line', data: { labels: last7DaysLabels, datasets: [{ label: 'Visitas', data: [0,0,0,0,0,0,0], borderColor: '#0ea5e9', backgroundColor: 'rgba(14, 165, 233, 0.1)', borderWidth: 2, fill: true, tension: 0.4 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, grid: { color: '#1e293b' }, ticks: { color: '#64748b', precision: 0 } }, x: { grid: { display: false }, ticks: { color: '#64748b' } } } } });
 
-        // UPDATE Y DELETE (CRUD)
-        window.cambiarEstadoLead = async (id, st) => { await updateDoc(doc(db, "leads", id), { estado: st }); };
-        window.cambiarEstadoTicket = async (id, st) => { await updateDoc(doc(db, "tickets", id), { estado: st }); };
-        window.borrarTicket = async (id) => { await deleteDoc(doc(db, "tickets", id)); };
-        
+        // AUDITORÍA Y UTILIDADES
+        async function registrarAuditoria(accion_texto, modulo) {
+            try { await addDoc(collection(db, "auditoria"), { admin: auth.currentUser?.email || 'Sistema', accion: accion_texto, modulo: modulo, fechaC: serverTimestamp() }); } catch(e) {}
+        }
+        window.cambiarEstadoLead = async (id, st) => { await updateDoc(doc(db, "leads", id), { estado: st }); registrarAuditoria(`Estado Lead a [${st}]`, 'CRM'); };
+        window.cambiarEstadoTicket = async (id, st) => { await updateDoc(doc(db, "tickets", id), { estado: st }); registrarAuditoria(`Ticket a [${st}]`, 'Soporte');};
+        window.borrarTicket = async (id) => { await deleteDoc(doc(db, "tickets", id)); registrarAuditoria(`Ticket Borrado`, 'Soporte'); };
+        window.borrarUser = async (id) => { await deleteDoc(doc(db, "usuarios", id)); };
+        window.cambiarRolUser = async (id, rol) => { await updateDoc(doc(db, "usuarios", id), { rol: rol }); };
+        window.borrarCMS = async (id) => { await deleteDoc(doc(db, "inventario", id)); };
+        window.cambiarEstadoCMS = async (id, st) => { await updateDoc(doc(db, "inventario", id), { estado: st }); };
+
         // MODAL DE CHAT ADMIN
         let currentTicketId = null;
         let unsubscribeChat = null;
-
         window.abrirChatTicket = (ticketId, clienteNombre) => {
             currentTicketId = ticketId;
             document.getElementById('chat-modal').classList.remove('hidden');
             document.getElementById('chat-modal-title').textContent = clienteNombre;
-            
             if(unsubscribeChat) unsubscribeChat();
-            
             unsubscribeChat = onSnapshot(query(collection(db, "tickets", ticketId, "mensajes"), orderBy("fecha", "asc")), snap => {
                 let html = '';
                 snap.forEach(dSnap => {
-                    const d = dSnap.data();
-                    const isAdmin = d.rol === 'admin';
+                    const d = dSnap.data(); const isAdmin = d.rol === 'admin';
                     const t = d.fecha ? new Date(d.fecha.seconds*1000).toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'}) : '';
-                    
-                    html += `
-                        <div class="flex w-full ${isAdmin ? 'justify-end' : 'justify-start'}">
-                            <div class="${isAdmin ? 'bg-brand-600 text-white rounded-tl-2xl rounded-bl-2xl rounded-tr-2xl' : 'bg-[#1e293b] text-slate-200 rounded-tr-2xl rounded-br-2xl rounded-tl-2xl'} p-4 max-w-[80%] shadow-md">
-                                <p class="text-sm">${d.texto}</p>
-                                <div class="text-right mt-1"><span class="text-[10px] opacity-70">${t}</span></div>
-                            </div>
-                        </div>
-                    `;
+                    html += `<div class="flex w-full ${isAdmin ? 'justify-end' : 'justify-start'}"><div class="${isAdmin ? 'bg-brand-600 text-white rounded-tl-2xl rounded-bl-2xl rounded-tr-2xl' : 'bg-[#1e293b] text-slate-200 rounded-tr-2xl rounded-br-2xl rounded-tl-2xl'} p-4 max-w-[80%] shadow-md"><p class="text-sm">${d.texto}</p><div class="text-right mt-1"><span class="text-[10px] opacity-70">${t}</span></div></div></div>`;
                 });
                 const chatContainer = document.getElementById('chat-mensajes');
                 chatContainer.innerHTML = html || '<div class="text-center text-slate-500 text-xs mt-10">Sin mensajes aún.</div>';
                 chatContainer.scrollTop = chatContainer.scrollHeight;
             });
         };
-
-        window.cerrarChatModal = () => {
-            document.getElementById('chat-modal').classList.add('hidden');
-            if(unsubscribeChat) unsubscribeChat();
-            currentTicketId = null;
-        };
+        window.cerrarChatModal = () => { document.getElementById('chat-modal').classList.add('hidden'); if(unsubscribeChat) unsubscribeChat(); currentTicketId = null; };
 
         document.getElementById('form-chat-admin').addEventListener('submit', async e => {
-            e.preventDefault();
-            const input = document.getElementById('chat-input-admin');
+            e.preventDefault(); const input = document.getElementById('chat-input-admin');
             if(!input.value.trim() || !currentTicketId) return;
             await addDoc(collection(db, "tickets", currentTicketId, "mensajes"), { texto: input.value, rol: 'admin', fecha: serverTimestamp() });
             input.value = '';
         });
 
-        // LISTENERS PRINCIPALES DE FIREBASE
+        // ================= FIREBASE AUTH & MAIN LISTENERS =================
         onAuthStateChanged(auth, async (user) => {
             if (!user) { document.getElementById('login-screen').classList.remove('hidden'); document.getElementById('dashboard-screen').classList.add('hidden'); return; }
             document.getElementById('login-screen').classList.add('hidden'); document.getElementById('dashboard-screen').classList.remove('hidden');
+            document.getElementById('user-email-display').textContent = user.email;
 
-            // 1. TELEMETRÍA Y GRÁFICO (RESTAURADO)
+            // 0. CONFIG (Carga única)
+            const configDoc = await getDoc(doc(db, "configuracion", "global"));
+            if(configDoc.exists()) {
+                const cfg = configDoc.data();
+                document.getElementById('cfg-stripe').value = cfg.stripe || '';
+                document.getElementById('cfg-openai').value = cfg.openai || '';
+                document.getElementById('cfg-analytics').value = cfg.analytics || '';
+            }
+
+            // 1. TELEMETRÍA Y GRÁFICO 
             onSnapshot(query(collection(db, "telemetria"), orderBy("fecha", "desc")), snap => {
                 let v = 0, err = 0, errHTML = '';
-                const vDay = {}; last7DaysLabels.forEach(l => vDay[l] = 0); // Inicializar a 0 la semana
-
-                const hoyStr = new Date().toLocaleDateString('es-ES', {day:'2-digit', month:'2-digit'});
+                const vDay = {}; last7DaysLabels.forEach(l => vDay[l] = 0);
+                
+                const hoyD = new Date();
+                const hoyStr = `${String(hoyD.getDate()).padStart(2, '0')}/${String(hoyD.getMonth()+1).padStart(2, '0')}`;
                 let traficoHoy = 0;
 
                 snap.forEach(dSnap => {
@@ -276,13 +325,13 @@
                     if(data.tipo === "visita") {
                         v++;
                         if(data.fecha) {
-                            const dStr = new Date(data.fecha.seconds*1000).toLocaleDateString('es-ES', {day:'2-digit', month:'2-digit'});
+                            const dateObj = new Date(data.fecha.seconds*1000);
+                            const dStr = `${String(dateObj.getDate()).padStart(2, '0')}/${String(dateObj.getMonth()+1).padStart(2, '0')}`;
                             if(vDay[dStr] !== undefined) vDay[dStr]++;
                             if(dStr === hoyStr) traficoHoy++;
                         }
                     } else if(data.tipo === "error") {
-                        err++;
-                        const t = data.fecha ? new Date(data.fecha.seconds*1000).toLocaleTimeString('es-ES') : '';
+                        err++; const t = data.fecha ? new Date(data.fecha.seconds*1000).toLocaleTimeString('es-ES') : '';
                         errHTML += `<tr class="hover:bg-[#111827]"><td class="px-4 py-2">${t}</td><td class="px-4 py-2 text-brand-400">${data.archivo?data.archivo.split('/').pop():''}</td><td class="px-4 py-2 text-red-400">${data.mensaje}</td></tr>`;
                     }
                 });
@@ -295,18 +344,13 @@
                 trafficChartInstance.update();
             });
 
-            // 2. LEADS (NOTIFICACIONES EN VIVO)
+            // 2. LEADS (NOTIFICACIONES)
             onSnapshot(query(collection(db, "leads"), orderBy("fecha", "desc")), snap => {
                 let html = '', t = 0, hayNuevos = false;
                 snap.forEach(dSnap => {
-                    t++; const d = dSnap.data(); const id = dSnap.id;
-                    const st = d.estado || 'nuevo';
-                    if(st === 'nuevo') hayNuevos = true; // Activar punto rojo
-
-                    let cClass = 'text-green-400 border-green-500/30';
-                    if(st==='proceso') cClass = 'text-yellow-400 border-yellow-500/30';
-                    if(st==='cerrado') cClass = 'text-brand-400 border-brand-500/30';
-
+                    t++; const d = dSnap.data(); const id = dSnap.id; const st = d.estado || 'nuevo';
+                    if(st === 'nuevo') hayNuevos = true;
+                    let cClass = st==='proceso'?'text-yellow-400 border-yellow-500/30':(st==='cerrado'?'text-brand-400 border-brand-500/30':'text-green-400 border-green-500/30');
                     html += `<tr class="lead-row hover:bg-[#1e293b]/50"><td class="px-6 py-4"><div class="font-bold text-white text-sm">${d.nombre}</div><div class="text-xs text-brand-400">${d.email}</div></td><td class="px-6 py-4"><select onchange="cambiarEstadoLead('${id}', this.value)" class="select-estado border rounded text-xs font-bold uppercase tracking-wider outline-none p-1 bg-dark-card ${cClass}"><option value="nuevo" class="text-green-400" ${st==='nuevo'?'selected':''}>Nuevo</option><option value="proceso" class="text-yellow-400" ${st==='proceso'?'selected':''}>Proceso</option><option value="cerrado" class="text-brand-400" ${st==='cerrado'?'selected':''}>Ganado</option></select></td><td class="px-6 py-4 text-sm">${d.servicio}</td><td class="px-6 py-4"><div class="text-xs text-slate-400 bg-dark-bg p-2 rounded max-h-16 overflow-auto">"${d.mensaje}"</div></td></tr>`;
                 });
                 document.getElementById('dash-leads').textContent = t;
@@ -314,29 +358,54 @@
                 document.getElementById('dot-crm').classList.toggle('hidden', !hayNuevos);
             });
 
-            // 3. TICKETS SOPORTE (NOTIFICACIONES Y CHAT)
+            // 3. TICKETS SOPORTE (CHAT & NOTIFICACIONES)
             onSnapshot(query(collection(db, "tickets"), orderBy("fecha", "desc")), snap => {
                 let html = '', hayNuevos = false;
                 snap.forEach(dSnap => {
-                    const d = dSnap.data(); const id = dSnap.id;
-                    const st = d.estado || 'abierto';
-                    if(st === 'abierto') hayNuevos = true; // Activar punto rojo
-
-                    html += `<tr class="hover:bg-[#1e293b]/50"><td class="px-6 py-4 font-bold text-white text-sm">${d.cliente}</td><td class="px-6 py-4 text-slate-300 text-sm">${d.asunto}</td><td class="px-6 py-4"><select onchange="cambiarEstadoTicket('${id}', this.value)" class="bg-dark-card border border-dark-border rounded text-xs p-1 ${st==='abierto'?'text-yellow-400':'text-green-400'}"><option value="abierto" ${st==='abierto'?'selected':''}>Abierto</option><option value="cerrado" ${st==='cerrado'?'selected':''}>Resuelto</option></select></td><td class="px-6 py-4 text-right"><button onclick="abrirChatTicket('${id}', '${d.cliente}')" class="bg-brand-600 hover:bg-brand-500 text-white px-3 py-1 rounded text-xs mr-2 transition-colors"><i class="fas fa-comment-dots mr-1"></i> Responder</button><button onclick="borrarTicket('${id}')" class="text-slate-500 hover:text-red-400"><i class="fas fa-trash"></i></button></td></tr>`;
+                    const d = dSnap.data(); const id = dSnap.id; const st = d.estado || 'abierto';
+                    if(st === 'abierto') hayNuevos = true;
+                    html += `<tr class="hover:bg-[#1e293b]/50"><td class="px-6 py-4 font-bold text-white text-sm">${d.cliente}</td><td class="px-6 py-4 text-slate-300 text-sm">${d.asunto}</td><td class="px-6 py-4"><select onchange="cambiarEstadoTicket('${id}', this.value)" class="bg-dark-card border border-dark-border rounded text-xs p-1 ${st==='abierto'?'text-yellow-400':'text-green-400'}"><option value="abierto" ${st==='abierto'?'selected':''}>Abierto</option><option value="cerrado" ${st==='cerrado'?'selected':''}>Resuelto</option></select></td><td class="px-6 py-4 text-right"><button onclick="abrirChatTicket('${id}', '${d.cliente}')" class="bg-brand-600 hover:bg-brand-500 text-white px-3 py-1 rounded text-xs mr-2"><i class="fas fa-comment-dots mr-1"></i> Responder</button><button onclick="borrarTicket('${id}')" class="text-slate-500 hover:text-red-400"><i class="fas fa-trash"></i></button></td></tr>`;
                 });
                 document.getElementById('lista-tickets').innerHTML = html || '<tr><td colspan="4" class="p-6 text-center text-green-500">Bandeja limpia.</td></tr>';
                 document.getElementById('dot-soporte').classList.toggle('hidden', !hayNuevos);
             });
 
             // 4. MRR FINANZAS
-            onSnapshot(query(collection(db, "finanzas")), snap => {
-                let mrr = 0; snap.forEach(d => { if(d.data().tipo==='mrr') mrr+=Number(d.data().importe); });
-                document.getElementById('dash-mrr').textContent = mrr + '€';
+            onSnapshot(query(collection(db, "finanzas")), snap => { let mrr = 0; snap.forEach(d => { if(d.data().tipo==='mrr') mrr+=Number(d.data().importe); }); document.getElementById('dash-mrr').textContent = mrr + '€'; });
+
+            // 5. AUDITORÍA
+            onSnapshot(query(collection(db, "auditoria"), orderBy("fechaC", "desc"), limit(20)), snap => {
+                let htmlDash = '', htmlSec = '';
+                snap.forEach(dSnap => {
+                    const d = dSnap.data(); const t = d.fechaC ? new Date(d.fechaC.seconds*1000).toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'}) : '';
+                    htmlDash += `<div class="mb-3 border-l-2 border-brand-500 pl-3"><div class="text-[10px] text-slate-500">${t} - ${d.modulo}</div><div class="text-xs text-white">${d.accion}</div></div>`;
+                    htmlSec += `<tr class="hover:bg-[#111827]"><td class="px-6 py-3">${t}</td><td class="px-6 py-3 text-brand-400">${d.admin}</td><td class="px-6 py-3 text-white">${d.accion}</td><td class="px-6 py-3">${d.modulo}</td></tr>`;
+                });
+                document.getElementById('log-actividad-list').innerHTML = htmlDash; document.getElementById('audit-logs-table').innerHTML = htmlSec;
+            });
+
+            // 6. USUARIOS
+            onSnapshot(query(collection(db, "usuarios"), orderBy("fecha", "desc")), snap => {
+                let html = '';
+                snap.forEach(s => { const d = s.data(); const id = s.id; html += `<tr class="hover:bg-[#1e293b]/50"><td class="px-6 py-4 font-bold text-white text-sm">${d.nombre}</td><td class="px-6 py-4"><select onchange="cambiarRolUser('${id}', this.value)" class="bg-[#0a0f18] border border-brand-500/30 text-brand-400 rounded text-xs p-1 font-bold"><option value="Editor" ${d.rol==='Editor'?'selected':''}>Editor</option><option value="Comercial" ${d.rol==='Comercial'?'selected':''}>Comercial</option><option value="Admin" ${d.rol==='Admin'?'selected':''}>Admin</option></select></td><td class="px-6 py-4 text-right"><button onclick="borrarUser('${id}')" class="text-slate-500 hover:text-red-400"><i class="fas fa-trash"></i></button></td></tr>`; });
+                document.getElementById('lista-usuarios').innerHTML = html || '<tr><td colspan="3" class="p-6 text-center text-slate-500">Solo estás tú.</td></tr>';
+            });
+
+            // 7. CMS
+            onSnapshot(query(collection(db, "inventario"), orderBy("fecha", "desc")), snap => {
+                let html = '';
+                snap.forEach(s => { const d = s.data(); const id = s.id; const cClass = d.estado==='publicado' ? 'text-green-400 border-green-500/30' : 'text-yellow-400 border-yellow-500/30'; html += `<tr class="hover:bg-[#1e293b]/50"><td class="px-6 py-4"><div class="font-bold text-white text-sm">${d.titulo}</div><div class="text-xs text-slate-400">${d.categoria}</div></td><td class="px-6 py-4"><select onchange="cambiarEstadoCMS('${id}', this.value)" class="bg-[#0a0f18] border ${cClass} rounded text-[10px] p-1 uppercase font-bold"><option value="borrador" ${d.estado==='borrador'?'selected':''}>Borrador</option><option value="publicado" ${d.estado==='publicado'?'selected':''}>Publicado</option></select></td><td class="px-6 py-4 text-right"><button onclick="borrarCMS('${id}')" class="text-red-400 hover:text-white"><i class="fas fa-trash"></i></button></td></tr>`; });
+                document.getElementById('lista-cms').innerHTML = html || '<tr><td colspan="3" class="p-6 text-center text-slate-500">Sin contenido.</td></tr>';
             });
         });
 
+        // FORMS SUBMITS
+        document.getElementById('form-usuario').addEventListener('submit', async (e) => { e.preventDefault(); await addDoc(collection(db, "usuarios"), { nombre: document.getElementById('usr-nombre').value, rol: document.getElementById('usr-rol').value, fecha: serverTimestamp() }); registrarAuditoria('Usuario añadido', 'Usuarios'); e.target.reset(); });
+        document.getElementById('form-cms').addEventListener('submit', async (e) => { e.preventDefault(); await addDoc(collection(db, "inventario"), { titulo: document.getElementById('cms-titulo').value, categoria: document.getElementById('cms-categoria').value, estado: 'borrador', fecha: serverTimestamp() }); registrarAuditoria('Nuevo contenido', 'Inventario'); e.target.reset(); });
+        document.getElementById('form-config').addEventListener('submit', async (e) => { e.preventDefault(); const btn = document.getElementById('btn-save-config'); btn.textContent = 'Guardando...'; await setDoc(doc(db, "configuracion", "global"), { stripe: document.getElementById('cfg-stripe').value, openai: document.getElementById('cfg-openai').value, analytics: document.getElementById('cfg-analytics').value }, { merge: true }); registrarAuditoria('Configuración actualizada', 'Ajustes'); setTimeout(()=>{ btn.textContent='Guardado Correctamente'; setTimeout(()=>btn.textContent='Guardar en Base de Datos', 2000); }, 500); });
+        
         document.getElementById('login-form').addEventListener('submit', (e) => { e.preventDefault(); signInWithEmailAndPassword(auth, document.getElementById('login-email').value, document.getElementById('login-pass').value).catch(() => document.getElementById('login-error').classList.remove('hidden')); });
-        document.getElementById('logout-btn').addEventListener('click', () => signOut(auth));
+        document.getElementById('logout-btn').addEventListener('click', () => { registrarAuditoria('Cierre de sesión', 'Seguridad'); setTimeout(() => signOut(auth), 500); });
     </script>
 </body>
 </html>
