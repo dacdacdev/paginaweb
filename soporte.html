@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow"> <!-- Para que Google no indexe esta página -->
+    <title>Soporte Técnico | DacDacDev</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: { 500: '#0ea5e9', 600: '#0284c7' },
+                        dark: { bg: '#0a0f18', card: '#111827', border: '#1e293b' }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-dark-bg text-slate-200 antialiased min-h-screen flex items-center justify-center p-4 selection:bg-brand-500 selection:text-white">
+
+    <div class="w-full max-w-lg bg-dark-card border border-dark-border rounded-2xl shadow-[0_0_40px_rgba(14,165,233,0.1)] p-8 relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-600 to-brand-400"></div>
+        
+        <div class="text-center mb-8">
+            <div class="inline-block px-3 py-1 mb-4 rounded border border-brand-500/30 bg-brand-500/10 text-brand-400 text-xs font-mono font-bold uppercase tracking-widest">
+                Área de Clientes
+            </div>
+            <h1 class="text-3xl font-black text-white tracking-tight mb-2">Soporte Técnico</h1>
+            <p class="text-slate-400 text-sm">Abre un ticket y nuestro equipo de desarrollo lo atenderá lo antes posible.</p>
+        </div>
+
+        <form id="ticket-form" class="space-y-5">
+            <div>
+                <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Nombre de tu Negocio / Web</label>
+                <input type="text" id="tk-cliente" required placeholder="Ej: Bar Paco" class="w-full bg-[#0a0f18] border border-dark-border rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-500 transition-colors">
+            </div>
+            
+            <div>
+                <label class="block text-xs font-bold text-slate-500 uppercase mb-2">¿Qué necesitas?</label>
+                <select id="tk-asunto" required class="w-full bg-[#0a0f18] border border-dark-border rounded-lg px-4 py-3 text-slate-300 focus:outline-none focus:border-brand-500 transition-colors appearance-none cursor-pointer">
+                    <option value="" disabled selected>Selecciona el motivo...</option>
+                    <option value="Cambio de Textos o Precios">Modificar Textos o Precios</option>
+                    <option value="Cambio de Imágenes">Actualizar Imágenes</option>
+                    <option value="Problema Técnico / Error">Problema Técnico / La web falla</option>
+                    <option value="Duda sobre Reservas o IA">Duda sobre automatizaciones/IA</option>
+                    <option value="Otro">Otro motivo</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Explícanos el detalle</label>
+                <textarea id="tk-mensaje" rows="4" required placeholder="Describe qué ocurre o qué cambios necesitas exactamente..." class="w-full bg-[#0a0f18] border border-dark-border rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-500 transition-colors resize-none"></textarea>
+            </div>
+
+            <button type="submit" id="btn-submit" class="w-full bg-brand-600 hover:bg-brand-500 text-white font-bold py-4 rounded-lg transition-all shadow-lg shadow-brand-500/20 mt-2 flex items-center justify-center gap-2">
+                Abrir Ticket de Soporte <i class="fas fa-paper-plane"></i>
+            </button>
+        </form>
+
+        <div class="mt-8 text-center border-t border-dark-border pt-6">
+            <p class="text-xs text-slate-500">¿Es una urgencia crítica? Contáctanos por <a href="https://wa.me/34611030269" class="text-green-500 hover:underline">WhatsApp</a>.</p>
+        </div>
+    </div>
+
+    <!-- Lógica de Firebase para enviar el Ticket -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+        // Usa tu misma configuración de Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyDqWjgoi8DwcZiXwp3nF1gQ0vvxZ39CUtQ",
+            authDomain: "chatbot-web-v1.firebaseapp.com",
+            projectId: "chatbot-web-v1",
+            storageBucket: "chatbot-web-v1.firebasestorage.app",
+            messagingSenderId: "7994049270",
+            appId: "1:7994049270:web:f5e6a2652065bf4680a2d7"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        document.getElementById('ticket-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const btn = document.getElementById('btn-submit');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Procesando...';
+            btn.disabled = true;
+
+            const cliente = document.getElementById('tk-cliente').value;
+            const asunto = document.getElementById('tk-asunto').value;
+            const mensaje = document.getElementById('tk-mensaje').value;
+
+            try {
+                // Guardar en la colección "tickets"
+                await addDoc(collection(db, "tickets"), {
+                    cliente: cliente,
+                    asunto: asunto,
+                    mensaje: mensaje,
+                    estado: "abierto",
+                    fecha: serverTimestamp()
+                });
+
+                btn.classList.replace('bg-brand-600', 'bg-green-600');
+                btn.innerHTML = '<i class="fas fa-check"></i> Ticket Enviado Correctamente';
+                e.target.reset();
+
+            } catch (error) {
+                alert("Error al enviar el ticket. Revisa tu conexión.");
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
