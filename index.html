@@ -357,36 +357,43 @@
             <div class="text-center mb-16 reveal">
                 <h2 class="text-3xl md:text-5xl font-bold text-white mb-4 uppercase tracking-tight">Tu negocio no es una plantilla barata</h2>
                 <p class="text-slate-400 text-lg max-w-2xl mx-auto">Desarrollos a medida. Pagas por código puro y conversiones. Elige el plan que tu infraestructura necesita.</p>
-                <p class="text-brand-500 font-bold mt-4 text-sm">*Sin cuotas de mantenimiento mensual obligatorio por la web.</p>
+                
+                <!-- Cuadro de aclaración de Alojamiento MUY claro -->
+                <div class="mt-6 inline-block bg-brand-900/30 border border-brand-500/50 rounded-xl p-4 max-w-3xl text-left">
+                    <p class="text-brand-400 font-bold text-sm mb-1"><i class="fas fa-info-circle mr-2"></i>Aclaración sobre el Alojamiento (Hosting):</p>
+                    <p class="text-slate-300 text-xs md:text-sm">En ningún paquete cobramos cuotas mensuales de mantenimiento de agencia. El único coste fijo mensual que tendrás es el del servidor donde se aloja tu web (Vercel). Son <strong>20€ al mes que pagarás directamente a la plataforma de alojamiento</strong>, nosotros no nos llevamos ninguna comisión de ahí.</p>
+                </div>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-8 items-start">
                 
-                <!-- Paquete BÁSICO -->
+                <!-- Paquete BÁSICO (Adaptado para locales pequeños con Soporte/Atención) -->
                 <div class="bg-dark-card p-8 rounded-2xl border-2 border-brand-500/30 hover:border-brand-500/80 transition-all flex flex-col reveal shadow-xl relative">
                     <div class="mb-6">
-                        <div class="inline-block px-3 py-1 bg-slate-800 text-slate-300 rounded-full text-xs font-bold tracking-wider mb-4 border border-slate-700">FRONT-END BÁSICO</div>
+                        <div class="inline-block px-3 py-1 bg-slate-800 text-slate-300 rounded-full text-xs font-bold tracking-wider mb-4 border border-slate-700">IDEAL PARA LOCALES Y BARES</div>
                         <h3 class="text-2xl font-bold text-white mb-2">Paquete Inicial</h3>
                         <div class="flex items-baseline gap-3 mt-4">
                             <span class="text-4xl font-black text-brand-400">400€</span>
                         </div>
-                        <p class="text-slate-400 mt-4 leading-relaxed">Tu carta de presentación digital. Una web programada desde cero que carga a la velocidad de la luz.</p>
-                        <p class="text-brand-400 font-bold text-sm mt-2">Pago único. Cambios bajo demanda.</p>
+                        <p class="text-slate-400 mt-4 leading-relaxed">Tu carta digital o web de negocio lista para arrancar. Perfecta para pequeños locales que necesitan inmediatez.</p>
+                        <p class="text-brand-400 font-bold text-sm mt-3">Pago único por la web.</p>
+                        <p class="text-slate-500 text-xs mt-1">*Requiere 20€/mes de alojamiento (pagado directamente a Vercel, no a nosotros).</p>
                     </div>
                     <ul class="space-y-4 mb-8 flex-1 mt-4">
                         <li class="flex items-start gap-3 text-slate-200">
                             <i class="fas fa-bolt text-yellow-500 mt-1"></i> 
-                            <div><strong class="block">Código Puro (HTML5/CSS3/JS)</strong>Optimización para puntuar 100/100.</div>
+                            <div><strong class="block">Código Puro (HTML5/CSS3/JS)</strong>Carga ultrarrápida en móviles.</div>
+                        </li>
+                        <li class="flex items-start gap-3 text-slate-200">
+                            <i class="fas fa-calendar-check text-green-500 mt-1"></i> 
+                            <div><strong class="block">Gestión de Reservas y Soporte</strong>Atención al cliente y control de tus reservas.</div>
                         </li>
                         <li class="flex items-start gap-3 text-slate-200">
                             <i class="fas fa-mobile-alt text-brand-500 mt-1"></i> 
-                            <div><strong class="block">Diseño Responsive Custom</strong>Adaptación milimétrica a móviles.</div>
-                        </li>
-                        <li class="flex items-start gap-3 text-slate-500 opacity-75">
-                            <i class="fas fa-times text-red-500 mt-1"></i> <span class="line-through">Lógica de Reservas / Backend</span>
+                            <div><strong class="block">Diseño Responsive Custom</strong>Adaptación total a cualquier smartphone.</div>
                         </li>
                     </ul>
-                    <a href="#contacto" class="w-full block text-center py-4 border border-brand-500/50 text-white rounded-xl hover:bg-slate-800 transition-all font-bold uppercase tracking-wider">Solicitar Desarrollo</a>
+                    <a href="#contacto" class="w-full block text-center py-4 border border-brand-500/50 text-white rounded-xl hover:bg-slate-800 transition-all font-bold uppercase tracking-wider">Solicitar para mi Local</a>
                 </div>
 
                 <!-- Paquete PREMIUM (Recomendado) -->
@@ -401,7 +408,8 @@
                             <span class="text-4xl font-black text-brand-400">995€</span>
                         </div>
                         <p class="text-slate-300 mt-4 leading-relaxed font-medium">Lógica compleja, reservas directas y bases de datos integradas.</p>
-                        <p class="text-brand-400 font-bold text-sm mt-2">Pago único. Cambios bajo demanda.</p>
+                        <p class="text-brand-400 font-bold text-sm mt-3">Pago único por la web.</p>
+                        <p class="text-slate-500 text-xs mt-1">*Requiere 20€/mes de alojamiento (pagado directamente a Vercel, no a nosotros).</p>
                     </div>
                     <ul class="space-y-4 mb-8 flex-1 mt-4">
                         <li class="flex items-start gap-3 text-slate-200">
@@ -430,7 +438,8 @@
                             <span class="text-lg text-slate-500 font-bold">+250€/mes</span>
                         </div>
                         <p class="text-slate-400 mt-4 leading-relaxed">Tu departamento técnico externalizado. Desarrollo integral y automatizaciones de IA rodando en piloto automático.</p>
-                        <p class="text-purple-400 font-bold text-sm mt-2">Setup inicial + Mantenimiento de IA.</p>
+                        <p class="text-purple-400 font-bold text-sm mt-3">Setup + Mantenimiento IA.</p>
+                        <p class="text-slate-500 text-xs mt-1">*Requiere 20€/mes de alojamiento (pagado directamente a Vercel, no a nosotros).</p>
                     </div>
                     <ul class="space-y-4 mb-8 flex-1 mt-4">
                         <li class="flex items-start gap-3 text-slate-200">
@@ -577,11 +586,11 @@
 
                 <details class="group bg-dark-card border border-slate-700 hover:border-brand-500/50 rounded-xl transition-colors">
                     <summary class="flex justify-between items-center font-bold cursor-pointer list-none p-6 text-white text-lg">
-                        <span>¿Tengo que pagar una cuota de mantenimiento mensual obligatoria?</span>
+                        <span>¿Tengo que pagar alguna cuota de mantenimiento mensual obligatoria?</span>
                         <span class="transition group-open:rotate-180"><i class="fas fa-chevron-down text-brand-500"></i></span>
                     </summary>
                     <div class="text-slate-400 px-6 pb-6 leading-relaxed">
-                        Por mi parte, <strong>no hay ninguna cuota de mantenimiento</strong> para el desarrollo de la web. El pago por la infraestructura es único. El único coste fijo mensual que tendrás que asumir es el alojamiento (hosting) de la web en los servidores de Vercel, que tiene un coste de <strong>20€ al mes</strong>. Si contratas módulos de Crecimiento/IA, esos sí llevan su propia suscripción mensual por el uso de los bots.
+                        Por mi parte, <strong>no hay ninguna cuota de mantenimiento mensual por el desarrollo</strong> de la web. El pago por la infraestructura es único. El único coste fijo mensual externo que asume el comprador o local (el cliente final) es el alojamiento en los servidores de Vercel, que asciende a <strong>20€ al mes</strong> pagados directamente a la plataforma. Si el negocio contrata módulos adicionales de Crecimiento o IA, esos sí llevan su propia suscripción independiente.
                     </div>
                 </details>
 
@@ -647,7 +656,7 @@
                             <div class="px-4 py-2 text-[10px] font-bold text-brand-400 uppercase tracking-widest bg-[#0a0f18]/80 backdrop-blur sticky top-0 border-b border-slate-800">Desarrollo Web</div>
                             <div class="custom-option px-4 py-3 text-sm text-slate-300 hover:bg-purple-600 hover:text-white cursor-pointer transition-colors border-b border-slate-800" data-value="Paquete Élite (1.495€ + 250€/m)">Paquete Élite (Socio Tecnológico) 🚀</div>
                             <div class="custom-option px-4 py-3 text-sm text-slate-300 hover:bg-brand-600 hover:text-white cursor-pointer transition-colors" data-value="Paquete Premium (995€)">Paquete Premium VIP (995€) 🔥</div>
-                            <div class="custom-option px-4 py-3 text-sm text-slate-300 hover:bg-brand-600 hover:text-white cursor-pointer transition-colors" data-value="Paquete Básico (400€)">Paquete Básico (400€)</div>
+                            <div class="custom-option px-4 py-3 text-sm text-slate-300 hover:bg-brand-600 hover:text-white cursor-pointer transition-colors" data-value="Paquete Básico (400€)">Paquete Básico / Local (400€)</div>
                             
                             <div class="px-4 py-2 text-[10px] font-bold text-purple-400 uppercase tracking-widest bg-[#0a0f18]/80 backdrop-blur sticky top-0 border-b border-t border-slate-800">Automatización y Crecimiento</div>
                             <div class="custom-option px-4 py-3 text-sm text-slate-300 hover:bg-purple-600 hover:text-white cursor-pointer transition-colors" data-value="Recepcionista IA">Recepcionista IA WhatsApp</div>
